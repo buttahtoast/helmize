@@ -1,37 +1,44 @@
-## Welcome to GitHub Pages
+## Introduction
 
-You can use the [editor on GitHub](https://github.com/buttahtoast/helmize/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+Helmize is a simple deployment library wrapped in a library helm chart. It's purpose is to simplify complex infrastructure deployments where you change deployed manifests based on given conditions. This project is thought for people that bootstrap complex infrastructure setup on kubernetes and want to simplify their file structure. 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## How it works
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
 
-```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
 
-- Bulleted
-- List
+# Getting Started 
 
-1. Numbered
-2. List
 
-**Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
+
+
+
+## Requirements 
+
+This documentation won't explain the core concepts of [Helm](https://helm.sh/) and [Sprig templating](http://masterminds.github.io/sprig/), it is expected that you know these technologies.
+
+The only requirement for helmize is [helm](https://helm.sh/docs/intro/install/). The library was tested with the following helm version:
+
+  * v3.7.2
+
+## Initialize
+
+First we create a new helm chart which is going to contain the entire deployment structure for helmize. We can simply do that with the following comment (In this case I will call the new chart `infrastructure`, chose the name you would like):
+
+```
+helm create infrastructure
 ```
 
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
 
-### Jekyll Themes
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/buttahtoast/helmize/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
-### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+
+First you include the chart 
+
+
+
+
+
