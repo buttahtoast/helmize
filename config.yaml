@@ -1,0 +1,30 @@
+baseURL: "https://buttahtoast.github.io/helmize/"
+languageCode: "en-us"
+title: "Helmize"
+theme: "ace-documentation"
+pygmentsCodeFences: true
+pygmentsStyle: "monokailight"
+defaultContentLanguageInSubdir: false
+enableMissingTranslationPlaceholders: false
+params:
+  ordersectionsby: "weight" # ordersectionsby = "title"
+  disableSearch: false # default is false
+  disableReadmoreNav: false # set true to hide prev/next navigation, default is false
+  highlightClientSide: false # set true to use highlight.pack.js instead of the default hugo chroma highlighter
+  menushortcutsnewtab: true # set true to open shortcuts links to a new tab/window
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
+menu:
+
+  # Shortcuts
+  shortcuts:
+    - name: "Artifacthub"
+      url: "https://artifacthub.io/packages/helm/buttahtoast/helmize"
+      weigt: 1
+
+    - name: "<i class='fab fa-github'></i>"
+      url: "https://github.com/buttahtoast/helm-charts"
+      weight: 2
