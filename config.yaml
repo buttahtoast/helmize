@@ -1,7 +1,7 @@
 baseURL: "https://buttahtoast.github.io/helmize/"
 languageCode: "en-us"
 title: "Helmize"
-theme: "ace-documentation"
+theme: "hugo-geekdoc"
 pygmentsCodeFences: true
 pygmentsStyle: "monokailight"
 defaultContentLanguageInSubdir: false

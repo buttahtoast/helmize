@@ -1,0 +1,6 @@
+---
+header:
+  - name: GitHub
+    ref: https://github.com/buttahtoast/helm-charts/tree/master/charts/helmize
+    icon: gdoc_github
+    external: true

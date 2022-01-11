@@ -4,5 +4,4 @@ description = "Documentation"
 weight = 2
 +++
 
-{{< childpages >}}
-
+{{< toc-tree >}}
