@@ -6,6 +6,10 @@ pygmentsCodeFences: true
 pygmentsStyle: "monokailight"
 defaultContentLanguageInSubdir: false
 enableMissingTranslationPlaceholders: false
+enableRobotsTXT: true
+
+
+
 params:
   ordersectionsby: "weight" # ordersectionsby = "title"
   disableSearch: false # default is false
