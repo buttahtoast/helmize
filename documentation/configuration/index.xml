@@ -1,2 +1,24 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Configuration on Helmize</title><link>https://buttahtoast.github.io/helmize/documentation/configuration/</link><description>Recent content in Configuration on Helmize</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://buttahtoast.github.io/helmize/documentation/configuration/index.xml" rel="self" type="application/rss+xml"/><item><title>Reference</title><link>https://buttahtoast.github.io/helmize/documentation/configuration/reference/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://buttahtoast.github.io/helmize/documentation/configuration/reference/</guid><description>This is the entire configuration as reference
-Copy</description></item><item><title/><link>https://buttahtoast.github.io/helmize/documentation/configuration/customize/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://buttahtoast.github.io/helmize/documentation/configuration/customize/</guid><description/></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Configuration on Helmize</title><link>https://buttahtoast.github.io/helmize/documentation/configuration/</link><description>Recent content in Configuration on Helmize</description><generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://buttahtoast.github.io/helmize/documentation/configuration/index.xml" rel="self" type="application/rss+xml"/><item><title>General</title><link>https://buttahtoast.github.io/helmize/documentation/configuration/general/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://buttahtoast.github.io/helmize/documentation/configuration/general/</guid><description>Configuration The following general configuration options are available in the helmize.yaml
+conditions Required
+Type slice
+Read more about conditionsdropins Required
+Type slice
+Read more about dropinsinventory_directory Optional
+Type string
+Define a directory where the entire structure for helmize is located below. This path will be appended for all the condition&amp;rsquo;s paths.
+templates_directory Optional</description></item><item><title>Conditions</title><link>https://buttahtoast.github.io/helmize/documentation/configuration/conditions/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://buttahtoast.github.io/helmize/documentation/configuration/conditions/</guid><description>Conditions translate into paths where files are looked up based on given values which are relevant for deployment. Conditions are declared as list, based on the order the files are looked up and merged.
+Configuration Each condition can have the followin configurations.
+name Required
+Type string
+Used across helmize to reference to condition.
+key Optional
+Type string
+Path to the value in the user delivered values which is used as key to lookup.</description></item><item><title>Dropins</title><link>https://buttahtoast.github.io/helmize/documentation/configuration/dropins/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://buttahtoast.github.io/helmize/documentation/configuration/dropins/</guid><description>Dropins are Values and templates which can be sustituted based on given path patterns. They allow greater customization through the use of sprig templates.
+Configuration Each dropin can have the followin configurations.
+patterns Required
+Type string/slice
+Define regex patterns which match file paths you want to supply this dropin to.
+data Optional
+Type map
+Define data that will be available for the files that matched the pattern.</description></item><item><title>Reference</title><link>https://buttahtoast.github.io/helmize/documentation/configuration/reference/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://buttahtoast.github.io/helmize/documentation/configuration/reference/</guid><description>Configuration Reference
+inventory_directory: &amp;#34;groups/&amp;#34; templates_directory: &amp;#34;tpls/&amp;#34; force: false file_extensions: [ &amp;#34;yaml&amp;#34; ] file_excludes: [ &amp;#34;kustomization&amp;#34; ] merge_strategy: &amp;#34;path&amp;#34; ## Conditions &amp;lt;slice&amp;gt; conditions: # Location Condition - name: &amp;#34;location&amp;#34; key: &amp;#34;Values.config.location&amp;#34; default: &amp;#34;default&amp;#34; # Location - name: &amp;#34;environment&amp;#34; key: &amp;#34;Values.config.environment&amp;#34; required: false default: &amp;#34;default&amp;#34; path: &amp;#34;/custom/path&amp;#34; filter: [ &amp;#34;dev&amp;#34; ] reverseFilter: false allow_root: true .</description></item></channel></rss>
