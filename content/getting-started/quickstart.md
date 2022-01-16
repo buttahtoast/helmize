@@ -622,7 +622,7 @@ spec:
 
 As you can see the output changes based on the input of the chart. 
 
-### Location 
+### Location
 
 Let's add a condition for the location. The location should also be controllable via Values of the chart.
 
