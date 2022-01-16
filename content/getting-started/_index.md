@@ -5,6 +5,6 @@ description = "Getting Started"
 weight = 1
 +++
 
-{{< childpages >}}
+{{< toc-tree >}}
 
 

@@ -1,36 +1,34 @@
 +++
 title = "Reference"
 description = "Reference"
-weight = 2
+weight = 4
 +++
 
-This is the entire configuration as reference
+Configuration Reference
 
+```YAML
+inventory_directory: "groups/"
+templates_directory: "tpls/"
+force: false 
+file_extensions: [ "yaml" ]
+file_excludes: [ "kustomization" ]
+merge_strategy: "path"
 
-{{< code lang="YAML" >}}
+## Conditions <slice>
+conditions:
 
+  # Location Condition
+  - name: "location"
+    key: "Values.config.location"
+    default: "default"
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-{{< /code >}}
+  # Location
+  - name: "environment"
+    key: "Values.config.environment"
+    required: false
+    default: "default"
+    path: "/custom/path"
+    filter: [ "dev" ]
+    reverseFilter: false
+    allow_root: true
+...

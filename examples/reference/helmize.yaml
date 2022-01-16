@@ -1,0 +1,17 @@
+inventory_directory: "structure/"
+templates_directory: "tpls/"
+conditions:
+
+  - name: "base"
+    path: "/base/"
+    allow_root: true
+
+  - name: "environment"
+    key: "Values.env"
+    path: "env/"
+    default: "test"
+    filter: [ "test", "prod" ]
+    reverseFilter: true
+
+  - name: "location"
+    key: "Values.location"
