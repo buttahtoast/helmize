@@ -19,6 +19,9 @@ jobs:
         with:
           node-version: 12
 
+      - name: Install Gulp 
+        run:  npm install gulp
+
       - name: Build Geekdoc theme (1/2)
         working-directory: ./themes/hugo-geekdoc
         run: npm install
