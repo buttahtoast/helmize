@@ -15,3 +15,14 @@ conditions:
 
   - name: "location"
     key: "Values.location"
+
+dropins: 
+
+  - patterns: [ ".*" ]
+    data:
+      labels:
+        "custom.label": "data"
+    tpls:
+      - "registry.tpl"
+
+

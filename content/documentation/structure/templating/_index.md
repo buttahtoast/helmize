@@ -4,4 +4,20 @@ description = "Templating"
 weight = 2
 +++
 
-{{< toc-tree >}}
+
+
+
+# Context 
+
+It's important to know which context is available for templating at which stage.
+
+
+## Dropin Context
+
+
+
+##
+
+
+
+

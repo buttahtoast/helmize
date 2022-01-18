@@ -278,7 +278,7 @@ spec:
 ```
 {{< /expand >}}
 
-## Condition
+## Conditions
 
 [Read more on conditions](../documentation/configuration/conditions/)
 
@@ -865,3 +865,56 @@ spec:
 {{< /expand >}}
 
 {{< /expand >}}
+
+As seen with these two examples, conditions are a great mechanism to combine different indepdendent factors. You can extended the conditions at anytime without restructering the entire folder structure.
+
+## Dropins
+
+[Read more on dropins](../documentation/configuration/dropins/)
+
+We create a simple that's not really useful but helps you understand how dropins work:
+
+
+```Shell
+cat << EOF >> ./helmize.yaml
+dropins: 
+  - patterns: [ ".*" ]
+    data:
+      labels:
+        "custom.label": "data"
+    tpls:
+      - "registry.tpl"
+EOF    
+```
+
+This Dropin makes use of the [Label Post Renderer]() and adds the `registry.tpl`
+
+{{< expand "registry.tpl" "..." >}}
+
+First we have to create the templates directory we configured via 
+
+```YAML
+```    
+{{< /expand >}}
+
+registry.tpl
+
+
+dropins: 
+
+  - patterns: [ ".*" ]
+    data:
+      labels:
+        "custom.label": "data"
+    tpls:
+      - "registry.tpl"
+
+
+
+
+ghcr.io/stefanprodan/podinfo:6.0.3
+
+
+
+
+

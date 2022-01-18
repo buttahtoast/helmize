@@ -28,6 +28,15 @@ _Optional_
 Path to the value in the user delivered values which is used as key to lookup.
 
 
+## key_types
+
+_Optional_
+
+**Type** `string`/`slice` **Default** `[ "string", "slice" ]`
+
+Path to the value in the user delivered values which is used as key to lookup.
+
+
 ## required
 
 _Optional_
