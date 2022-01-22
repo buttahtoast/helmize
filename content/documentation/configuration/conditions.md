@@ -32,10 +32,11 @@ Path to the value in the user delivered values which is used as key to lookup.
 
 _Optional_
 
-**Type** `string`/`slice` **Default** `[ "string", "slice" ]`
+**Type** `slice` **Default** `[ "string", "slice" ]`
 
-Path to the value in the user delivered values which is used as key to lookup.
+Define the types the key must have. For example if you only want to allow a single value, the type should be `slice`. Types you can use are documented here:
 
+* [http://masterminds.github.io/sprig/reflection.html](http://masterminds.github.io/sprig/reflection.html)
 
 ## required
 
@@ -73,7 +74,7 @@ _Optional_
 Filter keylist for values that are not allowed and exclude them as valid path. The filter is executed against all inputs for this condition. If a filter matches a value, the value is removed. You can use regex patterns. The [allow_root](#allow_root) is not affected by any filter and will always be added.
 
 
-## reverseFilter
+## reverse_filter
 
 _Optional_
 

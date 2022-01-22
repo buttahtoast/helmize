@@ -11,18 +11,15 @@ conditions:
     path: "env/"
     default: "test"
     filter: [ "test", "prod" ]
-    reverseFilter: true
+    reverse_filter: true
 
   - name: "location"
     key: "Values.location"
 
 dropins: 
-
   - patterns: [ ".*" ]
     data:
       labels:
         "custom.label": "data"
     tpls:
       - "registry.tpl"
-
-

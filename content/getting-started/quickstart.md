@@ -58,7 +58,7 @@ conditions:
 EOF
 ```
 
-With this initial configuration we have added a base directory which will lookup all files within.
+With this initial configuration we have added a base directory which will lookup all files within (it's not reuired to have a base condition).
 
 ## Structure
 
@@ -303,7 +303,7 @@ conditions:
     path: "env/"
     default: "test"
     filter: [ "test", "prod" ]
-    reverseFilter: true
+    reverse_filter: true
 EOF    
 ```
 
@@ -641,7 +641,7 @@ conditions:
     path: "env/"
     default: "test"
     filter: [ "test", "prod" ]
-    reverseFilter: true
+    reverse_filter: true
 
   - name: "location"
     key: "Values.location"
@@ -870,9 +870,49 @@ As seen with these two examples, conditions are a great mechanism to combine dif
 
 ## Dropins
 
-[Read more on dropins](../documentation/configuration/dropins/)
+[Read more on dropins](../../documentation/configuration/dropins/)
 
 We create a simple that's not really useful but helps you understand how dropins work:
+
+
+```Shell
+cat << EOF >> ./helmize.yaml
+dropins: 
+  - patterns: [ ".*" ]
+    data:
+      labels:
+        "custom.label": "data"
+    tpls:
+      - "*.tpl"
+EOF    
+```
+
+This Dropin makes use of the [Label Post Renderer]() and adds the `registry.tpl`
+
+{{< expand "registry.tpl" "..." >}}
+
+First we have to create the templates directory we configured via `templates_directory`
+
+```Shell
+mkdir tpls/
+```
+
+Then Let's add this Template under `templates/registry.tpl`
+
+```
+{{/* Does not do much, but you can use templating to map values or use defaulting */}}
+{{- if $.Values.registry }}
+registry: {{ $.Values.registry }}
+{{- end }}
+
+{{/*
+  Adds Another Label for the Post Renderer
+*/}}
+labels:
+  registy.template: "label"
+```
+
+Since we include any files with the `*.tpl` ending in the `templates` directory this template will be used. If you want to be more explicit you would need to add only the `registry.tpl`
 
 
 ```Shell
@@ -887,34 +927,8 @@ dropins:
 EOF    
 ```
 
-This Dropin makes use of the [Label Post Renderer]() and adds the `registry.tpl`
 
-{{< expand "registry.tpl" "..." >}}
-
-First we have to create the templates directory we configured via 
-
-```YAML
-```    
 {{< /expand >}}
 
-registry.tpl
 
-
-dropins: 
-
-  - patterns: [ ".*" ]
-    data:
-      labels:
-        "custom.label": "data"
-    tpls:
-      - "registry.tpl"
-
-
-
-
-ghcr.io/stefanprodan/podinfo:6.0.3
-
-
-
-
-
+Now have seen the basi principles helmize brings. It's an help to organize large deployments and gives you greate customization which is value driven. The next step is to try it out for yourself! If there are still a lot of question marks, check out the [examples](../../examples) where we reference some implementations of helmize which might help you get started with your own use-case.
