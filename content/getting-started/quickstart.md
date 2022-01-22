@@ -929,11 +929,23 @@ dropins:
 EOF    
 ```
 
-In the 
+In the `structure/base/podinfo/deploy.yaml` we change the image to default on the registry if it's set, others use `ghcr.io`:
 
-we change the image to default on the registry if it's set
+```
+...
+      - name: frontend
+        image: {{ default "ghcr.io" $.Data.registry }}/stefanprodan/podinfo:6.0.3
+        imagePullPolicy: IfNotPresent
+...
+```
 
-{{ default "ghcr.io" $.Data.registry }}/stefanprodan/podinfo:6.0.3
+Now if we template with the `registry` set, we should see it
+
+```
+helm template . --set registry="custom.registry"
+```
+
+So we can access the results of dropings via the `$.Data` map in our file structure. [Read More](../documentation/structure/files/)
 
 {{< /expand >}}
 
