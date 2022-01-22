@@ -7,7 +7,7 @@ weight = 2
 
 {{< hint "info" >}}If you encounter any problems during the quickstart make sure to use the [debug options](..//documentation/structure/debug/). They help to understand what's going on and what might be the problem.{{< /hint >}}
 
-First we create a new helm chart which is going to contain the entire deployment structure for helmize. We can simply do that with the following comment (In this case I will call the new chart `reference`, chose the name you would like):
+First, we create a new helm chart that will contain the entire deployment structure for helmize. We can simply do that with the following comment (In this case I will call the new chart `reference`, chose the name you would like):
 
 ```Shell
 helm create reference && cd reference/
@@ -38,7 +38,7 @@ Update dependencies to download the specified version for helmize:
 helm dependency update
 ```
 
-Now we need to add a template which includes the entrypoint for helmize:
+Now we need to add a template that includes the entrypoint for helmize:
 
 
 ```Shell
@@ -282,7 +282,7 @@ spec:
 
 ## Conditions
 
-[Read more on conditions](../documentation/configuration/conditions/)
+[Read more on conditions](../../documentation/configuration/conditions/)
 
 For the quickstart we are going to add two conditions on top of the base condition called `environment` and `location`
 
@@ -306,7 +306,7 @@ conditions:
     default: "test"
     filter: [ "test", "prod" ]
     reverse_filter: true
-EOF    
+EOF
 ```
 
 Now we add two new structures for the environment `test`and `prod`
@@ -329,7 +329,7 @@ metadata:
   name: frontend-test
 spec:
   minReadySeconds: 10
-EOF        
+EOF
 ```
 
 Create a HPA resource which should only be deployed on test 
@@ -510,7 +510,7 @@ kind: Deployment
 metadata:
   name: frontend-prod
 spec:
-  minReadySeconds: 10
+  minReadySeconds: 20
 EOF
 ```
 
@@ -550,7 +550,7 @@ kind: Deployment
 metadata:
   name: frontend-prod
 spec:
-  minReadySeconds: 10
+  minReadySeconds: 20
   progressDeadlineSeconds: 60
   revisionHistoryLimit: 5
   selector:
@@ -647,7 +647,7 @@ conditions:
 
   - name: "location"
     key: "Values.location"
-EOF    
+EOF
 ```
 
 Now we add two new structures for the location `east` and `west`
@@ -669,7 +669,7 @@ kind: Deployment
 metadata:
   labels
     location: "east"
-EOF        
+EOF
 ```
 
 {{< hint info >}}
@@ -709,7 +709,7 @@ kind: Deployment
 metadata:
   labels:
     location: "east"
-EOF        
+EOF
 ```
 
 Now if we try the same template command again we get a result that looks much more like what we are looking for. As you can see we combined the two conditions `prod` and `east`. But we can do the exact same thing with every environment with every location, just by changing the values.
@@ -734,7 +734,7 @@ kind: Deployment
 metadata:
   labels:
     location: "west"
-EOF        
+EOF
 ```
 
 Now we can start combining two condiditions. So for now let's select `test` as environment and `west` as location
@@ -886,7 +886,7 @@ dropins:
         "custom.label": "data"
     tpls:
       - "*.tpl"
-EOF    
+EOF
 ```
 
 This Dropin makes use of the [Label Post Renderer]() and adds the `registry.tpl`
@@ -926,7 +926,7 @@ dropins:
         "custom.label": "data"
     tpls:
       - "registry.tpl"
-EOF    
+EOF
 ```
 
 In the `structure/base/podinfo/deploy.yaml` we change the image to default on the registry if it's set, others use `ghcr.io`:
