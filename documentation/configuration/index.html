@@ -91,8 +91,8 @@ Getting Started
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/getting-started/requirements/ class=gdoc-nav__entry>
-Requirements
+<a href=/getting-started/concept/ class=gdoc-nav__entry>
+Concept
 </a>
 </span>
 </label>
@@ -105,12 +105,6 @@ Requirements
 Quickstart
 </a>
 </span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>Limitations</span>
 </label>
 </li>
 </ul>
@@ -191,6 +185,16 @@ Structure
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
+<a href=/documentation/structure/debug/ class=gdoc-nav__entry>
+Debug
+</a>
+</span>
+</label>
+</li>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
 <a href=/documentation/structure/templating/ class=gdoc-nav__entry>
 Templating
 </a>
@@ -245,6 +249,16 @@ Extension
 </li>
 </ul>
 </li>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/examples/ class=gdoc-nav__entry>
+Examples
+</a>
+</span>
+</label>
+</li>
 </ul>
 </section>
 <section class=gdoc-nav--more>
@@ -272,6 +286,31 @@ File
 </h1>
 </div>
 <p>By default the configuration is located in a <code>helmize.yaml</code> file within your charts root folder. You will get errors if the configuration file is missing, has wrong formatting or types.</p>
+<div class=gdoc-page__anchorwrap>
+<h1 id=templating>
+Templating
+<a data-clipboard-text=http://helmize.dev/documentation/configuration/#templating class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Templating" href=#templating><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
+</a>
+</h1>
+</div>
+<p>The entire configuration file is templated. So you can also use sprig within the configuration file. You must make sure that after the templating the content resolves to valid YAML, otherwise the exection will fail.</p>
+<p>A simple example:</p>
+<pre tabindex=0><code>inventory_directory: &quot;structure/&quot;
+conditions:
+
+{{- if $.Values.exclude_base }}
+  - name: &quot;base&quot;
+    path: &quot;/base/&quot;
+    allow_root: true
+{{- end }}
+
+  - name: &quot;environment&quot;
+    key: {{ default &quot;Values.env&quot; $.Values.overwrite_env_key }}
+    path: &quot;env/&quot;
+    default: &quot;test&quot;
+</code></pre><p>When <code>exclude_base</code>is set to <code>false</code>, the base condition won&rsquo;t be used, since it&rsquo;s not rendered in the configuration file:</p>
+<pre tabindex=0><code>helm template . --set exclude_base=false
+</code></pre>
 </article>
 <div class="gdoc-page__footer flex flex-wrap justify-between">
 </div>

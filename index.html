@@ -4,7 +4,7 @@
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=color-scheme content="light dark">
-<meta name=description content="This project is in the early stages of development and still activiely maintained. You may encounter behavior that&rsquo;s not intended when making use of the project.  Helmize is a simple deployment library wrapped in a library helm chart. It&rsquo;s purpose is to simplify complex infrastructure deployments where you change deployed manifests based on given conditions. This project is thought for people that bootstrap complex infrastructure setup on kubernetes and want to simplify their file structure.">
+<meta name=description content="This project is in the early stages of development and still activiely maintained. You may encounter behavior that&rsquo;s not intended when making use of the project. If you find any bugs or have any questions feel free to open an issue (Click the Github Logo in the header)  Why     We have created this solution since there was nothing that would let us deploy complex structures based on values that change.">
 <title>
 Helmize
 </title>
@@ -93,8 +93,8 @@ Getting Started
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/getting-started/requirements/ class=gdoc-nav__entry>
-Requirements
+<a href=/getting-started/concept/ class=gdoc-nav__entry>
+Concept
 </a>
 </span>
 </label>
@@ -107,12 +107,6 @@ Requirements
 Quickstart
 </a>
 </span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>Limitations</span>
 </label>
 </li>
 </ul>
@@ -193,6 +187,16 @@ Structure
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
+<a href=/documentation/structure/debug/ class=gdoc-nav__entry>
+Debug
+</a>
+</span>
+</label>
+</li>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
 <a href=/documentation/structure/templating/ class=gdoc-nav__entry>
 Templating
 </a>
@@ -247,6 +251,16 @@ Extension
 </li>
 </ul>
 </li>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/examples/ class=gdoc-nav__entry>
+Examples
+</a>
+</span>
+</label>
+</li>
 </ul>
 </section>
 <section class=gdoc-nav--more>
@@ -266,17 +280,8 @@ hidden-mobile" itemprop=breadcrumb>
 <article class="gdoc-markdown gdoc-markdown__align--left">
 <h1></h1>
 <blockquote class="gdoc-hint info">
-This project is in the early stages of development and still activiely maintained. You may encounter behavior that&rsquo;s not intended when making use of the project.
+This project is in the early stages of development and still activiely maintained. You may encounter behavior that&rsquo;s not intended when making use of the project. If you find any bugs or have any questions feel free to open an issue (Click the Github Logo in the header)
 </blockquote>
-<p>Helmize is a simple deployment library wrapped in a library helm chart. It&rsquo;s purpose is to simplify complex infrastructure deployments where you change deployed manifests based on given conditions. This project is thought for people that bootstrap complex infrastructure setup on kubernetes and want to simplify their file structure.</p>
-<div class=gdoc-page__anchorwrap>
-<h1 id=concept>
-Concept
-<a data-clipboard-text=http://helmize.dev/#concept class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Concept" href=#concept><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
-</a>
-</h1>
-</div>
-<img src=./concept.png alt=drawing style=width:100%>
 <div class=gdoc-page__anchorwrap>
 <h1 id=why>
 Why
@@ -284,12 +289,25 @@ Why
 </a>
 </h1>
 </div>
-<p>I have created this solution since I did not really find a fiting solution, which would allow me to create
-My first attempt was using Kustomize, which turned out to be a complex folder structure which is from my point of view not easily maintainable.</p>
-<ul>
-<li><a class=gdoc-markdown__link href=https://github.com/fluxcd/kustomize-controller/issues/414>https://github.com/fluxcd/kustomize-controller/issues/414</a></li>
-</ul>
-<p>{{ partial &ldquo;sidebar.html&rdquo; . }}</p>
+<p>We have created this solution since there was nothing that would let us deploy complex structures based on values that change. We started of using <a class=gdoc-markdown__link href=https://kubectl.docs.kubernetes.io/installation/kustomize/>Kustomize</a> but as soon as you have factors like <code>environment</code>, <code>location</code>, <code>customer</code> etc. you end up with huge large folder structures. These structures make hard to integrate with any other system you may have in your CI/CD cycle and is hard to keep control of. <a class=gdoc-markdown__link href=https://github.com/telekom/das-schiff>Das Schiff</a> did a great job with an example bootstrap structure in combination with <a class=gdoc-markdown__link href=https://kubectl.docs.kubernetes.io/installation/kustomize/>Kustomize</a>. But Kustomize does not deliver enough flexibility for such complex deployments. Another approach would be using <a class=gdoc-markdown__link href=https://github.com/fidelity/kraan>kraan</a> which allows such control over layers.</p>
+<p>But the easiest solution to this is creating a helm chart yourself and place some yaml files in it and then based on values given to the chart render the yaml or not. That&rsquo;s where helmize comes into play.</p>
+<div class=gdoc-page__anchorwrap>
+<h1 id=how>
+How
+<a data-clipboard-text=http://helmize.dev/#how class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor How" href=#how><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
+</a>
+</h1>
+</div>
+<p>Helmize is just a simple chart library which simplifies creating complex infrastructure deployments within helm charts. Through the use of Helm you don&rsquo;t need any additional operator or anything. It greatly integrates in any tool chain since you can customize it to your needs. It is complementary since it&rsquo;s just advanced rendering in a helm chart, that means you can deploy any other crds or whatever you need (eg. kraan layers).</p>
+<p><a class=gdoc-markdown__link href=getting-started/concept/>Read More</a></p>
+<div class=gdoc-page__anchorwrap>
+<h1 id=who>
+Who
+<a data-clipboard-text=http://helmize.dev/#who class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Who" href=#who><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
+</a>
+</h1>
+</div>
+<p>This project is thought for people that bootstrap complex infrastructure setup on kubernetes and want the entire setup to be value driven. If you are looking for a simple solution for eg. a deployment for a single application this project might be too much overhead. If you have already experience with Helm it might be worth taking a look.</p>
 </article>
 <div class="gdoc-page__footer flex flex-wrap justify-between">
 </div>
