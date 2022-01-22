@@ -277,6 +277,24 @@ hidden-mobile" itemprop=breadcrumb>
 </div>
 <article class="gdoc-markdown gdoc-markdown__align--left">
 <h1>Getting Started</h1>
+<div class="gdoc-toc gdoc-toc__level--6">
+<ul>
+<li>
+<span>
+<a href=/getting-started/concept/ class=gdoc-toc__entry>
+Concept
+</a>
+</span>
+</li>
+<li>
+<span>
+<a href=/getting-started/quickstart/ class=gdoc-toc__entry>
+Quickstart
+</a>
+</span>
+</li>
+</ul>
+</div>
 <div class=gdoc-page__anchorwrap>
 <h1 id=requirements>
 Requirements
@@ -284,8 +302,7 @@ Requirements
 </a>
 </h1>
 </div>
-<p>This documentation won&rsquo;t explain the core concepts of <a class=gdoc-markdown__link href=https://helm.sh/>Helm</a> and <a class=gdoc-markdown__link href=http://masterminds.github.io/sprig/>Sprig templating</a>, it is expected that you know these technologies.</p>
-<p>The only requirement for helmize is <a class=gdoc-markdown__link href=https://helm.sh/docs/intro/install/>helm</a>. The library was tested with the following helm version:</p>
+<p>This documentation won&rsquo;t explain the core concepts of <a class=gdoc-markdown__link href=https://helm.sh/>Helm</a> and <a class=gdoc-markdown__link href=http://masterminds.github.io/sprig/>Sprig templating</a>, it is expected that you know these technologies.The only requirement for helmize is <a class=gdoc-markdown__link href=https://helm.sh/docs/intro/install/>helm</a>. The library was tested with the following helm version:</p>
 <ul>
 <li>v3.7.2</li>
 </ul>
@@ -296,6 +313,7 @@ Limitations
 </a>
 </h1>
 </div>
+<p>Merge of files is done with the <a class=gdoc-markdown__link href=http://masterminds.github.io/sprig/dicts.html>mergeOverwrite</a> function that comes with Sprig. You can&rsquo;t combine any type of slice (lists). If you have two files with lists in a map, the prededing one will always overwrite the list contents. Therefor you must work around this with value templating when you want to combine values of lists.</p>
 </article>
 <div class="gdoc-page__footer flex flex-wrap justify-between">
 </div>
