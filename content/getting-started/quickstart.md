@@ -5,6 +5,8 @@ description = "Quickstart"
 weight = 2 
 +++
 
+{{< hint "info" >}}If you encounter any problems during the quickstart make sure to use the [debug options](..//documentation/structure/debug/). They help to understand what's going on and what might be the problem.{{< /hint >}}
+
 First we create a new helm chart which is going to contain the entire deployment structure for helmize. We can simply do that with the following comment (In this case I will call the new chart `reference`, chose the name you would like):
 
 ```Shell
@@ -927,6 +929,11 @@ dropins:
 EOF    
 ```
 
+In the 
+
+we change the image to default on the registry if it's set
+
+{{ default "ghcr.io" $.Data.registry }}/stefanprodan/podinfo:6.0.3
 
 {{< /expand >}}
 
