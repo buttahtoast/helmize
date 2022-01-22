@@ -3,20 +3,20 @@
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=color-scheme content="light dark">
-<meta name=description content="Configuration">
+<meta name=description content="Templating">
 <title>
-Configuration |Helmize
+Templating |Helmize
 </title>
 <link rel=icon type=image/svg+xml href=/favicon/favicon.svg>
 <link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png>
 <link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png>
-<meta property="og:title" content="Configuration">
-<meta property="og:description" content="Configuration">
+<meta property="og:title" content="Templating">
+<meta property="og:description" content="Templating">
 <meta property="og:type" content="website">
-<meta property="og:url" content="http://helmize.dev/documentation/configuration/">
+<meta property="og:url" content="http://helmize.dev/documentation/structure/templates/">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Configuration">
-<meta name=twitter:description content="Configuration">
+<meta name=twitter:title content="Templating">
+<meta name=twitter:description content="Templating">
 <script src=/js/main.bundle.min.js></script>
 <link rel=preload as=font href=/fonts/Metropolis.woff2 type=font/woff2 crossorigin=anonymous>
 <link rel=preload as=font href=/fonts/LiberationSans.woff2 type=font/woff2 crossorigin=anonymous>
@@ -123,7 +123,7 @@ Documentation
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/documentation/configuration/ class="gdoc-nav__entry is-active">
+<a href=/documentation/configuration/ class=gdoc-nav__entry>
 Configuration
 </a>
 </span>
@@ -205,7 +205,7 @@ Debug
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/documentation/structure/templates/ class=gdoc-nav__entry>
+<a href=/documentation/structure/templates/ class="gdoc-nav__entry is-active">
 Templating
 </a>
 </span>
@@ -315,46 +315,41 @@ justify-between
 hidden-mobile" itemprop=breadcrumb>
 <div><svg class="icon gdoc_path hidden-mobile"><use xlink:href="#gdoc_path"/></svg>
 <ol class=breadcrumb itemscope itemtype=https://schema.org/BreadcrumbList>
-<li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemscope itemtype=https://schema.org/WebPage itemprop=item itemid=/ href=/><span itemprop=name></span></a><meta itemprop=position content="1"></li><li> / </li><li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemscope itemtype=https://schema.org/WebPage itemprop=item itemid=/documentation/ href=/documentation/><span itemprop=name>Documentation</span></a><meta itemprop=position content="2"></li><li> / </li><li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><span itemprop=name>Configuration</span><meta itemprop=position content="3"></li>
+<li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemscope itemtype=https://schema.org/WebPage itemprop=item itemid=/ href=/><span itemprop=name></span></a><meta itemprop=position content="1"></li><li> / </li><li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemscope itemtype=https://schema.org/WebPage itemprop=item itemid=/documentation/ href=/documentation/><span itemprop=name>Documentation</span></a><meta itemprop=position content="2"></li><li> / </li><li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemscope itemtype=https://schema.org/WebPage itemprop=item itemid=/documentation/structure/ href=/documentation/structure/><span itemprop=name>Structure</span></a><meta itemprop=position content="3"></li><li> / </li><li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><span itemprop=name>Templating</span><meta itemprop=position content="4"></li>
 </ol>
 </div>
 </div>
 <article class="gdoc-markdown gdoc-markdown__align--left">
-<h1>Configuration</h1>
-<p>The configuration is the core component which defines how your deployment structure will be organized</p>
+<h1>Templating</h1>
 <div class=gdoc-page__anchorwrap>
-<h1 id=file>
-File
-<a data-clipboard-text=http://helmize.dev/documentation/configuration/#file class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor File" href=#file><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
+<h1 id=context>
+Context
+<a data-clipboard-text=http://helmize.dev/documentation/structure/templates/#context class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Context" href=#context><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
 </a>
 </h1>
 </div>
-<p>By default the configuration is located in a <code>helmize.yaml</code> file within your charts root folder. You will get errors if the configuration file is missing, has wrong formatting or types.</p>
+<p>It&rsquo;s important to know which context is available for templating at which stage.</p>
 <div class=gdoc-page__anchorwrap>
-<h1 id=templating>
-Templating
-<a data-clipboard-text=http://helmize.dev/documentation/configuration/#templating class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Templating" href=#templating><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
+<h2 id=global-context>
+Global Context
+<a data-clipboard-text=http://helmize.dev/documentation/structure/templates/#global-context class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Global Context" href=#global-context><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
 </a>
-</h1>
+</h2>
 </div>
-<p>The entire configuration file is templated. So you can also use sprig within the configuration file. You must make sure that after the templating the content resolves to valid YAML, otherwise the exection will fail.</p>
-<p>A simple example:</p>
-<pre tabindex=0><code>inventory_directory: &quot;structure/&quot;
-conditions:
-
-{{- if $.Values.exclude_base }}
-  - name: &quot;base&quot;
-    path: &quot;/base/&quot;
-    allow_root: true
-{{- end }}
-
-  - name: &quot;environment&quot;
-    key: {{ default &quot;Values.env&quot; $.Values.overwrite_env_key }}
-    path: &quot;env/&quot;
-    default: &quot;test&quot;
-</code></pre><p>When <code>exclude_base</code>is set to <code>false</code>, the base condition won&rsquo;t be used, since it&rsquo;s not rendered in the configuration file:</p>
-<pre tabindex=0><code>helm template . --set exclude_base=false
-</code></pre>
+<p>As Global Context we refer to the value context delievered by helm. The below contexts may refer to thix context:</p>
+<div class=gdoc-page__anchorwrap>
+<h2 id=dropin-context>
+Dropin Context
+<a data-clipboard-text=http://helmize.dev/documentation/structure/templates/#dropin-context class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Dropin Context" href=#dropin-context><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
+</a>
+</h2>
+</div>
+<div class=gdoc-page__anchorwrap>
+<h2 id=heading>
+<a data-clipboard-text=http://helmize.dev/documentation/structure/templates/#heading class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor " href=#heading><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
+</a>
+</h2>
+</div>
 </article>
 <div class="gdoc-page__footer flex flex-wrap justify-between">
 </div>
