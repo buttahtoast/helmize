@@ -23,3 +23,7 @@ dropins:
         "custom.label": "data"
     tpls:
       - "registry.tpl"
+
+  - patterns: [ "service.yaml" ]
+    data:
+      disabled: false

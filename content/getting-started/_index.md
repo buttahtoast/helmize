@@ -3,6 +3,7 @@
 title = "Getting Started"
 description = "Getting Started"
 weight = 1
+geekdocCollapseSection = false
 +++
 
 {{< toc-tree >}}
