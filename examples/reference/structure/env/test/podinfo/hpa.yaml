@@ -1,5 +1,6 @@
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
+helmize_identifier: "hpa"
 metadata:
   name: frontend
 spec:

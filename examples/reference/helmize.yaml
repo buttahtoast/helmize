@@ -1,5 +1,7 @@
 inventory_directory: "structure/"
 templates_directory: "tpls/"
+custom_identifier_template: "reference.identifier.template"
+
 conditions:
 
   - name: "base"
@@ -15,6 +17,7 @@ conditions:
 
   - name: "location"
     key: "Values.location"
+    default: "east"
 
 dropins: 
   - patterns: [ ".*" ]
