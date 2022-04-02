@@ -10,7 +10,8 @@ Type slice
 Read more about dropinsinventory_directory Optional
 Type string
 Define a directory where the entire structure for helmize is located below. This path will be appended for all the condition&amp;rsquo;s paths.
-templates_directory Optional</description></item><item><title>Labels</title><link>http://helmize.dev/documentation/post-renderers/built-in/labels/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://helmize.dev/documentation/post-renderers/built-in/labels/</guid><description>The Labels Post-Renderer allows to add Labels to all the files (if a metadata field is present, if not the labels won&amp;rsquo;t be added).
+templates_directory Optional</description></item><item><title>Identifiers</title><link>http://helmize.dev/documentation/structure/identifier/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://helmize.dev/documentation/structure/identifier/</guid><description>Since Helmize supports multi YAML files each element within a file
+Regardless if you are using the default identifier template or your own. If the template returns an empty ID the file name where the resource originate from is used. Should two resources from the same file use the file&amp;rsquo;s id it&amp;rsquo;s considered an error. Default Template Currently if a element has the field kind and metadata.</description></item><item><title>Labels</title><link>http://helmize.dev/documentation/post-renderers/built-in/labels/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://helmize.dev/documentation/post-renderers/built-in/labels/</guid><description>The Labels Post-Renderer allows to add Labels to all the files (if a metadata field is present, if not the labels won&amp;rsquo;t be added).
 Labels can be set via `$.Values.
 Example</description></item><item><title>Secrets</title><link>http://helmize.dev/guides/use/secrets/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://helmize.dev/guides/use/secrets/</guid><description>For secrets you should use
 Other Solutions There are different Solutions which help you to organize your secrets in a safe way:
@@ -22,7 +23,7 @@ Type string
 Used across helmize to reference to condition.
 key Optional
 Type string
-Path to the value in the user delivered values which is used as key to lookup.</description></item><item><title>Extend</title><link>http://helmize.dev/documentation/post-renderers/extend/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://helmize.dev/documentation/post-renderers/extend/</guid><description>You can add your own post renderers within your chart.
+Path to the value in the user delivered values which is used as key to lookup.</description></item><item><title>Data Sharing</title><link>http://helmize.dev/documentation/structure/data/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://helmize.dev/documentation/structure/data/</guid><description/></item><item><title>Extend</title><link>http://helmize.dev/documentation/post-renderers/extend/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>http://helmize.dev/documentation/post-renderers/extend/</guid><description>You can add your own post renderers within your chart.
 Let&amp;rsquo;s create a new renderer in the reference chart
 Create Let&amp;rsquo;s create a new Post-Renderer which let&amp;rsquo;s us enable file contents via dropins.
 we must create our Post-Renderer in the templatesdirectory of our chart.
