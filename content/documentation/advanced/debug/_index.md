@@ -1,7 +1,7 @@
 +++
 title = "Debug"
 description = "Debug"
-weight = 2
+weight = 4
 +++
 
 With large file structures it's often difficult to understand, which files were merged or why content is missing.
