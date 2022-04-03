@@ -2,7 +2,9 @@
 ---
 
  
-{{< hint "info" >}}This project is in the early stages of development and still activiely maintained. You may encounter behavior that's not intended when making use of the project. If you find any bugs or have any questions feel free to open an issue (Click the Github Logo in the header){{< /hint >}}
+{{< hint "info" >}}This project is in the early stages of development and still activiely maintained. You may encounter behavior that's not intended when making use of the project. If you find any bugs or have any questions feel free to open an issue.
+
+Currently I dedicate my free time to it. I welcome any contributions and any feedback.{{< /hint >}}
 
 # Why
 

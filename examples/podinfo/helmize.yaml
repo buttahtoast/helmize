@@ -1,0 +1,30 @@
+inventory_directory: "structure/"
+templates_directory: "tpls/"
+custom_identifier_template: "reference.identifier.template"
+post_renderers:
+  - "reference.post-renders.disabler"
+  - "inject_defaults"
+conditions:
+  - name: "environment"
+    key: "Values.env"
+    path: "env/"
+    default: "test"
+    filter: [ "test", "prod" ]
+    reverse_filter: true
+  - name: "location"
+    key: "Values.location"
+    default: "east"
+  - name: "base"
+    path: "/resources/"
+    allow_root: true
+dropins: 
+  - patterns: [ ".*" ]
+    data:
+      labels:
+        "custom.label": "data"
+    tpls:
+      - "registry.tpl"
+
+  - patterns: [ "service.yaml" ]
+    data:
+      disabled: false

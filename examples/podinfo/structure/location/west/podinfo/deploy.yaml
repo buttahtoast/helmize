@@ -1,0 +1,9 @@
+apiVersion: apps/v1
+kind: Deployment
+helmize_identifier: "deploy"
+metadata:
+  labels:
+    location: "west"
+Data:
+  disabled: true    
+

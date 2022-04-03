@@ -31,6 +31,10 @@ file_excludes: [ "kustomization" ]
 # http://helmize.dev/documentation/configuration/general/#merge_strategy
 merge_strategy: "path"
 
+## Custom Identifier Template
+# http://helmize.dev/documentation/configuration/general/#custom_identifier_template
+custom_identifier_template: "custom.identifier"
+
 ## Conditions
 # http://helmize.dev/documentation/configuration/conditions/
 conditions:
