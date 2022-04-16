@@ -1,6 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
-helmize_identifier: "deploy"
+metadata:
+  name: frontend
 spec:
   minReadySeconds: 10
 ---

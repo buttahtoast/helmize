@@ -82,3 +82,22 @@ no_match
 multiple_filename_id
 {{- end -}}
 
+
+{{- define "inventory.render.defaults.file_cfg.expand" -}}
+expand
+{{- end -}}
+
+
+{{- define "inventory.render.defaults.file_cfg.subpath" -}}
+subpath
+{{- end -}}
+
+
+{{/* Pattern (File Configuration Type, Local) <Template> 
+
+   IDs are used as Patterns to match against other ids. If Enabled the file won't be added if nothing matches.
+
+*/}}
+{{- define "inventory.render.defaults.file_cfg.pattern" -}}
+pattern
+{{- end -}}

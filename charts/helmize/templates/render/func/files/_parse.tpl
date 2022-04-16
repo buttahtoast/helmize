@@ -61,7 +61,7 @@
       {{- range $partial_files -}}
 
         {{/* File Struct */}}
-        {{- $partial_file := dict "id" list "content" "" "debug" list "errors" list -}}
+        {{- $partial_file := dict "id" list "content" "" "subpath" (regexReplaceAll $path $file "${1}" | trimPrefix "/" | dir) "debug" list "errors" list -}}
 
         {{/* Template Content */}}
         {{- $template_content_raw := tpl . $context -}}
@@ -71,7 +71,10 @@
         {{- if not (include "lib.utils.errors.unmarshalingError" $templated_content) -}}
 
           {{/* Resolve File Configuration within file, if not set get empty dict */}}
-          {{- $file_cfg := default dict (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $templated_content "path" (include "inventory.render.defaults.file_cfg.key" $)))) -}}
+          {{- $file_cfg := default dict (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $templated_content "path" (include "inventory.render.defaults.file_cfg.key" $)))).res -}}
+          {{- if $file_cfg -}}
+            {{- $_ := unset $templated_content (include "inventory.render.defaults.file_cfg.key" $) -}}
+          {{- end -}}
 
           {{/* Compares against Type */}}
           {{- $file_cfg_type := fromYaml (include "lib.utils.types.validate" (dict "type" "inventory.render.types.file_configuration"  "data" $file_cfg  "ctx" $.ctx)) -}}

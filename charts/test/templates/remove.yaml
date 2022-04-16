@@ -1,0 +1,6 @@
+t: |
+  {{- $data := $.Values.test -}}
+  {{- range $t, $p := $data -}}
+  {{- $_ := set $p "ids" "none" -}}
+  {{- end -}}
+  {{ toYaml $data | nindent 10}}
