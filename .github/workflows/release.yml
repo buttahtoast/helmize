@@ -2,7 +2,7 @@ name: Helm Chart Release
 on:
   push:
     branches:
-      - master 
+      - main 
 jobs:
   release:
     runs-on: ubuntu-latest
