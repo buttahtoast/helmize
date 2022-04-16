@@ -1,5 +1,0 @@
-t: | 
-  {{ include "inventory.entrypoint.func.debug" $ }}
-  {{- if (include "inventory.entrypoint.func.debug" $) -}}
-    {{ include  "inventory.config.types.config" $ }}
-  {{- end -}}

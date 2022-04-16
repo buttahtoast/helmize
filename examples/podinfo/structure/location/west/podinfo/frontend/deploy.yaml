@@ -2,7 +2,9 @@ apiVersion: apps/v1
 kind: Deployment
 helmize_identifier: "deploy"
 metadata:
+  name: frontend
   labels:
-    location: "east"
+    location: "west"
 Data:
-  disabled: true
+  disabled: true    
+

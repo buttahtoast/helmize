@@ -2,5 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: frontend
-spec:
-  minReadySeconds: 10
+  labels:
+    location: "east"
+Data:
+  disabled: true

@@ -15,4 +15,13 @@
 {{ include "inventory.render.defaults.file_cfg.multi_filename" $ }}:
   types: [ "bool" ]
   default: false
+{{ include "inventory.render.defaults.file_cfg.subpath" $ }}:
+  types: [ "bool" ]
+  default: true
+{{ include "inventory.render.defaults.file_cfg.expand" $ }}:
+  types: [ "bool" ]
+  default: false
+{{ include "inventory.render.defaults.file_cfg.pattern" $ }}:
+  types: [ "bool" ]
+  default: false
 {{- end -}}
