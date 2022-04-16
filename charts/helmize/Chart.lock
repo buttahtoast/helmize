@@ -1,6 +1,0 @@
-dependencies:
-- name: library
-  repository: file://../library
-  version: 2.2.2
-digest: sha256:a3e28f76d69ffdfc179caa27bb9e0b20e1a2e0591bc8cf060beda42349bc8ab6
-generated: "2022-04-15T14:43:31.393976+02:00"
