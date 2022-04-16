@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main  # Set a branch to deploy
-  pull_request:
-
 jobs:
   deploy:
     runs-on: ubuntu-20.04
@@ -29,7 +27,7 @@ jobs:
       # Add Custom Domain
       # https://github.com/tschaub/gh-pages/issues/213
       - name: Domain
-        run: echo "helmize.dev" > ./public/hugo/CNAME
+        run: echo "helmize.dev" > ./hugo/public/CNAME
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v3
