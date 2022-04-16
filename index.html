@@ -4,7 +4,9 @@
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=color-scheme content="light dark">
-<meta name=description content="This project is in the early stages of development and still activiely maintained. You may encounter behavior that&rsquo;s not intended when making use of the project. If you find any bugs or have any questions feel free to open an issue (Click the Github Logo in the header)  Why     We have created this solution since there was nothing that would let us deploy complex structures based on values that change.">
+<meta name=description content="This project is in the early stages of development and still activiely maintained. You may encounter behavior that&rsquo;s not intended when making use of the project. If you find any bugs or have any questions feel free to open an issue.
+Currently I dedicate my free time to it. I welcome any contributions and any feedback.
+ Why     We have created this solution since there was nothing that would let us deploy complex structures based on values that change.">
 <title>
 Helmize
 </title>
@@ -112,13 +114,13 @@ Quickstart
 </ul>
 </li>
 <li>
-<input type=checkbox class=gdoc-nav__toggle id=navtree-18577d40>
-<label for=navtree-18577d40 class="flex justify-between">
+<input type=checkbox class=hidden>
+<label>
 <span class=flex>
 <a href=/documentation/ class=gdoc-nav__entry>
 Documentation
 </a>
-</span><svg class="icon gdoc_keyborad_arrow_left"><use xlink:href="#gdoc_keyborad_arrow_left"/></svg><svg class="icon gdoc_keyborad_arrow_down"><use xlink:href="#gdoc_keyborad_arrow_down"/></svg>
+</span>
 </label>
 <ul class=gdoc-nav__list>
 <li>
@@ -136,7 +138,7 @@ Configuration
 <label>
 <span class=flex>
 <a href=/documentation/configuration/general/ class=gdoc-nav__entry>
-General
+Config
 </a>
 </span>
 </label>
@@ -174,71 +176,13 @@ Reference
 </ul>
 </li>
 <li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/structure/ class=gdoc-nav__entry>
-Structure
-</a>
-</span>
-</label>
-<ul class=gdoc-nav__list>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/structure/files/ class=gdoc-nav__entry>
-Files
-</a>
-</span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/structure/identifier/ class=gdoc-nav__entry>
-Identifiers
-</a>
-</span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>Data Sharing</span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/structure/debug/ class=gdoc-nav__entry>
-Debug
-</a>
-</span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/structure/templates/ class=gdoc-nav__entry>
-Templating
-</a>
-</span>
-</label>
-</li>
-</ul>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
+<input type=checkbox class=gdoc-nav__toggle id=navtree-cd29dab4>
+<label for=navtree-cd29dab4 class="flex justify-between">
 <span class=flex>
 <a href=/documentation/post-renderers/ class=gdoc-nav__entry>
 Post Renderers
 </a>
-</span>
+</span><svg class="icon gdoc_keyborad_arrow_left"><use xlink:href="#gdoc_keyborad_arrow_left"/></svg><svg class="icon gdoc_keyborad_arrow_down"><use xlink:href="#gdoc_keyborad_arrow_down"/></svg>
 </label>
 <ul class=gdoc-nav__list>
 <li>
@@ -267,8 +211,56 @@ Labels
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/documentation/post-renderers/extend/ class=gdoc-nav__entry>
-Extend
+<a href=/documentation/post-renderers/customize/ class=gdoc-nav__entry>
+Customize
+</a>
+</span>
+</label>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/documentation/advanced/ class=gdoc-nav__entry>
+Advanced
+</a>
+</span>
+</label>
+<ul class=gdoc-nav__list>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/documentation/advanced/identifiers/ class=gdoc-nav__entry>
+Identifiers
+</a>
+</span>
+</label>
+</li>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>Data</span>
+</label>
+</li>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/documentation/advanced/templates/ class=gdoc-nav__entry>
+Templating
+</a>
+</span>
+</label>
+</li>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/documentation/advanced/debug/ class=gdoc-nav__entry>
+Debug
 </a>
 </span>
 </label>
@@ -329,16 +321,6 @@ Use with
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/guides/use/fluxcd/ class=gdoc-nav__entry>
-Fluxcd
-</a>
-</span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
 <a href=/guides/use/secrets/ class=gdoc-nav__entry>
 Secrets
 </a>
@@ -359,16 +341,6 @@ Kustomization
 </li>
 </ul>
 </li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/examples/ class=gdoc-nav__entry>
-Examples
-</a>
-</span>
-</label>
-</li>
 </ul>
 </section>
 <section class=gdoc-nav--more>
@@ -388,7 +360,8 @@ hidden-mobile" itemprop=breadcrumb>
 <article class="gdoc-markdown gdoc-markdown__align--left">
 <h1></h1>
 <blockquote class="gdoc-hint info">
-This project is in the early stages of development and still activiely maintained. You may encounter behavior that&rsquo;s not intended when making use of the project. If you find any bugs or have any questions feel free to open an issue (Click the Github Logo in the header)
+<p>This project is in the early stages of development and still activiely maintained. You may encounter behavior that&rsquo;s not intended when making use of the project. If you find any bugs or have any questions feel free to open an issue.</p>
+<p>Currently I dedicate my free time to it. I welcome any contributions and any feedback.</p>
 </blockquote>
 <div class=gdoc-page__anchorwrap>
 <h1 id=why>

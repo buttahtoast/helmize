@@ -13,7 +13,7 @@ Templating |Helmize
 <meta property="og:title" content="Templating">
 <meta property="og:description" content="Templating">
 <meta property="og:type" content="website">
-<meta property="og:url" content="http://helmize.dev/documentation/structure/templates/">
+<meta property="og:url" content="http://helmize.dev/documentation/advanced/templates/">
 <meta name=twitter:card content="summary">
 <meta name=twitter:title content="Templating">
 <meta name=twitter:description content="Templating">
@@ -110,13 +110,13 @@ Quickstart
 </ul>
 </li>
 <li>
-<input type=checkbox class=gdoc-nav__toggle id=navtree-18577d40 checked>
-<label for=navtree-18577d40 class="flex justify-between">
+<input type=checkbox class=hidden>
+<label>
 <span class=flex>
 <a href=/documentation/ class=gdoc-nav__entry>
 Documentation
 </a>
-</span><svg class="icon gdoc_keyborad_arrow_left"><use xlink:href="#gdoc_keyborad_arrow_left"/></svg><svg class="icon gdoc_keyborad_arrow_down"><use xlink:href="#gdoc_keyborad_arrow_down"/></svg>
+</span>
 </label>
 <ul class=gdoc-nav__list>
 <li>
@@ -134,7 +134,7 @@ Configuration
 <label>
 <span class=flex>
 <a href=/documentation/configuration/general/ class=gdoc-nav__entry>
-General
+Config
 </a>
 </span>
 </label>
@@ -172,71 +172,13 @@ Reference
 </ul>
 </li>
 <li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/structure/ class=gdoc-nav__entry>
-Structure
-</a>
-</span>
-</label>
-<ul class=gdoc-nav__list>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/structure/files/ class=gdoc-nav__entry>
-Files
-</a>
-</span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/structure/identifier/ class=gdoc-nav__entry>
-Identifiers
-</a>
-</span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>Data Sharing</span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/structure/debug/ class=gdoc-nav__entry>
-Debug
-</a>
-</span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/structure/templates/ class="gdoc-nav__entry is-active">
-Templating
-</a>
-</span>
-</label>
-</li>
-</ul>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
+<input type=checkbox class=gdoc-nav__toggle id=navtree-cd29dab4>
+<label for=navtree-cd29dab4 class="flex justify-between">
 <span class=flex>
 <a href=/documentation/post-renderers/ class=gdoc-nav__entry>
 Post Renderers
 </a>
-</span>
+</span><svg class="icon gdoc_keyborad_arrow_left"><use xlink:href="#gdoc_keyborad_arrow_left"/></svg><svg class="icon gdoc_keyborad_arrow_down"><use xlink:href="#gdoc_keyborad_arrow_down"/></svg>
 </label>
 <ul class=gdoc-nav__list>
 <li>
@@ -265,8 +207,56 @@ Labels
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/documentation/post-renderers/extend/ class=gdoc-nav__entry>
-Extend
+<a href=/documentation/post-renderers/customize/ class=gdoc-nav__entry>
+Customize
+</a>
+</span>
+</label>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/documentation/advanced/ class=gdoc-nav__entry>
+Advanced
+</a>
+</span>
+</label>
+<ul class=gdoc-nav__list>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/documentation/advanced/identifiers/ class=gdoc-nav__entry>
+Identifiers
+</a>
+</span>
+</label>
+</li>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>Data</span>
+</label>
+</li>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/documentation/advanced/templates/ class="gdoc-nav__entry is-active">
+Templating
+</a>
+</span>
+</label>
+</li>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/documentation/advanced/debug/ class=gdoc-nav__entry>
+Debug
 </a>
 </span>
 </label>
@@ -327,16 +317,6 @@ Use with
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/guides/use/fluxcd/ class=gdoc-nav__entry>
-Fluxcd
-</a>
-</span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
 <a href=/guides/use/secrets/ class=gdoc-nav__entry>
 Secrets
 </a>
@@ -357,16 +337,6 @@ Kustomization
 </li>
 </ul>
 </li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/examples/ class=gdoc-nav__entry>
-Examples
-</a>
-</span>
-</label>
-</li>
 </ul>
 </section>
 <section class=gdoc-nav--more>
@@ -379,7 +349,7 @@ justify-between
 hidden-mobile" itemprop=breadcrumb>
 <div><svg class="icon gdoc_path hidden-mobile"><use xlink:href="#gdoc_path"/></svg>
 <ol class=breadcrumb itemscope itemtype=https://schema.org/BreadcrumbList>
-<li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemscope itemtype=https://schema.org/WebPage itemprop=item itemid=/ href=/><span itemprop=name></span></a><meta itemprop=position content="1"></li><li> / </li><li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemscope itemtype=https://schema.org/WebPage itemprop=item itemid=/documentation/ href=/documentation/><span itemprop=name>Documentation</span></a><meta itemprop=position content="2"></li><li> / </li><li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemscope itemtype=https://schema.org/WebPage itemprop=item itemid=/documentation/structure/ href=/documentation/structure/><span itemprop=name>Structure</span></a><meta itemprop=position content="3"></li><li> / </li><li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><span itemprop=name>Templating</span><meta itemprop=position content="4"></li>
+<li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemscope itemtype=https://schema.org/WebPage itemprop=item itemid=/ href=/><span itemprop=name></span></a><meta itemprop=position content="1"></li><li> / </li><li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemscope itemtype=https://schema.org/WebPage itemprop=item itemid=/documentation/ href=/documentation/><span itemprop=name>Documentation</span></a><meta itemprop=position content="2"></li><li> / </li><li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemscope itemtype=https://schema.org/WebPage itemprop=item itemid=/documentation/advanced/ href=/documentation/advanced/><span itemprop=name>Advanced</span></a><meta itemprop=position content="3"></li><li> / </li><li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><span itemprop=name>Templating</span><meta itemprop=position content="4"></li>
 </ol>
 </div>
 </div>
@@ -388,7 +358,7 @@ hidden-mobile" itemprop=breadcrumb>
 <div class=gdoc-page__anchorwrap>
 <h1 id=context>
 Context
-<a data-clipboard-text=http://helmize.dev/documentation/structure/templates/#context class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Context" href=#context><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
+<a data-clipboard-text=http://helmize.dev/documentation/advanced/templates/#context class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Context" href=#context><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
 </a>
 </h1>
 </div>
@@ -396,7 +366,7 @@ Context
 <div class=gdoc-page__anchorwrap>
 <h2 id=global-context>
 Global Context
-<a data-clipboard-text=http://helmize.dev/documentation/structure/templates/#global-context class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Global Context" href=#global-context><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
+<a data-clipboard-text=http://helmize.dev/documentation/advanced/templates/#global-context class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Global Context" href=#global-context><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
 </a>
 </h2>
 </div>
@@ -404,13 +374,13 @@ Global Context
 <div class=gdoc-page__anchorwrap>
 <h2 id=dropin-context>
 Dropin Context
-<a data-clipboard-text=http://helmize.dev/documentation/structure/templates/#dropin-context class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Dropin Context" href=#dropin-context><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
+<a data-clipboard-text=http://helmize.dev/documentation/advanced/templates/#dropin-context class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Dropin Context" href=#dropin-context><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
 </a>
 </h2>
 </div>
 <div class=gdoc-page__anchorwrap>
 <h2 id=heading>
-<a data-clipboard-text=http://helmize.dev/documentation/structure/templates/#heading class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor " href=#heading><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
+<a data-clipboard-text=http://helmize.dev/documentation/advanced/templates/#heading class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor " href=#heading><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
 </a>
 </h2>
 </div>
