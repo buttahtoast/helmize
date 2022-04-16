@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+helmize_identifier: "deploy"
+spec:
+  minReadySeconds: 10
+---
+apiVersion: v1
+kind: Service
+helmize_identifier: "service"
+metadata:
+  name: frontend
+spec:
+  type: Custom
