@@ -1,6 +1,6 @@
 inventory_directory: "structure/"
 templates_directory: "tpls/"
-custom_identifier_template: "reference.identifier.template"
+#custom_identifier_template: "reference.identifier.template"
 post_renderers:
   - "reference.post-renders.disabler"
   - "inject_defaults"

@@ -1,5 +1,8 @@
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
+cfg: 
+  match: [ "sad" ]
+
 metadata:
   name: frontend
 spec:
