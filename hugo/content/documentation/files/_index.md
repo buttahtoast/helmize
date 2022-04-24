@@ -1,7 +1,7 @@
 +++
 title = "Files"
 description = "File Configurations"
-weight = 3
+weight = 2
 +++
 
 {{< toc-tree >}}

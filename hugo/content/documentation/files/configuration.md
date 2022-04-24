@@ -1,7 +1,7 @@
 +++
 title = "Config"
 description = "Configuration"
-weight = 3
+weight = 1
 +++
 
 Each file can be configured with different values to influence to behavior of helmize

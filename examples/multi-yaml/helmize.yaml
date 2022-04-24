@@ -1,5 +1,4 @@
 inventory_directory: "structure/"
 conditions:
   - name: "resources"
-    path: "base"
     allow_root: true
