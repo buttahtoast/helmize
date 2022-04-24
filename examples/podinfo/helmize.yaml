@@ -17,14 +17,6 @@ conditions:
   - name: "base"
     path: "/resources/"
     allow_root: true
-dropins: 
-  - patterns: [ ".*" ]
-    data:
-      labels:
-        "custom.label": "data"
-    tpls:
-      - "registry.tpl"
-
-  - patterns: [ "service.yaml" ]
-    data:
-      disabled: false
+  - name: "patches"
+    path: "/patches/"
+    allow_root: true

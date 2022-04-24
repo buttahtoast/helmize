@@ -1,0 +1,12 @@
+{{- if $.Values.public_repos -}}
+  {{- range $repo_name, $repo_url := $.Values.public_repos }}
+---  
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: HelmRepository
+metadata:
+  name: {{ $repo_name }}
+spec:
+  url: {{ $repo_url }}
+  interval: {{ default "5m0s" $.Values.repo.interval }}
+  {{- end }}
+{{- end -}}

@@ -1,7 +1,3 @@
-labels:
-  test: label
-
-
 ## Multi YAML Example
 repo:
   interval: "1m"
