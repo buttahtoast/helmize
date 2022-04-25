@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Pod
+cfg:
+  subpath: false
+  pattern: true
+metadata:
+  labels:
+    subpath: "not_regarded"

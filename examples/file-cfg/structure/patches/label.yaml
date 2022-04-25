@@ -1,0 +1,8 @@
+id:
+  - ".*"
+cfg:
+  subpath: false
+  pattern: true
+metadata:
+  labels:
+    shared: "labels"
