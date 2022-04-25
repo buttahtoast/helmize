@@ -1,0 +1,17 @@
+id: [ "deploy" ]
+cfg:
+  fork: true
+  subpath: false
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment-prod
+  labels:
+    environment: prod
+spec:
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        environment: prod
+
