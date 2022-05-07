@@ -2,12 +2,12 @@
 ##
 remote: origin
 chart-dirs:
-  - charts/
-  - examples/
+  - charts
+  - examples
 chart-repos:
   - buttahtoast=https://buttahtoast.github.io/helm-charts/
 validate-chart-schema: true
 validate-maintainers: true
-validate-yaml: false
-#excluded-charts:
-#  - "helmize"
+validate-yaml: true
+excluded-charts:
+  - "helmize"
