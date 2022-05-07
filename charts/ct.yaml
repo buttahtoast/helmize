@@ -11,6 +11,5 @@ validate-maintainers: true
 validate-yaml: true
 helm-extra-args: "--timeout 600s"  
 exclude-deprecated: true
-lint-conf: charts/lint.yaml
 #excluded-charts:
 #  - "helmize"

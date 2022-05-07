@@ -28,7 +28,7 @@ jobs:
           helm plugin install https://github.com/quintush/helm-unittest > /dev/null 2>&1
 
       - name: Run chart-testing (lint) Helmize
-        run: ct lint --config ./charts/ct.yaml
+        run: ct lint --config ./charts/ct.yaml --lint-conf ./charts/lint.yaml
 
       - name: Run chart-testing (lint) Examples
         run: ct lint --config ./examples/ct.yaml         
