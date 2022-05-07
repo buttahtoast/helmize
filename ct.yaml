@@ -1,13 +1,18 @@
 ## Reference: https://github.com/helm/chart-testing/blob/master/doc/ct_lint-and-install.md
 ##
 remote: origin
+target-branch: main
 chart-dirs:
-  - charts
-  - examples
+  - charts/
+  - examples/
 chart-repos:
   - buttahtoast=https://buttahtoast.github.io/helm-charts/
 validate-chart-schema: true
 validate-maintainers: true
 validate-yaml: true
-excluded-charts:
-  - "helmize"
+additional-commands:
+  - "helm unittest --color -f unit_tests/*_test.yaml -3 {{ .Path }}"
+helm-extra-args: "--timeout 600s"  
+exclude-deprecated: true
+#excluded-charts:
+#  - "helmize"

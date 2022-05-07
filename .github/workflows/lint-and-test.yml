@@ -37,26 +37,6 @@ jobs:
       - name: Run chart-testing (lint)
         run: ct lint --config ./ct.yaml 
 
-      - name: Run docs-testing (helm-docs)
-        uses: buttahtoast/helm-testing-action@master
-        with:
-          charts: "${{ steps.list-changed.outputs.changed_charts }}"
-        if: steps.list-changed.outputs.changed == 'true'  
-
-      - name: Run kube-linter 
-        uses: buttahtoast/helm-testing-action@master
-        with:
-          exec: "linter"
-          charts: "${{ steps.list-changed.outputs.changed_charts }}"
-        if: steps.list-changed.outputs.changed == 'true'  
-
-      - name: Run Unit-Tests
-        uses: buttahtoast/helm-testing-action@master
-        with:
-          exec: "unit-tests"
-          charts: "${{ steps.list-changed.outputs.changed_charts }}"
-        if: steps.list-changed.outputs.changed == 'true'
-
       - name: Create kind cluster
         uses: helm/kind-action@v1.2.0
         if: steps.list-changed.outputs.changed == 'true'
