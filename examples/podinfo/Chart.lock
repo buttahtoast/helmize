@@ -1,6 +1,0 @@
-dependencies:
-- name: helmize
-  repository: file://../../../helm-charts-1/charts/helmize
-  version: 0.1.0-rc.3
-digest: sha256:25b2c59ef74e50d2913fe44ab097d3cf27715e38e83e6b5d8ba1ed04f6bdaf93
-generated: "2022-04-16T20:17:31.459972+02:00"
