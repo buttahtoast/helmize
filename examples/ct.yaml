@@ -1,0 +1,13 @@
+## Reference: https://github.com/helm/chart-testing/blob/master/doc/ct_lint-and-install.md
+##
+remote: origin
+target-branch: main
+chart-dirs:
+  - examples/
+validate-chart-schema: false
+validate-maintainers: false
+validate-yaml: false 
+exclude-deprecated: false
+check-version-increment: false
+additional-commands:
+  - "helm unittest --color -f unit_tests/*_test.yaml -3 {{ .Path }}"

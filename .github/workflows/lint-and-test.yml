@@ -27,20 +27,22 @@ jobs:
         id: list-changed
         run: |
           ct --config ./ct.yaml list-changed
-          ## If executed with debug this won't work anymore.
-          changed=$(ct --config ./ct.yaml list-changed)
-          charts=$(echo "$changed" | tr '\n' ' ' | xargs)
-          if [[ -n "$changed" ]]; then
-            echo "::set-output name=changed::true"
-            echo "::set-output name=changed_charts::$charts"
-          fi
-      - name: Run chart-testing (lint)
-        run: ct lint --config ./ct.yaml 
+
+      - name: Install Plugins
+        id: helm plugins
+        run: |
+          helm plugin install https://github.com/quintush/helm-unittest > /dev/null 2>&1
+
+      - name: Run chart-testing (lint) Helmize
+        run: ct lint --config ./charts/ct.yaml
+
+      - name: Run chart-testing (lint) Examples
+        run: ct lint --config ./examples/ct.yaml         
 
       - name: Create kind cluster
         uses: helm/kind-action@v1.2.0
         if: steps.list-changed.outputs.changed == 'true'
 
-      - name: Run chart-testing (install)
+      - name: Run chart-testing (install) Examples
         run: ct install --config ./ct.yaml
         if: steps.list-changed.outputs.changed == 'true'
