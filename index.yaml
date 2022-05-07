@@ -1,0 +1,29 @@
+apiVersion: v1
+entries:
+  helmize:
+  - annotations:
+      artifacthub.io/prerelease: "true"
+    apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-05-07T15:28:06.379624292Z"
+    dependencies:
+    - name: library
+      repository: https://buttahtoast.github.io/helm-charts/
+      version: 2.2.3
+    description: Go Sprig based deployment engine deployed via Helm
+    digest: 6f977fd9659be4aa74fafd9118f7d51de9cc613fed927bbbdbb869b99662490d
+    home: https://helmize.dev
+    icon: https://raw.githubusercontent.com/buttahtoast/helmize/main/icon.png
+    keywords:
+    - library
+    - sprig
+    - deploy
+    maintainers:
+    - email: oliverbaehler@hotmail.com
+      name: oliverbaehler
+    name: helmize
+    type: library
+    urls:
+    - https://github.com/buttahtoast/helmize/releases/download/helmize-0.1.0-rc.4/helmize-0.1.0-rc.4.tgz
+    version: 0.1.0-rc.4
+generated: "2022-05-07T15:28:06.379716092Z"
