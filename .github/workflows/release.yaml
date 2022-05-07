@@ -5,6 +5,32 @@ on:
     branches:
       - main  # Set a branch to deploy
 jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+
+      - name: Add dependency chart repos
+        run: |
+          helm repo add buttahtoast https://buttahtoast.github.io/helm-charts/
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Run chart-releaser
+        uses: helm/chart-releaser-action@v1.2.0
+        with:
+          charts_dir: charts
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+
   deploy:
     runs-on: ubuntu-20.04
     concurrency:
@@ -35,3 +61,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./hugo/public
+          keep_files: true

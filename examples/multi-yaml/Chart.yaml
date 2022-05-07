@@ -7,5 +7,4 @@ appVersion: "1.16.0"
 dependencies:
 - name: helmize
   version: ">=0.0.0-0"
-  #repository: "https://buttahtoast.github.io/helm-charts/"
-  repository: "file://../../../helm-charts-1/charts/helmize"
+  repository: "file://../../charts/helmize"
