@@ -12,5 +12,3 @@ validate-yaml: true
 helm-extra-args: "--timeout 600s"  
 exclude-deprecated: true
 debug: true
-#excluded-charts:
-#  - "helmize"
