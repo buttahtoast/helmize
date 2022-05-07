@@ -1,4 +1,10 @@
 +++
+title = "Files Config"
+description = "File Configurations"
+weight = 2
++++
+
++++
 title = "Config"
 description = "Configuration"
 weight = 1
@@ -25,13 +31,23 @@ Define what happens if a file does not match any existing file with it's identif
 This option is interesting for patches.  
 
 ---
-## expand
+## max_match
 
 _Optional_
 
-**Type** `boolean` **Default** `false`
+**Type** `float64` **Default** `0`
 
-If a file matches any existing file and this option is set to `true`, the identifiers are merged (expanded).
+Limit the amount of matches this file can have. `0` are unlimited matches.
+
+
+---
+## render
+
+_Optional_
+
+**Type** `boolean` **Default** `true`
+
+Define if a file should be rendered. The file will still show up in the summary but no be rendered when templating normally. When files are merged this option is overwritten as well. Eg. when the base file has `render` set to `false` and a file merges with it, with `render`set to `true`, the result will be `true`
 
 ---
 ## subpath
@@ -104,3 +120,19 @@ conditions:
     allow_root: true
 ```
 {{< /expand >}}
+
+---
+
+## fork 
+
+_Optional_
+
+**Type** `boolean` **Default** `false`
+
+Forks are new files based on their matches. If a files matches any file's id it will create a new file. Only one fork can be created, so the first match creates the new file.
+
+### Example 
+
+[See the example chart]
+
+

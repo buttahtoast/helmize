@@ -1,4 +1,4 @@
-id: [ "deploy" ]
+id: [ "deploy", "prod" ]
 cfg:
   fork: true
   subpath: false
