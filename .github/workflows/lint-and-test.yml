@@ -26,6 +26,7 @@ jobs:
       - name: List changed charts
         id: list-changed
         run: |
+          ct --config ./ct.yaml list-changed
           ## If executed with debug this won't work anymore.
           changed=$(ct --config ./ct.yaml list-changed)
           charts=$(echo "$changed" | tr '\n' ' ' | xargs)
