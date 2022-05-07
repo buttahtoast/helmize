@@ -14,3 +14,7 @@ Helmize is just a simple chart library which simplifies creating complex infrast
 The entire documentation can be found here:
 
   * [helmize.dev](https://helmize.dev)
+
+## Contributing
+
+We'd love to have you contribute! Please refer to our [contribution guidelines](CONTRIBUTING.md) for details.
