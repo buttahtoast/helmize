@@ -29,7 +29,6 @@ jobs:
           ct --config ./ct.yaml list-changed
 
       - name: Install Plugins
-        id: helm plugins
         run: |
           helm plugin install https://github.com/quintush/helm-unittest > /dev/null 2>&1
 
