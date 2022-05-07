@@ -128,13 +128,24 @@ structure
 The `release.yaml` files are merged together and the `subdir/release.yaml` are merged together. 
 {{< /expand >}}
 
-# custom_identifier_template
+# identifier_template
 
 _Optional_
 
-**Type** `string` **Default** `inventory.render.func.files.identifier.template` 
+**Type** `string` **Default** `"inventory.render.templates.identifier"` 
 
 Define a custom identifier template
 
-[Read more about identifiers](../../advanced/identifiers/)
+[Read more about identifiers](../../customization/identifiers/)
+
+
+# render_template
+
+_Optional_
+
+**Type** `string` **Default** `"inventory.entrypoint.templates.render"` 
+
+Define a custom render template
+
+[Read more about identifiers](../../customization/render/)
 

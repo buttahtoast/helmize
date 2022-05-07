@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+helmize_identifier: "deploy"
+metadata:
+  name: frontend
+  labels:
+    location: "west"
+Data:
+  disabled: true    
+

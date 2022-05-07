@@ -1,0 +1,1 @@
+{{- include "inventory.entrypoint.func.deploy" $ | nindent 0 }}

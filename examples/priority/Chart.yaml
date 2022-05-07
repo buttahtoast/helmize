@@ -1,0 +1,8 @@
+apiVersion: v2
+name: priority
+type: application
+version: 0.1.0
+dependencies:
+- name: helmize
+  version: ">=0.0.0-0"
+  repository: "file://../../charts/helmize"
