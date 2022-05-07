@@ -23,11 +23,6 @@ jobs:
         id: lint
         uses: helm/chart-testing-action@v2.0.1
 
-      - name: List changed charts
-        id: list-changed
-        run: |
-          ct --config ./ct.yaml list-changed
-
       - name: Install Plugins
         run: |
           helm plugin install https://github.com/quintush/helm-unittest > /dev/null 2>&1
