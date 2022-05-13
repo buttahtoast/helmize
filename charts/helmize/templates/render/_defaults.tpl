@@ -51,7 +51,17 @@ Data
 
 */}}
 {{- define "inventory.render.defaults.file_cfg.key" -}}
-cfg
+file_config
+{{- end -}}
+
+
+{{/* File Configuration Value <Template> 
+
+   Default value for File Configuration Key
+
+*/}}
+{{- define "inventory.render.defaults.file_cfg.value" -}}
+config
 {{- end -}}
 
 {{/* No Match (File Configuration Type) <Template> 
