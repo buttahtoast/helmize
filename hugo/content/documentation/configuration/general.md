@@ -16,15 +16,6 @@ _Required_
 [Read more about conditions](../conditions/)
 
 
-# dropins
-
-_Required_
-
-**Type** `slice`
-
-[Read more about dropins](../dropins/)
-
-
 # inventory_directory
 
 _Optional_
@@ -128,11 +119,21 @@ structure
 The `release.yaml` files are merged together and the `subdir/release.yaml` are merged together. 
 {{< /expand >}}
 
+# file_config_key
+
+[Example]()
+
+_Optional_
+
+**Type** `string` **Default** `helmize` 
+
+Key within each's file content which holds the [file configuration](../../structure/files/). This value also allows nested paths (eg. `metadata.config`). After the config is source the entire key is removed from the content.
+
 # identifier_template
 
 _Optional_
 
-**Type** `string` **Default** `"inventory.render.templates.identifier"` 
+**Type** `string` **Default** `inventory.render.templates.identifier` 
 
 Define a custom identifier template
 
@@ -143,7 +144,7 @@ Define a custom identifier template
 
 _Optional_
 
-**Type** `string` **Default** `"inventory.entrypoint.templates.render"` 
+**Type** `string` **Default** `inventory.entrypoint.templates.render` 
 
 Define a custom render template
 

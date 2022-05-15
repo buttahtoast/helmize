@@ -159,9 +159,10 @@ In this example we define custom identifiers via the `id` field.
 
 {{< expand "structure/resources/configmap.yaml" "..." >}}
 ```yaml
-id:
-  - custom-id-1
-  - custom-id-2
+helmize:
+  id:
+    - custom-id-1
+    - custom-id-2
 data:
   game.properties: |
     enemy:
@@ -185,7 +186,8 @@ Outcome with multiple YAMLs in one file
 {{< expand "structure/resources/configmap.yaml" "..." >}}
 ```
 ---
-id:
+helmize:
+  id:
   - custom-id-1
   - custom-id-2
 data:
@@ -197,9 +199,10 @@ data:
     player:
       maximumLives:5
 ---
-id:
-  - custom-id-3
-  - custom-id-4
+helmize:
+  id:
+    - custom-id-3
+    - custom-id-4
 data:
   game.properties: |
     enemy:

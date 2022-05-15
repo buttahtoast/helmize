@@ -1,6 +1,6 @@
 apiVersion: v2
-name: multi-yaml
-description: Multi YAML file examples
+name: example-file-cfg
+description: File Configuration Key Example
 type: application
 version: 0.1.0
 appVersion: "1.16.0"

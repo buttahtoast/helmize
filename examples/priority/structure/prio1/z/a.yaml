@@ -1,9 +1,11 @@
-cfg: 
+config:
+  id: 
+    - "help"
+    - "me"
   subpath: false
   fork: false
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
   labels:
     priority: "a"

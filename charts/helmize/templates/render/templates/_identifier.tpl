@@ -17,15 +17,18 @@
 
   {{/* File has content */}}
   {{- if $.wagon.content -}}
-  
+
+    {{/* Concat Identifier Path */}}
+    {{- $identifier_path := printf "%s.%s" (fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.render.defaults.file_cfg.key" $) "ctx" $.ctx))).res (include "inventory.render.defaults.file_cfg.identifier" $) -}}
+
     {{/* Check if dedicated id field is set */}}
-    {{- if $.wagon.content.id -}}
-      {{- if (kindIs "slice" $.wagon.content.id) -}}
-        {{- $_ := set $.wagon "id" (concat $.wagon.id $.wagon.content.id) -}}
+    {{- $config_id := (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $.wagon.content "path" $identifier_path))).res -}}
+    {{- if $config_id -}}
+      {{- if (kindIs "slice" $config_id) -}}
+        {{- $_ := set $.wagon "id" (concat $.wagon.id $config_id) -}}
       {{- else -}}
-        {{- $_ := set $.wagon "id" (append $.wagon.id $.wagon.content.id) -}}
+        {{- $_ := set $.wagon "id" (append $.wagon.id $config_id) -}}
       {{- end -}}
-      {{- $_ := unset $.wagon.content "id" -}}
     {{- end -}}
 
     {{/* kind-name identifier */}}

@@ -19,7 +19,7 @@
     {{- $file_train := list -}}
     {{- $yaml_delimiter := "\n---" -}}
     {{- $order := 0 -}}
-
+    
     {{/* Shared Data Over All Files */}}
     {{- $shared_data := dict -}}
 
@@ -77,9 +77,12 @@
               {{/* File Struct */}}
               {{- $incoming_wagon := dict "id" list "content" $parsed_content "file_id" $file_id "subpath" (regexReplaceAll $file_id.path $file_id.file "${1}" | trimPrefix "/" | dir) "debug" list "errors" list -}}
   
+              {{/* Benchmark */}}
+              {{- include "inventory.helpers.ts" (dict "msg" (printf "Evaluating Configuration") "ctx" $.ts) -}}
+
               {{/* Resolve File Configuration within file, if not set get empty dict */}}
-              {{- $file_cfg := default dict (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $incoming_wagon.content "path" ((fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.render.defaults.file_cfg.key" $) "ctx" $.ctx))).res)))).res -}}
-              {{- $_ := unset $incoming_wagon.content (include "inventory.render.defaults.file_cfg.value" $) -}}
+              {{- $file_cfg_path := (fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.render.defaults.file_cfg.key" $) "ctx" $.ctx))).res -}}
+              {{- $file_cfg := default dict (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $incoming_wagon.content "path" $file_cfg_path))).res -}}
       
               {{/* Compares against Type */}}
               {{- $file_cfg_type := fromYaml (include "lib.utils.types.validate" (dict "type" "inventory.render.types.file_configuration"  "data" $file_cfg  "ctx" $.ctx)) -}}
@@ -104,7 +107,10 @@
                  
               {{/* Benchmark */}}
               {{- include "inventory.helpers.ts" (dict "msg" (printf "Got Identifier") "ctx" $.ts) -}}
-    
+
+              {{/* Unset Configuration In Content */}}
+              {{- include "lib.utils.dicts.unset"  (dict "data" $incoming_wagon.content "path" $file_cfg_path) -}}
+
               {{/* Handle Errors (File Won't be merged) */}}
               {{- if $incoming_wagon.errors -}}
                 {{- $_ := set $return "errors" (append $return.errors (dict "file" $file_name "errors" $incoming_wagon.errors)) -}}

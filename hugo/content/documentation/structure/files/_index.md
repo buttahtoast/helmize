@@ -1,13 +1,7 @@
 +++
-title = "Files Config"
+title = "Files"
 description = "File Configurations"
 weight = 2
-+++
-
-+++
-title = "Config"
-description = "Configuration"
-weight = 1
 +++
 
 Each file can be configured with different values to influence to behavior of helmize
@@ -15,6 +9,15 @@ Each file can be configured with different values to influence to behavior of he
 # Configuration
 
 Each File can have the following properties.
+
+---
+## id
+
+_Optional_
+
+**Type** `string`/`slice`
+
+Define custom id(s) for this file. [Read more about identifiers](identifiers/)  
 
 ---
 ## no_match

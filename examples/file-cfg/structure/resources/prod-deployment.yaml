@@ -1,0 +1,8 @@
+metadata:
+  name: nginx-deployment-prod
+  helmize:
+    id: 
+      - deploy
+    fork: true
+spec:
+  replicas: 3

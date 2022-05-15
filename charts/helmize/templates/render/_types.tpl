@@ -4,6 +4,8 @@
   
 */}}
 {{- define "inventory.render.types.file_configuration" -}}
+{{ include "inventory.render.defaults.file_cfg.identifier" $ }}:
+  types: [ "string", "slice" ]
 {{ include "inventory.render.defaults.file_cfg.subpath" $ }}:
   types: [ "bool" ]
   default: true

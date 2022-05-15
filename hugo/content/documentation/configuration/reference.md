@@ -35,6 +35,10 @@ merge_strategy: "path"
 # http://helmize.dev/documentation/configuration/general/#custom_identifier_template
 custom_identifier_template: "custom.identifier"
 
+## File Configuration Key
+# http://helmize.dev/documentation/configuration/general/#file_config_key
+file_config_key: "custom.config.key"
+
 ## Conditions
 # http://helmize.dev/documentation/configuration/conditions/
 conditions:
@@ -78,23 +82,4 @@ conditions:
   ## Reverse Filter
   # http://helmize.dev/documentation/configuration/conditions/#reverse_filter
     reverse_filter: false
-
-## Dropins
-# http://helmize.dev/documentation/configuration/dropins/
-dropins:
-
-  ## Patterns
-  # http://helmize.dev/documentation/configuration/dropins/#patterns
-  - patterns: [ ".*" ]
-
-  ## Data 
-  # http://helmize.dev/documentation/configuration/dropins/#data
-    data:
-      labels:
-        "custom.label": "data"
-
-  ## Templates
-  # http://helmize.dev/documentation/configuration/dropins/#tpls
-    tpls:
-      - "registry.tpl"
 ```

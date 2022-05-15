@@ -51,7 +51,7 @@ Data
 
 */}}
 {{- define "inventory.render.defaults.file_cfg.key" -}}
-file_config
+file_config_key
 {{- end -}}
 
 
@@ -61,8 +61,18 @@ file_config
 
 */}}
 {{- define "inventory.render.defaults.file_cfg.value" -}}
-config
+helmize
 {{- end -}}
+
+{{/* Identifier (File Configuration Type) <Template> 
+
+   Match Strategy Key
+
+*/}}
+{{- define "inventory.render.defaults.file_cfg.identifier" -}}
+id
+{{- end -}}
+
 
 {{/* No Match (File Configuration Type) <Template> 
 

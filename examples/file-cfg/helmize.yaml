@@ -2,5 +2,4 @@ inventory_directory: "structure/"
 conditions:
   - name: "resources"
     allow_root: true
-  - name: "patches"
-    allow_root: true
+file_config_key: "metadata.helmize"
