@@ -1,0 +1,159 @@
+manifest snapshot:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        priority: z
+      name: nginx-deployment
+summary snapshot:
+  1: |
+    errors: []
+    files:
+    - checksum: 9260b5d6a939ef9e562bec1752d82bd671b6ef69ffdd9d28b5758fa63d55ed89
+      content:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          labels:
+            priority: z
+          name: nginx-deployment
+      debug: []
+      errors: []
+      files:
+      - _order: 0
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        file: structure/priority_1/1.yaml
+        ids:
+        - deployment-nginx-deployment.yaml
+        path: structure/priority_1/
+      - _order: 1
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        file: structure/priority_1/_.yaml
+        ids:
+        - deployment-nginx-deployment.yaml
+        path: structure/priority_1/
+      - _order: 2
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        file: structure/priority_1/a.yaml
+        ids:
+        - deployment-nginx-deployment.yaml
+        path: structure/priority_1/
+      - _order: 3
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: false
+        file: structure/priority_1/a/a.yaml
+        ids:
+        - deployment-nginx-deployment.yaml
+        path: structure/priority_1/
+      - _order: 4
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: false
+        file: structure/priority_1/a/z.yaml
+        ids:
+        - deployment-nginx-deployment.yaml
+        path: structure/priority_1/
+      - _order: 5
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        file: structure/priority_1/z.yaml
+        ids:
+        - deployment-nginx-deployment.yaml
+        path: structure/priority_1/
+      - _order: 6
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: false
+        file: structure/priority_1/z/a.yaml
+        ids:
+        - deployment-nginx-deployment.yaml
+        path: structure/priority_1/
+      - _order: 7
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: false
+        file: structure/priority_1/z/z.yaml
+        ids:
+        - deployment-nginx-deployment.yaml
+        path: structure/priority_1/
+      - _order: 8
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        file: structure/priority_2/1.yaml
+        ids:
+        - deployment-nginx-deployment.yaml
+        path: structure/priority_2/
+      - _order: 9
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        file: structure/priority_2/_.yaml
+        ids:
+        - deployment-nginx-deployment.yaml
+        path: structure/priority_2/
+      - _order: 10
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        file: structure/priority_2/a.yaml
+        ids:
+        - deployment-nginx-deployment.yaml
+        path: structure/priority_2/
+      - _order: 11
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        file: structure/priority_2/z.yaml
+        ids:
+        - deployment-nginx-deployment.yaml
+        path: structure/priority_2/
+      id:
+      - deployment-nginx-deployment.yaml
+      render: true
+      subpath: .

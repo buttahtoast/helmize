@@ -87,6 +87,6 @@ Reverses the [filter](#filter) configuration so that only values given with the 
 
 _Optional_
 
-**Type** `boolean`
+**Type** `boolean` **Default** `true`
 
-In addition to checking all keys, it becomes also valid to have files directly in the root of the condition's path.
+In addition to checking all keys, it becomes also valid to have files directly in the root of the condition's path. You may disable this option if you only want resources in subfolders of the condition's folder.

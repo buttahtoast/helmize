@@ -119,6 +119,7 @@ structure
 The `release.yaml` files are merged together and the `subdir/release.yaml` are merged together. 
 {{< /expand >}}
 
+<<<<<<< HEAD
 # file_config_key
 
 [Example]()
@@ -129,11 +130,17 @@ _Optional_
 
 Key within each's file content which holds the [file configuration](../../structure/files/). This value also allows nested paths (eg. `metadata.config`). After the config is source the entire key is removed from the content.
 
+=======
+>>>>>>> 95a66ca193ac23090f93e082b8685f8171fc476f
 # identifier_template
 
 _Optional_
 
+<<<<<<< HEAD
 **Type** `string` **Default** `inventory.render.templates.identifier` 
+=======
+**Type** `string` **Default** `"inventory.render.templates.identifier"` 
+>>>>>>> 95a66ca193ac23090f93e082b8685f8171fc476f
 
 Define a custom identifier template
 
@@ -144,7 +151,11 @@ Define a custom identifier template
 
 _Optional_
 
+<<<<<<< HEAD
 **Type** `string` **Default** `inventory.entrypoint.templates.render` 
+=======
+**Type** `string` **Default** `"inventory.entrypoint.templates.render"` 
+>>>>>>> 95a66ca193ac23090f93e082b8685f8171fc476f
 
 Define a custom render template
 

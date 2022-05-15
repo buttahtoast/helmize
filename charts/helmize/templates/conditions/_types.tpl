@@ -23,5 +23,6 @@ filter:
 reverse_filter:
   types: [ "int", "bool" ]
 allow_root:
-  types: [ "int", "bool" ]     
+  types: [ "int", "bool" ]
+  default: true   
 {{- end -}}

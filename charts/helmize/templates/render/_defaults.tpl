@@ -84,13 +84,13 @@ no_match
 {{- end -}}
 
 
-{{- define "inventory.render.defaults.file_cfg.max_match" -}}
-max_match
+{{- define "inventory.render.defaults.file_cfg.subpath" -}}
+subpath
 {{- end -}}
 
 
-{{- define "inventory.render.defaults.file_cfg.subpath" -}}
-subpath
+{{- define "inventory.render.defaults.file_cfg.max_match" -}}
+max_match
 {{- end -}}
 
 {{/* Render (File Configuration Type, Local) <Template> 
