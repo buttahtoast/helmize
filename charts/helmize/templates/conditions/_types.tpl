@@ -24,5 +24,9 @@ reverse_filter:
   types: [ "int", "bool" ]
 allow_root:
   types: [ "int", "bool" ]
-  default: true   
+  default: true
+file_cfg:
+  _props: {{- include "inventory.render.types.file_configuration.shared" $ | nindent 4 }}
+{{ include "inventory.postrenders.defaults.cfg.post_renderers" $ }}:
+  types: [ "slice" ]
 {{- end -}}

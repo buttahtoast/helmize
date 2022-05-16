@@ -6,7 +6,26 @@ weight = 2
 
 Each file can be configured with different values to influence to behavior of helmize
 
-# Configuration
+## Declaration
+
+By default the configuration for each file can be made under a `helmize` key at the root of the yaml manifest. This would look like this:
+
+```yaml
+helmize: 
+  id:
+    - deploy
+    - nginx
+  subpath: false
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+...
+```
+
+You can change the configuration key via [file_config_key](../../configuration/general#file_config_key)
+
+# Per File Configuration
 
 Each File can have the following properties.
 
@@ -18,6 +37,12 @@ _Optional_
 **Type** `string`/`slice`
 
 Define custom id(s) for this file. [Read more about identifiers](identifiers/)  
+
+---
+
+# Shared Configuration
+
+The following properites can be set within each file but may also be configured conditions. Configurations on file basis are merged over condition file configurations.
 
 ---
 ## no_match

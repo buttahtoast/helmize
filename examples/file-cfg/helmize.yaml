@@ -1,5 +1,17 @@
 inventory_directory: "structure/"
 conditions:
   - name: "resources"
-    allow_root: true
+    file_cfg:
+      render: true
+  - name: "forks"
+    file_cfg:
+      fork: true
+      subpath: false
+  - name: "patches"
+    file_cfg:
+      pattern: true
+      subpath: false
+      render: false
+
 file_config_key: "metadata.helmize"
+force: false

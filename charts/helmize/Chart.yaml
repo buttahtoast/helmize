@@ -8,7 +8,7 @@ home: https://helmize.dev
 icon: https://raw.githubusercontent.com/buttahtoast/helmize/main/hugo/icon/icon.png
 dependencies:
   - name: library
-    version: "2.2.5"
+    version: "2.3.0"
     repository: https://buttahtoast.github.io/helm-charts/
 keywords:
   - library

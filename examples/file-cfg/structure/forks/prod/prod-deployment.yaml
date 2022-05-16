@@ -3,6 +3,5 @@ metadata:
   helmize:
     id: 
       - deploy
-    fork: true
 spec:
-  replicas: 2
+  replicas: 3

@@ -1,9 +1,6 @@
-id:
-  - ".*"
-cfg:
-  subpath: false
-  pattern: true
-  render: false
 metadata:
+  helmize:
+    id: 
+      - ".*"
   labels:
     shared: "labels"

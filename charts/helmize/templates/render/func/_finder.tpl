@@ -10,7 +10,7 @@
     files: <slice> Found files
 
 */}}
-{{- define "inventory.render.func.files.finder" -}}
+{{- define "inventory.render.func.finder" -}}
   {{- if and $.paths $.ctx -}}
     {{- $return := dict "files" list "errors" list -}}
 
@@ -31,43 +31,44 @@
     {{- end -}}
 
     {{/* Iterate for each Path */}}
-    {{- range $.paths -}}
-      {{- $p_path := . -}}
-      {{- $p_files := list -}}
-      {{ range $file, $_ :=  $.ctx.Files.Glob (include "inventory.render.files.finder.path" (dict "path" $p_path "ext" .)) -}}
-        {{- $valid := 1 -}}
-
-        {{/* Validate for each extension, one must match */}}
-        {{- if $extensions -}}
-          {{- $match := 0 -}}
-          {{- range $extensions -}}
-            {{- if (hasSuffix . $file) -}}
-              {{- $match = 1 -}}
-            {{- end }}
+    {{- range $c_paths := $.paths -}}
+      {{- range $p_path:= $c_paths.paths -}}
+        {{- $p_files := list -}}
+        {{ range $file, $_ :=  $.ctx.Files.Glob (include "inventory.render.files.finder.path" (dict "path" $p_path "ext" .)) -}}
+          {{- $valid := 1 -}}
+  
+          {{/* Validate for each extension, one must match */}}
+          {{- if $extensions -}}
+            {{- $match := 0 -}}
+            {{- range $extensions -}}
+              {{- if (hasSuffix . $file) -}}
+                {{- $match = 1 -}}
+              {{- end }}
+            {{- end -}}
+            {{- if not $match -}}
+              {{- $valid = 0 -}}
+            {{- end -}}
           {{- end -}}
-          {{- if not $match -}}
-            {{- $valid = 0 -}}
+  
+          {{/* Validate for each exclusion, one must match */}}
+          {{- if $excludes -}}
+            {{- $exclusion := 1 -}}
+            {{- range $excludes -}}
+              {{- if (regexMatch . $file) -}}
+                {{- $exclusion = 0 -}}
+              {{- end }}
+            {{- end -}}
+            {{- if not $exclusion -}}
+              {{- $valid = 0 -}}
+            {{- end -}}
           {{- end -}}
+  
+          {{/* Add to files after correct validation */}}
+          {{- if $valid -}}
+            {{- $_ := set $return "files" (append $return.files (dict "file" $file "config" $c_paths.config "post_renderers" (default list $c_paths.post_renderers) "path" $p_path)) -}}
+          {{- end -}}
+  
         {{- end -}}
-
-        {{/* Validate for each exclusion, one must match */}}
-        {{- if $excludes -}}
-          {{- $exclusion := 1 -}}
-          {{- range $excludes -}}
-            {{- if (regexMatch . $file) -}}
-              {{- $exclusion = 0 -}}
-            {{- end }}
-          {{- end -}}
-          {{- if not $exclusion -}}
-            {{- $valid = 0 -}}
-          {{- end -}}
-        {{- end -}}
-
-        {{/* Add to files after correct validation */}}
-        {{- if $valid -}}
-          {{- $_ := set $return "files" (append $return.files (dict "file" $file "path" $p_path)) -}}
-        {{- end -}}
-
       {{- end -}}
     {{- end -}}
     {{- printf "%s" (toYaml $return) -}}

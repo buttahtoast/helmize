@@ -82,10 +82,10 @@
 
               {{/* Resolve File Configuration within file, if not set get empty dict */}}
               {{- $file_cfg_path := (fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.render.defaults.file_cfg.key" $) "ctx" $.ctx))).res -}}
-              {{- $file_cfg := default dict (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $incoming_wagon.content "path" $file_cfg_path))).res -}}
+              {{- $file_cfg := mergeOverwrite (get $file "config") (default dict (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $incoming_wagon.content "path" $file_cfg_path))).res) -}}
       
-              {{/* Compares against Type */}}
-              {{- $file_cfg_type := fromYaml (include "lib.utils.types.validate" (dict "type" "inventory.render.types.file_configuration"  "data" $file_cfg  "ctx" $.ctx)) -}}
+              {{/* Compares against Type, Defaults are already set via conditions */}}
+              {{- $file_cfg_type := fromYaml (include "lib.utils.types.validate" (dict "type" "inventory.render.types.file_configuration"  "data" $file_cfg "ctx" $.ctx)) -}}
               {{- if $file_cfg_type.isType -}}
 
                 {{/* Set Configuration */}}
@@ -176,6 +176,11 @@
                                 {{- with $incoming_wagon.files -}}
                                   {{- $_ := set $wagon "files" (concat $wagon.files $incoming_wagon.files) -}}
                                 {{- end -}}
+
+                                {{/* Concat Post Renderers */}}
+                                {{- with $incoming_wagon.post_renderers -}}
+                                  {{- $_ := set $wagon "post_renderers" (concat $wagon.post_renderers $incoming_wagon.post_renderers | uniq) -}}
+                                {{- end -}}
     
                                 {{/* Merge Contents */}}
                                 {{- if $incoming_wagon.content -}}
@@ -200,6 +205,8 @@
   
                 {{/* Append Forks */}}
                 {{- if $fork -}}
+                 
+                   {{/* Append Fork after train iteration */}}
                    {{- $file_train = append $file_train (set (omit $fork "config" "file_id") "fork" "true") -}}
 
                 {{/* Handle unmatched files */}}   
@@ -243,7 +250,7 @@
 
       {{/* Run PostRenderers */}}
       {{- range $file := $file_train -}}
-        {{- include "inventory.postrenders.func.execute" (dict "file" $file "extra_ctx" $file.data "extra_ctx_key" (include "inventory.render.defaults.files.data_key" $) "ctx" $.ctx) -}}
+        {{- include "inventory.postrenders.func.execute" (dict "file" $file "ctx" $.ctx) -}}
       {{- end -}}
 
       {{/* Benchmark */}}

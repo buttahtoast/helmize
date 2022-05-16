@@ -1,11 +1,20 @@
-{{/* Config <Type>
+{{/* File Config <Type>
 
-  Defines the Type Definition for the configuration
+  Defines the Type Definition for the configuration (Per File)
   
 */}}
 {{- define "inventory.render.types.file_configuration" -}}
 {{ include "inventory.render.defaults.file_cfg.identifier" $ }}:
   types: [ "string", "slice" ]
+{{ include "inventory.render.types.file_configuration.shared" $ }}
+{{- end -}}
+
+{{/* Shared File Config <Type>
+
+  Defines the Type Definition for the configuration which is used for other configurations
+  
+*/}}
+{{- define "inventory.render.types.file_configuration.shared" -}}
 {{ include "inventory.render.defaults.file_cfg.subpath" $ }}:
   types: [ "bool" ]
   default: true
