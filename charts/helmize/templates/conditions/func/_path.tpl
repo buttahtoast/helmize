@@ -11,7 +11,7 @@
 
 */}}
 {{- define "inventory.conditions.func.path" -}}
-  {{- if and $.cond $.path $.ctx -}}
+  {{- if and $.path $.ctx -}}
     {{- $base_directory := (fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.conditions.defaults.inv_dir" $.ctx) "ctx" $.ctx))).res -}}
     {{- $base_path := (include "inventory.helpers.trailingPath" $.path) -}}
     {{- if $base_directory -}}
@@ -31,6 +31,6 @@
     {{- end -}}
     {{- printf "%s/" $path -}}
   {{- else -}}
-    {{- include "lib.utils.errors.params" (dict "tpl" "inventory.conditions.func.resolve" "params" (list "cond" "path" "ctx")) -}}
+    {{- include "lib.utils.errors.params" (dict "tpl" "inventory.conditions.func.path" "params" (list "cond" "path" "ctx")) -}}
   {{- end -}}
 {{- end -}}

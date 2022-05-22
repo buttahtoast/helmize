@@ -1,7 +1,8 @@
 metadata:
-  name: nginx-deployment-prod
+  name: nginx-deployment-test
   helmize:
     id: 
       - deploy
 spec:
   replicas: 2
+  test: {{- toYaml $.Data | nindent 4 -}}

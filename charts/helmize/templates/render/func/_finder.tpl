@@ -65,7 +65,7 @@
   
           {{/* Add to files after correct validation */}}
           {{- if $valid -}}
-            {{- $_ := set $return "files" (append $return.files (dict "file" $file "config" $c_paths.config "post_renderers" (default list $c_paths.post_renderers) "path" $p_path)) -}}
+            {{- $_ := set $return "files" (append $return.files (dict "file" $file "config" $c_paths.config "post_renderers" (default list $c_paths.post_renderers) "data" $c_paths.data "value" $c_paths.value "path" $p_path)) -}}
           {{- end -}}
   
         {{- end -}}

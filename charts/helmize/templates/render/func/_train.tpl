@@ -36,8 +36,8 @@
       {{/* Benchmark */}}
       {{- include "inventory.helpers.ts" (dict "msg" (printf "File %s initialied" $file_name) "ctx" $.ts) -}}
 
-      {{/* Merge Data Store */}}
-      {{- $data := $shared_data -}}
+      {{/* Merge Data Store (Merges Condition Data with File Train Data Store */}}
+      {{- $shared_data = mergeOverwrite $shared_data $file.data -}}
 
       {{/* Identifier for file */}}
       {{- $file_id := dict "file" $file_name "path" (dir $file.path) "filename" (base $file_name) -}}
@@ -48,8 +48,8 @@
       {{/* Check if Content */}}
       {{- if $content -}}
 
-        {{/* Initialize Context */}}
-        {{- $context := $.ctx -}}
+        {{/* Initialize Context (Sets $.Data and $.Value key) */}}
+        {{- $context := (set (set $.ctx "Data" $shared_data) "Value" (default dict $file.value))  -}}
 
         {{/* Template File Content */}}
         {{- $template_content_raw := tpl $content $context -}}

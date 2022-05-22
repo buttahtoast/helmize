@@ -1,0 +1,29 @@
+inventory_directory: "structure/"
+conditions:
+
+  - name: "layer_1"
+    data: 
+      layer_1:
+        example_data: true
+
+  - name: "region"
+    path: "layer_2/"
+    key: "region"
+    default: "east"
+    filter: [ "east", "west", "north", "south" ]
+    reverse_filter: true
+    data: 
+      layer_2:
+        sampler: true
+    tpls: 
+      - "ingress_base.tpl"
+      - "ingress_class.tpl"
+
+  - name: "layer_3"
+    data: 
+      layer_3:
+        other: true
+
+
+file_config_key: "metadata.helmize"
+force: false

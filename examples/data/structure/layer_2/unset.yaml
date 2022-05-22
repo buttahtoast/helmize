@@ -1,0 +1,1 @@
+{{- $_ := unset $.Data "layer1" -}}

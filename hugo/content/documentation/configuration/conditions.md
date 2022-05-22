@@ -103,3 +103,32 @@ _Optional_
 **Type** `<SharedFileConfiguration>`
 
 You can define file configurations for the entire condition. The file configurations are applied for all files in the directory of this condition. If 
+
+---
+# Condition Data 
+
+It's possible to give specific data with a condition. The data for the condition is then available for all files matching this condition and will be preserved for files which are rendered after this condition applied. 
+
+Conditions are validated before the file lookup happens.
+
+---
+
+## data
+
+_Optional_
+
+**Type** `map`
+
+Define static data which will be availble for templating.
+
+---
+## tpls
+
+{{< hint "info" >}}Using templates might have a decrease in performance as consequence. Calling the sprig `tpl` functions tends to be a bit slow. However it might be a worthy trade-off for certain scenarios{{< /hint >}}
+
+
+_Optional_
+
+**Type** `list`
+
+With this parameter it's possible to reference template files which are executed. Their output is treated as data and merged with the existing [data key](#data). Note that this is treated as regex, not absolut path. If a template does not result in valid YAML an error will be thrown and the condition is not applied. The templates are executed in order of definition. Data from previous templates as available the following templates, see the templating context ()

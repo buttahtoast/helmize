@@ -1,0 +1,1 @@
+{{- $_ := set $.Data "inject" (dict "msg" "inject data into shared data store") -}}

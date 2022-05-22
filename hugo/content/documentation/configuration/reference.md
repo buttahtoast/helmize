@@ -82,4 +82,15 @@ conditions:
   ## Reverse Filter
   # http://helmize.dev/documentation/configuration/conditions/#reverse_filter
     reverse_filter: false
+
+  ## Data
+  # http://helmize.dev/documentation/configuration/conditions/#data
+    data:
+      static:
+        condition: data
+
+  ## Tpls
+  # http://helmize.dev/documentation/configuration/conditions/#tpls
+    tpls:
+      - "ingress.tpl"
 ```
