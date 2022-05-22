@@ -26,7 +26,7 @@ _Optional_
 
 **Type** `string`
 
-Path to the value in the user delivered values which is used as key to lookup.
+Path to the value in the user delivered values which is used as key to lookup. The key is relative the Values (`$.Values`) and therefor must be within the Values. 
 
 ---
 ## key_types
@@ -55,7 +55,7 @@ _Optional_
 
 **Type** `string`
 
-If the declared key does not contain a value, this default value will be used.
+If the declared key does not contain a value, this default value will be used. The default value will be set the key if not set, so it's available via the Values.
 
 ---
 ## path
@@ -109,7 +109,7 @@ You can define file configurations for the entire condition. The file configurat
 
 It's possible to give specific data with a condition. The data for the condition is then available for all files matching this condition and will be preserved for files which are rendered after this condition applied. 
 
-Conditions are validated before the file lookup happens.
+**Conditions are validated before the file lookup happens. Therefor all resulting data from conditions is available for each file, no matter the order of the files or conditions.**
 
 ---
 

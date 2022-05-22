@@ -4,7 +4,8 @@ conditions:
   - name: "layer_1"
     data: 
       layer_1:
-        example_data: true
+        remove: false
+        overwrite: "this"
 
   - name: "region"
     path: "layer_2/"
@@ -17,13 +18,16 @@ conditions:
         sampler: true
     tpls: 
       - "ingress_base.tpl"
-      - "ingress_class.tpl"
 
   - name: "layer_3"
     data: 
       layer_3:
         other: true
+    tpls: 
+      - "ingress_class.tpl"
 
-
-file_config_key: "metadata.helmize"
-force: false
+  {{- if $.Values.faulty }}
+  - name: "faulty_template"
+    tpls: 
+      - "faulty.tpl"
+  {{- end }}

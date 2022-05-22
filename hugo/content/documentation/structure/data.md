@@ -4,7 +4,7 @@ description = "Data Handling"
 weight = 3
 +++
 
-
+The 
 
 
 
@@ -25,14 +25,31 @@ This way you add data, which will be available for all the following files:
 ```
 {{< /expand >}}
 
-## Overwrite
+### Overwrite
+
+{{< hint "info" >}}Seting data which originates from [condition data](../../configuration/conditions/#condition-data) will only overwrite it for the current file (All YAMLs within that file). For the next file the condition data is newly merged and therefor present again.{{< /hint >}}
+
+Overwrite the key `layer1.overwrite`
+
+{{< expand "structure/layer_2/_overwrite.yaml" "..." >}}
+```
+{{- $_ := set $.Data.layer_1 "overwrite" "Not Overwritten by Layer2" -}}
+```
+{{< /expand >}}
+
+The `layer1.overwrite` will not be overwritten in the result.
 
 ## Unset
 
-Unsets entire data key `layer1`. 
+{{< hint "info" >}}Unseting data which originates from [condition data](../../configuration/conditions/#condition-data) will only unset it for the current file (All YAMLs within that file). For the next file the condition data is newly merged and therefor present again.{{< /hint >}}
+
+Unsets the data key `unwated` and `layer1`. 
 
 {{< expand "structure/layer_2/_unset.yaml" "..." >}}
 ```
+{{- $_ := unset $.Data "unwanted" -}}
 {{- $_ := unset $.Data "layer1" -}}
 ```
 {{< /expand >}}
+
+The `unwanted` key will no longer be present, the `layer1` will be present, since it's from the layer1 condition.

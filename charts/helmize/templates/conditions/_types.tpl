@@ -4,25 +4,25 @@
   
 */}}
 {{- define "inventory.conditions.types.condition" -}}
-name:
+{{ include "inventory.conditions.defaults.conditions.name" $ }}:
   types: [ "string" ]
   required: true
 {{ include "inventory.conditions.defaults.conditions.key" $ }}:
   types: [ "string" ]
-key_types:
+{{ include "inventory.conditions.defaults.conditions.key_types" $ }}:
   types: [ "slice" ]
   default: [ "string", "slice" ]
 {{ include "inventory.conditions.defaults.conditions.required" $ }}:
   types: [  "bool" ]
 {{ include "inventory.conditions.defaults.conditions.default" $ }}:
   types: [ "string" ]
-path:
+{{ include "inventory.conditions.defaults.conditions.path" $ }}:
   types: [ "string" ]
-filter: 
+{{ include "inventory.conditions.defaults.conditions.filter" $ }}: 
   types: [ "string", "slice" ]
-reverse_filter:
+{{ include "inventory.conditions.defaults.conditions.reverse_filter" $ }}:
   types: [ "int", "bool" ]
-allow_root:
+{{ include "inventory.conditions.defaults.conditions.allow_root" $ }}:
   types: [ "int", "bool" ]
   default: true
 {{ include "inventory.conditions.defaults.conditions.data" $ }}:

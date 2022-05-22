@@ -268,9 +268,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: my-configmap
-id:
-  - custom-id-1
-  - custom-id-2
+helmize:  
+  id:
+    - custom-id-1
+    - custom-id-2
 data:
   game.properties: |
     enemy:
@@ -284,9 +285,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: my-configmap
-id:
-  - custom-id-3
-  - custom-id-4
+helmize:
+  id:
+    - custom-id-3
+    - custom-id-4
 data:
   game.properties: |
     enemy:

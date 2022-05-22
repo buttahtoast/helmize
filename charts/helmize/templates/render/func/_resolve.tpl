@@ -34,8 +34,12 @@
       {{- $paths := list -}}
       {{- $_ := set $return "conditions" $conds.conditions -}}
       {{- range $conds.conditions -}}
-        {{- if .paths -}}
-          {{- $paths = append $paths (dict "paths" .paths "config" .config.file_cfg "post_renderers" .config.post_renderers "data" .data "value" .value)  -}}
+        {{- if .errors -}}
+          {{- $_ := set $return "errors" (concat $return.errors .errors) -}}
+        {{- else -}}
+          {{- if .paths -}}
+            {{- $paths = append $paths (dict "paths" .paths "config" .config.file_cfg "post_renderers" .config.post_renderers "data" .data "value" .value)  -}}
+          {{- end -}}
         {{- end -}}
       {{- end -}}
 

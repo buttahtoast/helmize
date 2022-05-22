@@ -31,10 +31,12 @@
       {{- range $condition := $conditions.conditions -}}
   
         {{/* Condition Variables */}}
-        {{- $condition_path := default .name .path -}}
         {{- $condition_keys := list -}}
-        {{- $condition_struct := dict "name" $condition.name "root_path" $condition_path "errors" list "paths" list "keys" list "config" $condition "errors" list "data" dict -}}
+        {{- $condition_struct := dict "name" (get $condition (include "inventory.conditions.defaults.conditions.name" $)) "errors" list "paths" list "keys" list "config" $condition "errors" list "data" dict -}}
         
+        {{/* Assign Root Path */}}
+        {{- $_ := set $condition_struct "root_path" (default $condition_struct.name (get $condition (include "inventory.conditions.defaults.conditions.path" $))) -}}
+
         {{/* Value Key */}}
         {{- $value_key := "" -}}
         {{- if (get $condition (include "inventory.conditions.defaults.conditions.key" $)) -}}
@@ -62,10 +64,6 @@
         {{/* If Key has Value */}}
         {{- if $key -}}
 
-          {{/* Combine Data */}}
-          {{- $shared_data = (mergeOverwrite $shared_data (default dict (get $condition (include "inventory.conditions.defaults.conditions.data" $)))) -}}
-          {{- $_ := set $condition_struct "data" $shared_data -}}
-
           {{/* Redirect to Slice */}}
           {{- if (kindIs "slice" $key) -}}
             {{- $condition_keys = concat $condition_keys $key -}}
@@ -75,8 +73,9 @@
 
           {{/* Validate Key Type */}}
           {{- $type_error := 1 -}}
-          {{- if $condition.key_types -}}
-            {{- range $condition.key_types -}}
+          {{- $key_types := (get $condition (include "inventory.conditions.defaults.conditions.key_types" $)) -}}
+          {{- if $key_types -}}
+            {{- range $key_types -}}
               {{- if (kindIs . $key) -}}
                 {{- $type_error = 0 -}}
               {{- end -}}
@@ -85,24 +84,26 @@
             {{- $type_error = 0 -}}
           {{- end -}}
           {{- if $type_error -}}
-            {{- $_ := set $condition_struct "errors" (append $condition_struct.errors (dict "error" (printf "Value for condition must be %s but is %s" ($condition.key_types| join ", ") (kindOf $key)))) -}}
+            {{- $_ := set $condition_struct "errors" (append $condition_struct.errors (dict "error" (printf "Value for condition must be %s but is %s" ($key_types| join ", ") (kindOf $key)))) -}}
           {{- end -}}
         {{- end -}}  
 
         {{/* Apply a filter to all results */}}
-        {{- if $condition.filter -}}
+        {{- $filter := (get $condition (include "inventory.conditions.defaults.conditions.filter" $)) -}}
+        {{- $reverse_filter := (get $condition (include "inventory.conditions.defaults.conditions.reverse_filter" $)) -}}
+        {{- if $filter -}}
           {{- $filtered_list := $condition_keys -}}
-          {{- if $condition.reverse_filter -}}
+          {{- if $reverse_filter -}}
             {{- $filtered_list = list -}}
           {{- end -}}
-          {{- if (kindIs "string" $condition.filter) -}}
-            {{- $_ := set $condition "filter" (list $condition.filter) -}}
+          {{- if (kindIs "string" $filter) -}}
+            {{- $filter = (list $filter) -}}
           {{- end -}}
           {{- range $condition_keys -}}
             {{- $con := . -}}
-            {{- range $condition.filter -}}
+            {{- range $filter -}}
               {{- if (regexMatch . $con) -}}
-                {{- if $condition.reverse_filter -}}
+                {{- if $reverse_filter -}}
                   {{- $filtered_list = append $filtered_list $con -}}
                 {{- else -}}
                   {{- $filtered_list = without $filtered_list $con -}}
@@ -114,19 +115,23 @@
         {{- end -}}
 
         {{/* Add Base */}}
-        {{- if $condition.allow_root -}}
+        {{- if (get $condition (include "inventory.conditions.defaults.conditions.allow_root" $)) -}}
           {{- $condition_keys = prepend  $condition_keys "/" -}}
         {{- end -}}
 
         {{/* Set Key Value */}}
         {{- $_ := set $condition_struct "value" (default dict $key) -}}
 
+        {{/* Combine Data */}}
+        {{- $shared_data = (mergeOverwrite $shared_data (default dict (get $condition (include "inventory.conditions.defaults.conditions.data" $)))) -}}
+        {{- $_ := set $condition_struct "data" $shared_data -}}        
+
         {{/* Create Path for each Condition Key */}}
         {{- $condition_keys = $condition_keys | uniq -}}
         {{- if $condition_keys -}}
           {{- $_ := set $condition_struct "keys" $condition_keys -}}
           {{- range $condition_keys -}}
-            {{- $path := include "inventory.conditions.func.path" (dict "path" $condition_path "cond" . "cpt" $.cpt "ctx" $.ctx) -}}
+            {{- $path := include "inventory.conditions.func.path" (dict "path" $condition_struct.root_path "cond" . "cpt" $.cpt "ctx" $.ctx) -}}
             {{- $_ := set $condition_struct "paths" (append $condition_struct.paths $path) -}}
           {{- end -}}
         {{- end -}}
