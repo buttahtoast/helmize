@@ -6,6 +6,7 @@
 {{- define "inventory.config.types.config" -}}
 {{ include "inventory.conditions.defaults.inv_dir" $ }}:
   types: [ "string" ]
+  default: "structure/"
 {{ include "inventory.conditions.defaults.conditions" $ }}:
   types: [ "slice" ]
 {{ include "inventory.entrypoint.defaults.force" $ }}:

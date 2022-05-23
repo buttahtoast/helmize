@@ -1,8 +1,6 @@
-# Example file-cfg
+# Example Identifiers
 
-This example showcases the usage of the [file_config_key](https://helmize.dev/documentation/configuration/general/#file_config_key) configuration option.
-
-Within the [helmize.yaml](./helmize.yaml) the `file_config_key` is set to `metadata.helmize`. Therefor all the manifests below `structure/` define [file configuration](https://helmize.dev/documentation/structure/files/) below the key `metadata.helmize`. When rendered, the key `metadata.helmize` is no longer present, but the configuration was applied.
+This example showcases all the different identifier outcomes.
 
 ## Playground
 
@@ -18,6 +16,15 @@ Extended output via [debug options](https://helmize.dev/documentation/debug/):
 ```
 helm template . --set summary=true --set debug=true
 ```
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| custom | bool | `true` | Show custom Identifiers |
+| file_name | bool | `true` | Show File Name Identifiers |
+| kind | bool | `true` | Show Kind Identifiers |
+| multi | bool | `true` | Enable Multi YAMl Identifers |
 
 ## Unit Tests
 

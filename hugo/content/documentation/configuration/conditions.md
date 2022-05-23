@@ -6,7 +6,7 @@ weight = 2
 
 Conditions translate into paths where files are looked up based on given values which are relevant for deployment. Conditions are declared as list, based on the order the files are looked up and merged.
 
-# Configuration
+# Options
 
 Each condition can have the followin configurations.
 

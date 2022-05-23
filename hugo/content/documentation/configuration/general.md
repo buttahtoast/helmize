@@ -1,14 +1,15 @@
 +++
-title = "Config"
-description = "General Configuration"
+title = "Helmize"
+description = "Helmize Configuration"
 weight = 1
 +++
+# Options
 
-The following general configuration options are available in the `helmize.yaml`
+The following options are available in the `helmize.yaml`
 
 ---
 
-# conditions
+## conditions
 
 _Required_
 
@@ -18,17 +19,17 @@ _Required_
 
 ---
 
-# inventory_directory
+## inventory_directory
 
 _Optional_
 
-**Type** `string` 
+**Type** `string` **Default** `structure/`
 
-Define a directory where the entire structure for helmize is located below. This path will be appended for all the [condition](/documentation/configuration/conditions/)'s paths.
+Define a directory where the entire structure for helmize is located below. This path will be prepended for all the [condition](/documentation/configuration/conditions/)'s paths.
 
 ---
 
-# file_extensions
+## file_extensions
 
 _Optional_
 
@@ -38,7 +39,7 @@ Define which file extensions should be considered while looking through the dire
 
 ---
 
-# file_excludes
+## file_excludes
 
 _Optional_
 
@@ -48,70 +49,7 @@ Define which file names should be considered while looking through the directori
 
 ---
 
-# merge_strategy
-
-_Optional_
-
-**Type** `string`/`slice` **Default** `path` **Valid Options** `file`, `path`
-
-Define how files are merged together.
-
-{{< expand "Explanation" "..." >}}
-## file 
-
-Merge file content based on file name. If you have multiple files with the exact same name in one condition folder or over multiple folders, they are considered to be one final file and merged together.
-
-Let's assume you have the following folder structure:
-
-```
-structure
-|
-+---stage/
-|   +---dev/
-|          release.yaml
-|          subdir/release.yaml
-|   ...
-|
-+---location/
-|   +---east/
-|          release.yaml
-|          subdir/release.yaml
-|   ...
-+
-```
-
-All the files named `release.yaml` will be merged together and as output you will get a single `release.yaml` file.
-
-
-## path
-
-Merge file content based on file subpath. If you have multiple files with teh exact same name but different subpaths they will not be merged together.
-
-Let's assume you have the following folder structure:
-
-```
-structure
-|
-+---stage/
-|   +---dev/
-|          release.yaml
-|          subdir/release.yaml
-|   ...
-|
-+---location/
-|   +---east/
-|          release.yaml
-|          subdir/release.yaml
-|   ...
-+
-```
-
-The `release.yaml` files are merged together and the `subdir/release.yaml` are merged together. 
-{{< /expand >}}
-
----
-
-# file_config_key
+## file_config_key
 
 [Example]()
 
@@ -119,11 +57,11 @@ _Optional_
 
 **Type** `string` **Default** `helmize` 
 
-Key within each's file content which holds the [file configuration](../../structure/files/). This value also allows nested paths (eg. `metadata.config`). After the config is source the entire key is removed from the content.
+Key within each's file content which holds the [file configuration](../../files/). This value also allows nested paths (eg. `metadata.config`). After the config is source the entire key is removed from the content.
 
 ---
 
-# identifier_template
+## identifier_template
 
 _Optional_
 
@@ -135,7 +73,7 @@ Define a custom identifier template
 
 ---
 
-# render_template
+## render_template
 
 _Optional_
 
@@ -146,7 +84,7 @@ Define a custom render template
 [Read more about identifiers](../../customization/render/)
 
 ---
-# force
+## force
 
 _Optional_
 

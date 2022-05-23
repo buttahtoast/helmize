@@ -1,12 +1,18 @@
 +++
-title = "Multi YAML"
-description = "Multi YAML Files"
-weight = 3
+title = "Advanced YAML"
+description = "Advanced YAML Files"
+weight = 5
 +++
+
+{{< hint "info" >}}[https://github.com/buttahtoast/helmize/tree/main/examples/advanced-yaml](https://github.com/buttahtoast/helmize/tree/main/examples/advanced-yaml){{< /hint >}}
+
+There's currently one known limitation with YAML and go sprig. Should we discover more, we will add it to this section.
+
+<h1>Multi YAML</h1>
 
 Helmize supports multi YAML files (Multiple YAMLs in one file separeted by ). The implementation is relativ primitive: If a file contains it's split into multiple sub files, which then are treated as seperated files for further processing.
 
-<h1>Limitation</h1>
+<h2>Limitation</h2>
 
 The `fromYaml` function can not parse multiple yaml files, but is aware of the delimiter. If you have the following example:
 
@@ -77,11 +83,11 @@ third: YAML
 
 Understanding this might help working with multi YAML files.
 
-<h1>Hints</h1>
+<h2>Hints</h2>
 
 Here are some hints regarding Multi YAML files
 
-<h2>Multiline</h2>
+<h3>Nested YAML Data</h3>
 
 You can still use multi line YAML's, our implementation should not interefer with them:
 
@@ -107,7 +113,7 @@ data:
       maximumLives:5
 ```
 
-<h2>Wrong Templating</h2>
+<h3>Wrong Templating</h3>
 
 There might be cases where to templating does not validate correctly and therefor you might have unexpected output. Take for example this template:
 
@@ -249,7 +255,7 @@ paths:
 ```
 {{< /expand >}}
 
-<h1>Examples</h1>
+<h2>Examples</h2>
 
 [You can find this example here](https://github.com/buttahtoast/helmize/tree/main/examples/multi-yaml)
 

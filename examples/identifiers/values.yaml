@@ -1,0 +1,11 @@
+# -- Show custom Identifiers
+custom: true
+
+# -- Show File Name Identifiers
+file_name: true
+
+# -- Show Kind Identifiers
+kind: true
+
+# -- Enable Multi YAMl Identifers
+multi: true

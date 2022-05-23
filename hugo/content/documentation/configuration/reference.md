@@ -11,10 +11,6 @@ Example configuration reference with documentation links.
 # http://helmize.dev/documentation/configuration/general/#inventory_directory
 inventory_directory: "groups/"
 
-## Templates Directory
-# http://helmize.dev/documentation/configuration/general/#templates_directory
-templates_directory: "tpls/"
-
 ## Force
 # http://helmize.dev/documentation/configuration/general/#force
 force: false 
@@ -26,10 +22,6 @@ file_extensions: [ "yaml" ]
 ## File Excludes
 # http://helmize.dev/documentation/configuration/general/#file_excludes
 file_excludes: [ "kustomization" ]
-
-## Merge Strategy
-# http://helmize.dev/documentation/configuration/general/#merge_strategy
-merge_strategy: "path"
 
 ## Custom Identifier Template
 # http://helmize.dev/documentation/configuration/general/#custom_identifier_template
@@ -44,6 +36,7 @@ file_config_key: "custom.config.key"
 conditions:
 
   # Condition "Base"
+
   ## Name
   # http://helmize.dev/documentation/configuration/conditions/#name
   - name: "base"
@@ -54,14 +47,17 @@ conditions:
 
   ## Allow Root
   # http://helmize.dev/documentation/configuration/conditions/#allow_root
-    allow_root: true
+    allow_root: false
 
   # Condition "Environment"
+
+  ## Name
+  # http://helmize.dev/documentation/configuration/conditions/#name  
   - name: "environment"
 
   ## Key
   # http://helmize.dev/documentation/configuration/conditions/#key
-    key: "Values.config.environment"
+    key: "config.environment"
 
   ## Key Types
   # http://helmize.dev/documentation/configuration/conditions/#key_types
@@ -82,6 +78,12 @@ conditions:
   ## Reverse Filter
   # http://helmize.dev/documentation/configuration/conditions/#reverse_filter
     reverse_filter: false
+
+  ## File Config
+  # http://helmize.dev/documentation/configuration/conditions/#file_cfg
+    file_cfg: 
+      pattern: true
+      render: false
 
   ## Data
   # http://helmize.dev/documentation/configuration/conditions/#data

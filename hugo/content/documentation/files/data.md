@@ -4,12 +4,12 @@ description = "Data Handling"
 weight = 3
 +++
 
-The 
+{{< hint "info" >}}[https://github.com/buttahtoast/helmize/tree/main/examples/data](https://github.com/buttahtoast/helmize/tree/main/examples/data){{< /hint >}}
+
+Data is shared over a specific field across all files. Data can originate from [Conditions]() or you can manipulate the data to a certain extend.
 
 
-
-
-# Manipulate Data
+# Manipulate
 
 {{< hint "warning" >}}With Data manipulation you can potentialy break the entire functionality. Make sure to only manipulate values under $.Data and be aware of what you are doing.{{< /hint >}}
 
