@@ -10,7 +10,7 @@ To execute the example run the following commands (assuming the current working 
 
 ```
 helm depdendency update
-helm template .
+helm template . 
 ```
 
 Extended output via [debug options](https://helmize.dev/documentation/debug/):
@@ -19,12 +19,7 @@ Extended output via [debug options](https://helmize.dev/documentation/debug/):
 helm template . --set summary=true --set debug=true
 ```
 
-## Values
-
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| public_repos | object | `{"external_dns":"https://kubernetes-sigs.github.io/external-dns/","jetstack":"https://charts.jetstack.io","metallb":"https://metallb.github.io/metallb"}` | Public Helm Repositories |
-| repo.interval | string | `"1m"` | Global Repository Interval |
+{{ template "chart.valuesSection" . }}
 
 ## Unit Tests
 
@@ -34,7 +29,7 @@ This Chart serves as Unit-Test to ensure changes don't remove functionalities or
 
 ### Update
 
-If there's new changes to the snapshot compare, you can update the snapshots with:
+If there's new changes to the snapshot compare, you can update the snapshots with: 
 
 ```
 helm unittest --color -f unit_tests/*_test.yaml -3 -u .

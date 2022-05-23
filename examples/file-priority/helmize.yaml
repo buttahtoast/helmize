@@ -1,6 +1,0 @@
-inventory_directory: "structure/"
-conditions:
-  - name: "prio1"
-    path: "priority_1"
-  - name: "prio2"
-    path: "priority_2/"

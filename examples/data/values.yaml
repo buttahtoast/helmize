@@ -8,4 +8,4 @@ showData: true
 showValue: true
 
 # -- Enable Faulty Layer
-faulty: true
+faulty: false

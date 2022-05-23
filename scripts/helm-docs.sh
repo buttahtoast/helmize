@@ -1,7 +1,7 @@
 #!/bin/bash
 ## Reference: https://github.com/norwoodj/helm-docs
 set -eux
-CHART_DIR="$(cd "$(dirname "$0")/.." && pwd)/charts"
+CHART_DIR="$(cd "$(dirname "$0")/.." && pwd)/"
 echo "$CHART_DIR"
 
 echo "Running Helm-Docs"

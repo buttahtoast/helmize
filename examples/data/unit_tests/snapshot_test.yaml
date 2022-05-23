@@ -1,4 +1,4 @@
-suite: example/file-cfg snapshot tests
+suite: example/data snapshot tests
 templates:
   - deploy.yaml
 tests:

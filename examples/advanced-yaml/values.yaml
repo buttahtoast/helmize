@@ -1,6 +1,7 @@
-## Multi YAML Example
 repo:
+  # -- Global Repository Interval
   interval: "1m"
+# -- Public Helm Repositories
 public_repos:
   metallb: https://metallb.github.io/metallb
   jetstack: https://charts.jetstack.io

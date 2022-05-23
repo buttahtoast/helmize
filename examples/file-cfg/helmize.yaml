@@ -24,6 +24,5 @@ conditions:
       registry_data:
         sampler: true
 
-
 file_config_key: "metadata.helmize"
 force: false
