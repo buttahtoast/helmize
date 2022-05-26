@@ -6,10 +6,18 @@
 
 */}}
 {{- define "inventory.entrypoint.func.deploy" -}}
-  {{/* Summary */}}
-  {{- $summary := (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $.Values "path" (include "inventory.entrypoint.defaults.summary_value" $)))).res -}}
-  {{- if $summary -}}
+
+  {{/* Print Helmize Configuration */}}
+  {{- if ((fromYaml (include "lib.utils.dicts.lookup" (dict "data" $.Values "path" (include "inventory.entrypoint.defaults.show_config" $)))).res) -}}
+  
+     {{- toYaml (dict "config" (fromYaml (include "inventory.config.func.get" $))) | nindent 0  }}
+
+  {{/* Print Summary Output */}}
+  {{- else if ((fromYaml (include "lib.utils.dicts.lookup" (dict "data" $.Values "path" (include "inventory.entrypoint.defaults.summary_value" $)))).res) -}}
+    
     {{- include "inventory.entrypoint.func.summary" $ -}}
+
+  {{/* Print Manifests */}}
   {{- else -}}
     {{/* Resolve Files */}}
     {{- $deploy_raw := include "inventory.entrypoint.func.resolve" $ -}}

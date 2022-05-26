@@ -7,6 +7,15 @@
 force
 {{- end -}}
 
+{{/* Show Config <Template> 
+
+  Default Configuration Key within configuration file for show_config option
+
+*/}}
+{{- define "inventory.entrypoint.defaults.show_config" -}}
+show_config
+{{- end -}}
+
 {{/* Summary Parameter <Template> 
 
   Default Summary Values Key
