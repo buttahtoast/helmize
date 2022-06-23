@@ -25,7 +25,7 @@ _Optional_
 
 **Type** `string` **Default** `structure/`
 
-Define a directory where the entire structure for helmize is located below. This path will be prepended for all the [condition](/documentation/configuration/conditions/)'s paths.
+Define a directory where the entire structure for helmize is located below. This path will be prepended for all the [condition](/documentation/configuration/conditions/)'s paths. The directory must be within the chart directry but **not within the templates/ folder**.
 
 ---
 

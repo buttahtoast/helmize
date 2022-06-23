@@ -4,15 +4,17 @@ description = "Identifiers"
 weight = 1
 +++
 
-{{< hint "warning" >}}
-Regardless if you are using the default identifier template or your own. If the template returns an empty ID the file name where the resource originate from is used. Should two resources from the same file use the file's id it's considered an error.
-{{< /hint >}}
+{{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/identifiers](https://github.com/buttahtoast/helmize/tree/main/examples/identifiers){{< /hint >}}
 
 Identifiers are used to identify a file or a partial file. Based on identifiers files are merged together. [File Configurations](../config) may influence the behavior. The subpath is not relevant in the identifier evaluation.
 
 # Template
 
-Currently if a element has the field `kind` and `metadata.name` it's combined to `{kind}-{metadata.name}.yaml`. If those two data fields are not set, the filename is used. You can define your identifiers per file via the `id` field. See **custom ID**. The current template can be found here:
+{{< hint "warning" >}}
+Regardless if you are using the default identifier template or your own. If the template returns an empty ID the file name where the resource originate from is used. Should there be multiple resources in that file which don't evaluate dedicated identifiers, they are both assigned the same identifier (filename) and therefor merged.
+{{< /hint >}}
+
+[Custom IDs](#custom-id) are always used. If a manifest has the field `kind` and `metadata.name` it's combined to `{kind}-{metadata.name}.yaml` which is added as identifier. If no [custom IDs](#custom-id) are set or those two data fields, the filename is used. The current template for identifiert evaluation can be found here:
 
   * [https://github.com/buttahtoast/helm-charts/blob/master/charts/helmize/templates/render/templates/_identifier.tpl](https://github.com/buttahtoast/helm-charts/blob/master/charts/helmize/templates/render/templates/_identifier.tpl)
 
@@ -155,7 +157,7 @@ Both elements have the same ID and merged:
 
 <h2>Custom ID</h2>
 
-In this example we define custom identifiers via the `id` field.
+In this example we define custom identifiers via the [id](../../files/#id) field.
 
 {{< expand "structure/resources/configmap.yaml" "..." >}}
 ```yaml

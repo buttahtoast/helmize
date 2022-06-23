@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nested
+spec:
+  template:
+    spec:
+      containers:
+      - name: backend
+        ports:
+        - __inject__
+        - name: grpc
+          containerPort: 1000
+          protocol: TCP
+        command:
+        - __inject__
+        - --level=info
+        - __inject__

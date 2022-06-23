@@ -184,7 +184,7 @@
     
                                 {{/* Merge Contents */}}
                                 {{- if $incoming_wagon.content -}}
-                                  {{- $_ := set $wagon "content" (mergeOverwrite (default dict $wagon.content) $incoming_wagon.content) -}}
+                                  {{- include "lib.utils.dicts.merge" (dict "base" $wagon.content "data" $incoming_wagon.content) -}}
                                 {{- end -}}
     
                                 {{/* Increase Match Counter */}}

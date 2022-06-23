@@ -4,7 +4,7 @@ description = "Data Handling"
 weight = 3
 +++
 
-{{< hint "info" >}}[https://github.com/buttahtoast/helmize/tree/main/examples/data](https://github.com/buttahtoast/helmize/tree/main/examples/data){{< /hint >}}
+{{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/data](https://github.com/buttahtoast/helmize/tree/main/examples/data){{< /hint >}}
 
 Data is shared over a specific field across all files. Data can originate from [Conditions]() or you can manipulate the data to a certain extend.
 

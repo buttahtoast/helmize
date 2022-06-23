@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nested
+spec:
+  template:
+    spec:
+      containers:
+      - name: backend
+        image: ghcr.io/stefanprodan/podinfo:6.1.1
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: http
+          containerPort: 9898
+          protocol: TCP
+        - name: http-metrics
+          containerPort: 9797
+          protocol: TCP
+        - name: grpc
+          containerPort: 10000
+          protocol: TCP
+        command:
+        - ./podinfo
+        - --port=9898
+        - --port-metrics=9797
+        - --grpc-port=9999
+        - --grpc-service-name=backend
+        - --cache-server=cache:6379
+        args:
+        - sample
+        - args
