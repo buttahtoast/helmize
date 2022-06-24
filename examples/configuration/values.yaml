@@ -1,2 +1,7 @@
 ## Print only Config Output
-show_config: true
+
+# Valid Cluster COnfiguration
+cluster:
+  environment: "dev"
+  location: "eu"
+  region: "east"

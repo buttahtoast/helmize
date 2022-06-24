@@ -41,7 +41,7 @@
         {{- $value_key := "" -}}
         {{- if (get $condition (include "inventory.conditions.defaults.conditions.key" $)) -}}
           {{- $v := (get $condition (include "inventory.conditions.defaults.conditions.key" $)) -}}
-          {{- $value_key = printf "Values.%s" (trimAll "." $v) -}}
+          {{- $value_key = (trimAll "." $v) -}}
         {{- end -}}
 
         {{/* Add Condition Keys */}}
@@ -84,7 +84,7 @@
             {{- $type_error = 0 -}}
           {{- end -}}
           {{- if $type_error -}}
-            {{- $_ := set $condition_struct "errors" (append $condition_struct.errors (dict "error" (printf "Value for condition must be %s but is %s" ($key_types| join ", ") (kindOf $key)))) -}}
+              {{- $_ := set $condition_struct "errors" (append $condition_struct.errors (dict "condition" $condition_struct.name "error" (printf "Value for condition must be %s but is %s" ($key_types| join ", ") (kindOf $key)))) -}}
           {{- end -}}
         {{- end -}}  
 
@@ -92,26 +92,31 @@
         {{- $filter := (get $condition (include "inventory.conditions.defaults.conditions.filter" $)) -}}
         {{- $reverse_filter := (get $condition (include "inventory.conditions.defaults.conditions.reverse_filter" $)) -}}
         {{- if $filter -}}
-          {{- $filtered_list := $condition_keys -}}
-          {{- if $reverse_filter -}}
-            {{- $filtered_list = list -}}
+
+          {{/* Append Default Value to filter */}}
+          {{- if (get $condition (include "inventory.conditions.defaults.conditions.default" $)) -}}
+            {{- $filter = append $filter (include "inventory.conditions.defaults.conditions.default" $) -}}
           {{- end -}}
-          {{- if (kindIs "string" $filter) -}}
-            {{- $filter = (list $filter) -}}
-          {{- end -}}
-          {{- range $condition_keys -}}
-            {{- $con := . -}}
+
+          {{/* Run Filter for each Condition Value */}}
+          {{- range $con := $condition_keys -}}
+            {{- $err := 0 -}}
             {{- range $filter -}}
-              {{- if (regexMatch . $con) -}}
-                {{- if $reverse_filter -}}
-                  {{- $filtered_list = append $filtered_list $con -}}
+              {{- if (not $err) -}}
+                {{- if (regexMatch . $con) -}}
+                  {{- if $reverse_filter -}}
+                    {{- $err = 1 -}}
+                    {{- $_ := set $condition_struct "errors" (append $condition_struct.errors (dict "condition" $condition_struct.name "error" (printf "Value %s is not allowed (Not Allowed values: %s)" $con ($filter| join ", ")))) -}}
+                  {{- end -}}
                 {{- else -}}
-                  {{- $filtered_list = without $filtered_list $con -}}
+                  {{- if (not $reverse_filter) -}}
+                    {{- $err = 1 -}}
+                    {{- $_ := set $condition_struct "errors" (append $condition_struct.errors (dict "condition" $condition_struct.name "error" (printf "Value %s is not allowed (Allowed values: %s)" $con ($filter| join ", ")))) -}}
+                  {{- end -}}
                 {{- end -}}
               {{- end -}}
             {{- end -}}
           {{- end -}}
-          {{- $condition_keys = $filtered_list -}}
         {{- end -}}
 
         {{/* Add Base */}}
@@ -122,9 +127,8 @@
         {{/* Set Key Value */}}
         {{- $_ := set $condition_struct "value" (default dict $key) -}}
 
-        {{/* Combine Data */}}
-        {{- $shared_data = (mergeOverwrite $shared_data (default dict (get $condition (include "inventory.conditions.defaults.conditions.data" $)))) -}}
-        {{- $_ := set $condition_struct "data" $shared_data -}}        
+        {{/* Combine Shared Data */}}
+        {{- $_ := set $condition_struct "data" (mergeOverwrite $shared_data (default dict (get $condition (include "inventory.conditions.defaults.conditions.data" $)))) -}}        
 
         {{/* Create Path for each Condition Key */}}
         {{- $condition_keys = $condition_keys | uniq -}}

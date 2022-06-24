@@ -14,3 +14,34 @@ tests:
       show_config: true
     asserts:
       - matchSnapshot: {}
+
+  ## Filter Testing
+  - it: "[Generic]: Filter Value"
+    values:
+      - ./values/inject.yaml
+    set: 
+      show_config: true
+    asserts:
+      - matchSnapshot: {}
+
+  - it: "[Generic]: Invalid Filter Value"
+    values:
+      - ./values/inject.yaml
+    set: 
+      cluster:
+        region: "not-allowed"
+    asserts:
+      - matchSnapshot: {}
+
+  - it: "[Generic]: Reversed Filter"
+    values:
+      - ./values/inject.yaml
+    set: 
+      show_config: true
+    asserts:
+      - matchSnapshot: {}
+
+
+
+  ## Force Testing
+

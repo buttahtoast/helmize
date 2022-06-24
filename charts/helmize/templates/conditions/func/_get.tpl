@@ -13,7 +13,7 @@
   {{- $return :=  dict "conditions" list "errors" list -}}
 
   {{/* Get Conditions from config */}}
-  {{- $conditions := (fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.conditions.defaults.conditions" $) "ctx" $))).res -}}
+  {{- $conditions := (fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.conditions.defaults.conditions" $) "ctx" $))).res -}}  
   {{- if $conditions -}}
     {{- $check_names := list -}}
     {{- range $cond := $conditions -}}

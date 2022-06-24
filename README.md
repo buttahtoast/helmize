@@ -2,11 +2,11 @@
 
 # Helmize
 
-<img src="icon.png"
+<img src="hugo/icon/icon.png"
      alt="Markdown Monster icon"
      style="float: right; width:200px;margin-right: 10px;" />
 
-Helmize is just a simple chart library which simplifies creating complex infrastructure deployments within helm charts. It's a powerful extension for existing GitOps Toolskits like [FluxCD](https://fluxcd.io/) which helps organize file structures.
+Helmize is just a simple chart library which simplifies creating complex infrastructure deployments within helm charts. It's a powerful extension for which integrates into existing GitOps Toolskits. It's just a helm library..
 
 
 ## Documentation

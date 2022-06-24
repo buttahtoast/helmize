@@ -22,9 +22,10 @@
   types: [ "string", "slice" ]
 {{ include "inventory.conditions.defaults.conditions.reverse_filter" $ }}:
   types: [ "int", "bool" ]
+  default: false
 {{ include "inventory.conditions.defaults.conditions.allow_root" $ }}:
   types: [ "int", "bool" ]
-  default: true
+  default: false
 {{ include "inventory.conditions.defaults.conditions.data" $ }}:
   types: [ "map" ]
 {{ include "inventory.conditions.defaults.conditions.tpls" $ }}:

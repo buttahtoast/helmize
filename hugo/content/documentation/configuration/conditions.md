@@ -73,7 +73,7 @@ _Optional_
 
 **Type** `string`/`slice`
 
-Filter keylist for values that are not allowed and exclude them as valid path. The filter is executed against all inputs for this condition. If a filter matches a value, the value is removed. You can use regex patterns. The [allow_root](#allow_root) is not affected by any filter and will always be added.
+Filter keylist for values that are allowed values. The filter is executed against all inputs for this condition. If a value does not match the filter, an error is created for this condition. You can use regex patterns. The [allow_root](#allow_root) is not affected by any filter and will always be added. The [default](#default) value will also be added to the filter, if set. 
 
 ---
 ## reverse_filter
@@ -82,7 +82,7 @@ _Optional_
 
 **Type** `boolean`
 
-Reverses the [filter](#filter) configuration so that only values given with the filter are accepted.
+Reverses the [filter](#filter) configuration so that only values given with the filter are not accepted.
 
 ---
 
@@ -90,9 +90,10 @@ Reverses the [filter](#filter) configuration so that only values given with the 
 
 _Optional_
 
-**Type** `boolean` **Default** `true`
+**Type** `boolean` **Default** `false`
 
 In addition to checking all keys, it becomes also valid to have files directly in the root of the condition's path. You may disable this option if you only want resources in subfolders of the condition's folder.
+
 
 ---
 

@@ -1,16 +1,15 @@
 inventory_directory: "structure/"
 file_config_key: "metadata.helmize"
-force: true
+force: false
 conditions:
 
   # Environment Condition
   - name: "environment"
-    key: "config.environment"
+    key: "cluster.environment"
     key_types: [ "string" ]
     required: false
     default: "default"
     filter: [ "dev" ]
-    reverse_filter: true
     file_cfg: 
       render: false
     data:
@@ -21,21 +20,18 @@ conditions:
 
   # Location Condition
   - name: "location"
-    key: "config.location"
+    key: "cluster.location"
     key_types: [ "string" ]
     required: true
     filter: [ "us", "eu", "as"]
-    reverse_filter: true
 
   ## Region Condition
   - name: "region"
-    key: "config.location"
+    key: "cluster.region"
     key_types: [ "string" ]
-    required: true
+    required: false
     default: "east"
-    filter: [ "east", "west", "south", "north" ]
-    reverse_filter: true
+    filter: [ "west", "south", "north" ]
 
 file_extensions: [ "yaml", "yml" ]
 file_excludes: [ "kustomization", "*tmp" ]
-custom_identifier_template: "custom.identifier"

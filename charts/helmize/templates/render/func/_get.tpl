@@ -15,7 +15,7 @@
   {{- if (not (include "lib.utils.errors.unmarshalingError" $render)) -}}
     {{- printf "%s" (toYaml $render) -}}
   {{- else -}}
-    {{- include "lib.utils.errors.fail" (printf "Render Returned invalid YAML:\n%s" (toYaml $render_raw | nindent 2)) -}}
+    {{- include "lib.utils.errors.fail" (printf "inventory.render.func.resolve returned invalid YAML:\n%s" (toYaml $render_raw | nindent 2)) -}}
   {{- end -}}
 {{- end -}}
 
