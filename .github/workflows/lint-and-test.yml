@@ -7,8 +7,11 @@ on:
     branches:    
       - main
 jobs: 
-  chart-test:
+  chart-test:  
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        helm-version: [ 'v3.4.2', 'v3.5.4', 'v3.6.3', 'v3.7.1', 'v3.8.2', 'latest' ]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -17,6 +20,8 @@ jobs:
 
       - name: Set up Helm
         uses: azure/setup-helm@v1
+        with:
+          version: '${{ matrix.helm-version }}'
 
       - uses: actions/setup-python@v2
         with:
