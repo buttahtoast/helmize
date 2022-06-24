@@ -2,7 +2,7 @@ apiVersion: v2
 name: helmize
 description: Go Sprig based deployment engine (GitOps Tool)
 type: library
-version: "0.1.0-rc.5"
+version: "0.1.0-rc.6"
 appVersion: "0.1.0"
 home: https://helmize.dev
 icon: https://raw.githubusercontent.com/buttahtoast/helmize/main/hugo/icon/icon.png
