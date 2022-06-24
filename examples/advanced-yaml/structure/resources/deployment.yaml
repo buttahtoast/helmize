@@ -3,10 +3,26 @@ kind: Deployment
 metadata:
   name: nested
 spec:
+  minReadySeconds: 3
+  revisionHistoryLimit: 5
+  progressDeadlineSeconds: 60
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: nested
   template:
+    metadata:
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9797"
+      labels:
+        app: nested
     spec:
       containers:
-      - name: backend
+      - name: nested
         image: ghcr.io/stefanprodan/podinfo:6.1.1
         imagePullPolicy: IfNotPresent
         ports:
@@ -17,7 +33,7 @@ spec:
           containerPort: 9797
           protocol: TCP
         - name: grpc
-          containerPort: 10000
+          containerPort: 9999
           protocol: TCP
         command:
         - ./podinfo
@@ -26,6 +42,31 @@ spec:
         - --grpc-port=9999
         - --grpc-service-name=backend
         - --cache-server=cache:6379
-        args:
-        - sample
-        - args
+        env:
+        - name: PODINFO_UI_COLOR
+          value: "#34577c"
+        livenessProbe:
+          exec:
+            command:
+            - podcli
+            - check
+            - http
+            - localhost:9898/healthz
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        readinessProbe:
+          exec:
+            command:
+            - podcli
+            - check
+            - http
+            - localhost:9898/readyz
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 32Mi
