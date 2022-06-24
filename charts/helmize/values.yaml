@@ -2,14 +2,17 @@
 #  The Values are valid in the values of the parent chart
 #  since library charts do not accept any values
 
+## Output Options
+#
+
 # -- Enable Summary Output
 summary: false
 
 # -- Enable Debug Information for Summary Output
 debug: false
 
-# -- Enable timestamp Output (Measurements)
-benchmark: false
+## Configuration Options
+#
 
 # -- Outputs the Configuration (Only for deploy template)
 show_config: false
@@ -18,12 +21,11 @@ show_config: false
 # @default -- helmize.yaml
 config_file: ""
 
-# Helmize Configuration
-config:
+# -- Helmize Configuration
+config: {}
 
-  
+## Development Options
+#
 
-
-  
-
-  
+# -- Enable timestamp Output (Measurements)
+benchmark: false
