@@ -1,0 +1,23 @@
+
+# Show Config
+show_config: false
+# Values
+
+
+config:
+  conditions:
+  - name: "resources"
+    file_cfg:
+      render: false
+  - name: "forks"
+    file_cfg:
+      render: false
+  - name: "patches"
+    file_cfg:
+      render: false
+  - name: "render_all"
+    file_cfg:
+      render: true
+    data: 
+      additional: true
+

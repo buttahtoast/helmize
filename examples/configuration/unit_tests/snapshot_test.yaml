@@ -1,0 +1,16 @@
+suite: example/configuration unit tests
+templates:
+  - deploy.yaml
+tests:
+  - it: "[Default Config File]: Config snapshot"
+    set: 
+      show_config: true
+    asserts:
+      - matchSnapshot: {}
+  - it: "[Default Config File]: Config snapshot (Values Injected)"
+    values:
+      - ./values/inject.yaml
+    set: 
+      show_config: true
+    asserts:
+      - matchSnapshot: {}

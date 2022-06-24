@@ -1,0 +1,26 @@
+config:
+  file_extensions:
+    # Combine with Values from Base Config 
+    - "__inject__" 
+    - "tpl"
+  file_excludes:
+    # Combine with Values from Base Config 
+    - "__inject__"
+    - ".*"
+  conditions:
+
+    # Additional Condition
+    - name: "catalog"
+      required: false
+
+    # Combine with Values from Base Config 
+    - "__inject__"
+
+    # Extend Environment Condition
+    - name: "environment"
+      required: true
+      filter: 
+        - "__inject__"
+        - "test"
+        - "test-q"
+        - "prod"

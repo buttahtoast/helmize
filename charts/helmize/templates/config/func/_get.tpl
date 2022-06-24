@@ -26,9 +26,9 @@
       {{- include "lib.utils.errors.fail" (printf "Templating of %s did not return valid YAML:\n%s" $cfg_loc ($template_config_raw | nindent 2)) -}}
     {{- end -}}
 
-    {{/* Merge Inline Configuration */}}
+    {{/* Merge Configuration (With Values) */}}
     {{- $values_cfg := (default dict (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $.Values "path" (include "inventory.config.defaults.config_values" $)))).res) -}}
-    {{- $cfg = mergeOverwrite $cfg $values_cfg -}}
+    {{- include "lib.utils.dicts.merge" (dict "base" $cfg "data" $values_cfg) -}}
 
     {{/* Validate Configuration */}}
     {{- $cfg_validate := fromYaml (include "lib.utils.types.validate" (dict "type" "inventory.config.types.config" "data" $cfg "ctx" $)) -}}
