@@ -1,0 +1,8 @@
+repo:
+  # -- Global Repository Interval
+  interval: "1m"
+# -- Public Helm Repositories
+public_repos:
+  metallb: https://metallb.github.io/metallb
+  jetstack: https://charts.jetstack.io
+  external_dns: https://kubernetes-sigs.github.io/external-dns/

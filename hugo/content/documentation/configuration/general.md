@@ -1,13 +1,15 @@
 +++
-title = "Config"
-description = "General Configuration"
+title = "Helmize"
+description = "Helmize Configuration"
 weight = 1
 +++
+# Options
 
-The following general configuration options are available in the `helmize.yaml`
+The following options are available in the `helmize.yaml`
 
+---
 
-# conditions
+## conditions
 
 _Required_
 
@@ -15,42 +17,19 @@ _Required_
 
 [Read more about conditions](../conditions/)
 
+---
 
-# dropins
-
-_Required_
-
-**Type** `slice`
-
-[Read more about dropins](../dropins/)
-
-
-# inventory_directory
+## inventory_directory
 
 _Optional_
 
-**Type** `string` 
+**Type** `string` **Default** `structure/`
 
-Define a directory where the entire structure for helmize is located below. This path will be appended for all the [condition](/documentation/configuration/conditions/)'s paths.
+Define a directory where the entire structure for helmize is located below. This path will be prepended for all the [condition](/documentation/configuration/conditions/)'s paths. The directory must be within the chart directry but **not within the templates/ folder**.
 
+---
 
-# templates_directory
-
-_Optional_
-
-**Type** `string` 
-
-Define a directory where all templates for the dropins templates are located below. This path will be appended for all the templates in all [dropins](#/configuration/dropins/)
-
-# force
-
-_Optional_
-
-**Type** `string` **Default** `false`
-
-If any file contains an error the template will fail. With force the template won't fail even if there are errors. Files with errors will be skipped.
-
-# file_extensions
+## file_extensions
 
 _Optional_
 
@@ -58,7 +37,9 @@ _Optional_
 
 Define which file extensions should be considered while looking through the directories. Just declare the extension without wildcard, this configuration does not accept regex pattern.
 
-# file_excludes
+---
+
+## file_excludes
 
 _Optional_
 
@@ -66,86 +47,47 @@ _Optional_
 
 Define which file names should be considered while looking through the directories. You can use regex patterns.
 
+---
 
-# merge_strategy
+## file_config_key
 
-_Optional_
-
-**Type** `string`/`slice` **Default** `path` **Valid Options** `file`, `path`
-
-Define how files are merged together.
-
-{{< expand "Explanation" "..." >}}
-## file 
-
-Merge file content based on file name. If you have multiple files with the exact same name in one condition folder or over multiple folders, they are considered to be one final file and merged together.
-
-Let's assume you have the following folder structure:
-
-```
-structure
-|
-+---stage/
-|   +---dev/
-|          release.yaml
-|          subdir/release.yaml
-|   ...
-|
-+---location/
-|   +---east/
-|          release.yaml
-|          subdir/release.yaml
-|   ...
-+
-```
-
-All the files named `release.yaml` will be merged together and as output you will get a single `release.yaml` file.
-
-
-## path
-
-Merge file content based on file subpath. If you have multiple files with teh exact same name but different subpaths they will not be merged together.
-
-Let's assume you have the following folder structure:
-
-```
-structure
-|
-+---stage/
-|   +---dev/
-|          release.yaml
-|          subdir/release.yaml
-|   ...
-|
-+---location/
-|   +---east/
-|          release.yaml
-|          subdir/release.yaml
-|   ...
-+
-```
-
-The `release.yaml` files are merged together and the `subdir/release.yaml` are merged together. 
-{{< /expand >}}
-
-# identifier_template
+[Example]()
 
 _Optional_
 
-**Type** `string` **Default** `"inventory.render.templates.identifier"` 
+**Type** `string` **Default** `helmize` 
+
+Key within each's file content which holds the [file configuration](../../files/). This value also allows nested paths (eg. `metadata.config`). After the config is source the entire key is removed from the content.
+
+---
+
+## identifier_template
+
+_Optional_
+
+**Type** `string` **Default** `inventory.render.templates.identifier` 
 
 Define a custom identifier template
 
 [Read more about identifiers](../../customization/identifiers/)
 
+---
 
-# render_template
+## render_template
 
 _Optional_
 
-**Type** `string` **Default** `"inventory.entrypoint.templates.render"` 
+**Type** `string` **Default** `inventory.entrypoint.templates.render` 
 
 Define a custom render template
 
 [Read more about identifiers](../../customization/render/)
 
+---
+## force
+
+_Optional_
+
+**Type** `string` **Default** `false`
+
+If any file contains an error the template will fail. With force the template won't fail even if there are errors. Files with errors will be skipped.

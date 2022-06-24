@@ -1,0 +1,13 @@
+conditions:
+
+{{- if $.Values.custom }}
+  - name: "custom"
+{{- end }}
+
+{{- if $.Values.file_name }}
+  - name: "file_name"
+{{- end }}
+
+{{- if $.Values.kind }}
+  - name: "kind"
+{{- end }}

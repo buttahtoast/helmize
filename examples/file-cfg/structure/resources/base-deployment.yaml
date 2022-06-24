@@ -1,12 +1,13 @@
-id: [ "deploy" ]
-cfg:
-  render: false
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
   labels:
     app: nginx
+  helmize:
+    id: 
+      - deploy
+    render: false
 spec:
   replicas: 1
   selector:

@@ -14,7 +14,7 @@
 
     {{/* Variables */}}
     {{- $ctx := $ -}}
-    {{- $return := dict "files" list "errors" list "timestamps" list -}}
+    {{- $return := dict "files" list "errors" list "timestamps" list "conditions" -}}
 
     {{/* Fetch Conditions */}}
     {{- $conds := fromYaml (include "inventory.conditions.func.resolve" (dict "ctx" $ctx)) -}}
@@ -32,9 +32,14 @@
       
       {{/* Iterate over each condition to get paths for file lookups */}}
       {{- $paths := list -}}
+      {{- $_ := set $return "conditions" $conds.conditions -}}
       {{- range $conds.conditions -}}
-        {{- if .paths -}}
-          {{- $paths = concat $paths .paths -}}
+        {{- if .errors -}}
+          {{- $_ := set $return "errors" (concat $return.errors .errors) -}}
+        {{- else -}}
+          {{- if .paths -}}
+            {{- $paths = append $paths (dict "paths" .paths "config" .config.file_cfg "post_renderers" .config.post_renderers "data" .data "value" .value)  -}}
+          {{- end -}}
         {{- end -}}
       {{- end -}}
 
@@ -45,8 +50,9 @@
       {{- if $paths -}}
 
         {{/* Lookup actual files in the given paths */}}
-        {{- $func_files := (dict "tpl" "inventory.render.func.files.finder" "ctx" (dict "paths" $paths "ctx" $ctx)) -}}
+        {{- $func_files := (dict "tpl" "inventory.render.func.finder" "ctx" (dict "paths" $paths "ctx" $ctx)) -}}
         {{- $files := (fromYaml (include $func_files.tpl $func_files.ctx)) -}}
+
           {{- if (not (include "lib.utils.errors.unmarshalingError" $files)) -}}
             
             {{/* Error Redirect */}}
@@ -87,7 +93,7 @@
             {{- include "lib.utils.errors.fail" (printf "inventory.render.func.files.finder Returned invalid YAML:\n%s" (toYaml $func_files | nindent 2)) -}}
           {{- end -}}
       {{- else -}}
-        {{- fail "no valid paths" -}}
+        {{- printf "%s" (toYaml $conds) -}}
       {{- end -}}
     {{- end -}}
 

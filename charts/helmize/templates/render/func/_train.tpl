@@ -19,7 +19,7 @@
     {{- $file_train := list -}}
     {{- $yaml_delimiter := "\n---" -}}
     {{- $order := 0 -}}
-
+    
     {{/* Shared Data Over All Files */}}
     {{- $shared_data := dict -}}
 
@@ -36,8 +36,8 @@
       {{/* Benchmark */}}
       {{- include "inventory.helpers.ts" (dict "msg" (printf "File %s initialied" $file_name) "ctx" $.ts) -}}
 
-      {{/* Merge Data Store */}}
-      {{- $data := $shared_data -}}
+      {{/* Merge Data Store (Merges Condition Data with File Train Data Store */}}
+      {{- $shared_data = mergeOverwrite $shared_data $file.data -}}
 
       {{/* Identifier for file */}}
       {{- $file_id := dict "file" $file_name "path" (dir $file.path) "filename" (base $file_name) -}}
@@ -48,8 +48,8 @@
       {{/* Check if Content */}}
       {{- if $content -}}
 
-        {{/* Initialize Context */}}
-        {{- $context := $.ctx -}}
+        {{/* Initialize Context (Sets $.Data and $.Value key) */}}
+        {{- $context := (set (set $.ctx "Data" $shared_data) "Value" (default dict $file.value))  -}}
 
         {{/* Template File Content */}}
         {{- $template_content_raw := tpl $content $context -}}
@@ -77,19 +77,22 @@
               {{/* File Struct */}}
               {{- $incoming_wagon := dict "id" list "content" $parsed_content "file_id" $file_id "subpath" (regexReplaceAll $file_id.path $file_id.file "${1}" | trimPrefix "/" | dir) "debug" list "errors" list -}}
   
+              {{/* Benchmark */}}
+              {{- include "inventory.helpers.ts" (dict "msg" (printf "Evaluating Configuration") "ctx" $.ts) -}}
+
               {{/* Resolve File Configuration within file, if not set get empty dict */}}
-              {{- $file_cfg := default dict (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $incoming_wagon.content "path" (include "inventory.render.defaults.file_cfg.key" $)))).res -}}
-              {{- $_ := unset $incoming_wagon.content (include "inventory.render.defaults.file_cfg.key" $) -}}
+              {{- $file_cfg_path := (fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.render.defaults.file_cfg.key" $) "ctx" $.ctx))).res -}}
+              {{- $file_cfg := mergeOverwrite (get $file "config") (default dict (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $incoming_wagon.content "path" $file_cfg_path))).res) -}}
       
-              {{/* Compares against Type */}}
-              {{- $file_cfg_type := fromYaml (include "lib.utils.types.validate" (dict "type" "inventory.render.types.file_configuration"  "data" $file_cfg  "ctx" $.ctx)) -}}
+              {{/* Compares against Type, Defaults are already set via conditions */}}
+              {{- $file_cfg_type := fromYaml (include "lib.utils.types.validate" (dict "type" "inventory.render.types.file_configuration"  "data" $file_cfg "ctx" $.ctx)) -}}
               {{- if $file_cfg_type.isType -}}
 
                 {{/* Set Configuration */}}
-                {{- $_ := set $incoming_wagon "cfg" $file_cfg -}}
+                {{- $_ := set $incoming_wagon "config" $file_cfg -}}
 
                 {{/* Redirect Render config */}}
-                {{- $_ := set $incoming_wagon "render" (get $incoming_wagon.cfg (include "inventory.render.defaults.file_cfg.render" $)) -}}
+                {{- $_ := set $incoming_wagon "render" (get $file_cfg (include "inventory.render.defaults.file_cfg.render" $)) -}}
 
               {{- else -}}
                 {{/* Error Redirect */}}
@@ -104,14 +107,17 @@
                  
               {{/* Benchmark */}}
               {{- include "inventory.helpers.ts" (dict "msg" (printf "Got Identifier") "ctx" $.ts) -}}
-    
+
+              {{/* Unset Configuration In Content */}}
+              {{- include "lib.utils.dicts.unset"  (dict "data" $incoming_wagon.content "path" $file_cfg_path) -}}
+
               {{/* Handle Errors (File Won't be merged) */}}
               {{- if $incoming_wagon.errors -}}
                 {{- $_ := set $return "errors" (append $return.errors (dict "file" $file_name "errors" $incoming_wagon.errors)) -}}
               {{- else -}}
   
                 {{/* Always Add File */}}
-                {{- $_ := set $incoming_wagon "files" (list (omit (set (set (set $file "_order" $order) "config" $incoming_wagon.cfg) "ids" $incoming_wagon.id) "partial_files")) -}}
+                {{- $_ := set $incoming_wagon "files" (list (omit (set (set (set $file "_order" $order) "config" $file_cfg) "ids" $incoming_wagon.id) "partial_files")) -}}
 
                 {{/* Further Debug */}}
                 {{- if (include "inventory.entrypoint.func.debug" $.ctx) -}}
@@ -122,7 +128,7 @@
                 {{- range $i, $wagon := $file_train -}}
     
                   {{/* Validate Subpath */}}
-                  {{- if (or (not (get $incoming_wagon.cfg (include "inventory.render.defaults.file_cfg.subpath" $))) (and (get $incoming_wagon.cfg (include "inventory.render.defaults.file_cfg.subpath" $)) (eq $incoming_wagon.subpath $wagon.subpath))) -}}
+                  {{- if (or (not (get $file_cfg (include "inventory.render.defaults.file_cfg.subpath" $))) (and (get $file_cfg (include "inventory.render.defaults.file_cfg.subpath" $)) (eq $incoming_wagon.subpath $wagon.subpath))) -}}
     
                     {{/* ForEach incomfing ID iterate */}}
                     {{- range $id := $incoming_wagon.id -}}
@@ -134,13 +140,13 @@
                         {{- if (not $fork) -}}
 
                           {{/* Validate Match Counter */}}
-                          {{- if (le ((default 0 (get $incoming_wagon.cfg (include "inventory.render.defaults.file_cfg.max_match" $))) | int) ($match_count | int)) -}}
+                          {{- if (le ((default 0 (get $file_cfg (include "inventory.render.defaults.file_cfg.max_match" $))) | int) ($match_count | int)) -}}
         
                             {{/* Check Match */}}
-                            {{- if (or (eq $id $wagon_id) (and (get $incoming_wagon.cfg (include "inventory.render.defaults.file_cfg.pattern" $)) (regexFind $id $wagon_id))) -}}
+                            {{- if (or (eq $id $wagon_id) (and (get $file_cfg (include "inventory.render.defaults.file_cfg.pattern" $)) (regexFind $id $wagon_id))) -}}
             
                               {{/* Fork to new File */}}
-                              {{- if (get $incoming_wagon.cfg (include "inventory.render.defaults.file_cfg.fork" $)) -}}
+                              {{- if (get $file_cfg (include "inventory.render.defaults.file_cfg.fork" $)) -}}
     
                                 {{/* Create new reference */}}
                                 {{- $fork = toYaml $incoming_wagon -}}
@@ -170,10 +176,15 @@
                                 {{- with $incoming_wagon.files -}}
                                   {{- $_ := set $wagon "files" (concat $wagon.files $incoming_wagon.files) -}}
                                 {{- end -}}
+
+                                {{/* Concat Post Renderers */}}
+                                {{- with $incoming_wagon.post_renderers -}}
+                                  {{- $_ := set $wagon "post_renderers" (concat $wagon.post_renderers $incoming_wagon.post_renderers | uniq) -}}
+                                {{- end -}}
     
                                 {{/* Merge Contents */}}
                                 {{- if $incoming_wagon.content -}}
-                                  {{- $_ := set $wagon "content" (mergeOverwrite (default dict $wagon.content) $incoming_wagon.content) -}}
+                                  {{- include "lib.utils.dicts.merge" (dict "base" $wagon.content "data" $incoming_wagon.content) -}}
                                 {{- end -}}
     
                                 {{/* Increase Match Counter */}}
@@ -194,17 +205,19 @@
   
                 {{/* Append Forks */}}
                 {{- if $fork -}}
-                   {{- $file_train = append $file_train (set (omit $fork "cfg" "file_id") "fork" "true") -}}
+                 
+                   {{/* Append Fork after train iteration */}}
+                   {{- $file_train = append $file_train (set (omit $fork "config" "file_id") "fork" "true") -}}
 
                 {{/* Handle unmatched files */}}   
                 {{- else if not ($matched) -}}
   
                   {{/* Skip if pattern enabled */}}
-                  {{- if not (get $incoming_wagon.cfg (include "inventory.render.defaults.file_cfg.pattern" $)) -}}
+                  {{- if not (get $file_cfg (include "inventory.render.defaults.file_cfg.pattern" $)) -}}
   
                     {{/* Skip File if configured */}}
-                    {{- if not (eq (get $incoming_wagon.cfg (include "inventory.render.defaults.file_cfg.no_match" $)) "skip") -}}
-                      {{- $file_train = append $file_train (omit $incoming_wagon "cfg" "file_id" | deepCopy) -}}
+                    {{- if not (eq (get $file_cfg (include "inventory.render.defaults.file_cfg.no_match" $)) "skip") -}}
+                      {{- $file_train = append $file_train (omit $incoming_wagon "config" "file_id" | deepCopy) -}}
                       {{- $order = addf $order 1 -}}
                     {{- end -}}
   
@@ -237,7 +250,7 @@
 
       {{/* Run PostRenderers */}}
       {{- range $file := $file_train -}}
-        {{- include "inventory.postrenders.func.execute" (dict "file" $file "extra_ctx" $file.data "extra_ctx_key" (include "inventory.render.defaults.files.data_key" $) "ctx" $.ctx) -}}
+        {{- include "inventory.postrenders.func.execute" (dict "file" $file "ctx" $.ctx) -}}
       {{- end -}}
 
       {{/* Benchmark */}}

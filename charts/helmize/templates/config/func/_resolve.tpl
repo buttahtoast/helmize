@@ -12,10 +12,18 @@
 */}}
 {{- define "inventory.config.func.resolve" -}}
   {{- if and $.path $.ctx }}
-    {{- $tpl := default false $.tpl -}}
+    {{- $cfg := dict -}}
 
-    {{/* Resolve configuration */}}
-    {{- $cfg := fromYaml (include "inventory.config.func.get" $.ctx) -}}
+    {{/* Resolve from Context */}}
+    {{- if (get $.ctx "Config") -}}
+      {{- $cfg = (get $.ctx "Config") -}}
+      {{- $_ := (set $.ctx "WASHERE" "true") -}}
+    {{/* Resolve from File */}}
+    {{- else -}}
+      {{- $cfg = fromYaml (include "inventory.config.func.get" $.ctx) -}}
+    {{- end -}}
+
+    {{/* Execute Lookup */}}
     {{- $result := include "lib.utils.dicts.lookup" (dict "data" $cfg "path" $.path "required" (default false $.req)) -}}
     {{- printf "%s" ($result) -}}
 

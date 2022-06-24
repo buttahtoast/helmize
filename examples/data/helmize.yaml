@@ -1,0 +1,33 @@
+inventory_directory: "structure/"
+conditions:
+
+  - name: "layer_1"
+    data: 
+      layer_1:
+        remove: false
+        overwrite: "this"
+
+  - name: "region"
+    path: "layer_2/"
+    key: "region"
+    default: "east"
+    filter: [ "east", "west", "north", "south" ]
+    reverse_filter: true
+    data: 
+      layer_2:
+        sampler: true
+    tpls: 
+      - "ingress_base.tpl"
+
+  - name: "layer_3"
+    data: 
+      layer_3:
+        other: true
+    tpls: 
+      - "ingress_class.tpl"
+
+  {{- if $.Values.faulty }}
+  - name: "faulty_template"
+    tpls: 
+      - "faulty.tpl"
+  {{- end }}

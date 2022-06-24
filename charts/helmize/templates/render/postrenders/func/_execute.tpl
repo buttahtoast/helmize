@@ -36,21 +36,21 @@
 
     {{/* Extra Context */}}
     {{- $context := $.ctx -}}
-    {{- if and $.extra_ctx (kindIs "map" $.extra_ctx) -}}
-      {{- $_ := set $context (default "inv" $.extra_ctx_key) $.extra_ctx -}}
-    {{- else -}}
-      {{- $_ := set $context (default "inv" $.extra_ctx_key) dict -}}
-    {{- end -}}
 
     {{/* File has Content */}}
     {{- if $.file.content -}}
 
       {{/* Load Renderers */}}
-      {{- $renders := (fromYaml (include "inventory.postrenders.func.get" (dict "ctx" $.ctx))).renders -}}
+      {{- $renders := default list (fromYaml (include "inventory.postrenders.func.get" (dict "ctx" $.ctx))).renders -}}
+
+      {{/* File Post-Renderers */}}
+      {{- with $.file.post_renders -}}
+        {{- $renders = concat $renders . -}}
+      {{- end -}}
 
       {{/* Add Post-Renderers as Debug */}}
       {{- if (include "inventory.entrypoint.func.debug" $.ctx) -}}
-        {{- $_ := set $.file "renderers" $renders -}}
+        {{- $_ := set $.file "post_renders" $renders -}}
       {{- end -}}
 
       {{/* Execute Renderers */}}

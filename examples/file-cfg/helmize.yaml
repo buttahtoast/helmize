@@ -1,6 +1,28 @@
 inventory_directory: "structure/"
 conditions:
   - name: "resources"
-    allow_root: true
+    file_cfg:
+      render: true
+    data: 
+      resources_data:
+        sampler: true
+  - name: "forks"
+    file_cfg:
+      fork: true
+      subpath: false
+    data: 
+      forks_data:
+        sampler: true
   - name: "patches"
-    allow_root: true
+    file_cfg:
+      pattern: true
+      subpath: false
+      render: false
+    tpls:
+      - registry.tpl
+    data: 
+      registry_data:
+        sampler: true
+
+file_config_key: "metadata.helmize"
+force: false

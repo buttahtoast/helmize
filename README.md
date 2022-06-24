@@ -1,2 +1,20 @@
-# helmize
-Helmize Documentation Repository
+[![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/helmize)](https://artifacthub.io/packages/search?repo=helmize)
+
+# Helmize
+
+<img src="icon.png"
+     alt="Markdown Monster icon"
+     style="float: right; width:200px;margin-right: 10px;" />
+
+Helmize is just a simple chart library which simplifies creating complex infrastructure deployments within helm charts. It's a powerful extension for existing GitOps Toolskits like [FluxCD](https://fluxcd.io/) which helps organize file structures.
+
+
+## Documentation
+
+The entire documentation can be found here:
+
+  * [helmize.dev](https://helmize.dev)
+
+## Contributing
+
+We'd love to have you contribute! Please refer to our [contribution guidelines](CONTRIBUTING.md) for details.

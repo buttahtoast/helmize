@@ -6,6 +6,7 @@
 {{- define "inventory.config.types.config" -}}
 {{ include "inventory.conditions.defaults.inv_dir" $ }}:
   types: [ "string" ]
+  default: "structure/"
 {{ include "inventory.conditions.defaults.conditions" $ }}:
   types: [ "slice" ]
 {{ include "inventory.entrypoint.defaults.force" $ }}:
@@ -24,6 +25,7 @@
   default: "inventory.entrypoint.templates.render" 
 {{ include "inventory.postrenders.defaults.cfg.post_renderers" $ }}:
   types: [ "slice" ]
-  default: [ "{{ include "inventory.postrenders.defaults.cfg.post_renderers.inject_key" $ }}" ]
-{{ include "inventory.render.types.file_configuration" $ }}
+{{ include "inventory.render.defaults.file_cfg.key" $ }}:
+  types: [ "string" ]
+  default: {{ include "inventory.render.defaults.file_cfg.value" $ }}
 {{- end -}}

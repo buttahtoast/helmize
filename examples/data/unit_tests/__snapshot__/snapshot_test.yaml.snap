@@ -1,0 +1,377 @@
+manifest snapshot:
+  1: |
+    Data:
+      class: vertical-class
+      domain: east.vertical.public.domain
+      layer_1:
+        overwrite: this
+        remove: false
+      layer_2:
+        sampler: true
+      layer_3:
+        other: true
+      unwanted: Unset me again
+  2: |
+    Value: {}
+  3: |
+    Data:
+      class: vertical-class
+      domain: east.vertical.public.domain
+      inject:
+        msg: inject data into shared data store
+      layer_1:
+        overwrite: this
+        remove: false
+      layer_2:
+        sampler: true
+      layer_3:
+        other: true
+  4: |
+    Value: east
+  5: |
+    Data:
+      class: vertical-class
+      domain: east.vertical.public.domain
+      inject:
+        msg: inject data into shared data store
+      layer_1:
+        overwrite: this
+        remove: false
+      layer_2:
+        sampler: true
+      layer_3:
+        other: true
+  6: |
+    Value: {}
+summary snapshot:
+  1: |
+    conditions:
+    - config:
+        allow_root: true
+        data:
+          layer_1:
+            overwrite: this
+            remove: false
+        key_types:
+        - string
+        - slice
+        name: layer_1
+      data:
+        class: vertical-class
+        domain: east.vertical.public.domain
+        layer_1:
+          overwrite: this
+          remove: false
+        layer_2:
+          sampler: true
+        layer_3:
+          other: true
+      errors: []
+      keys:
+      - /
+      name: layer_1
+      paths:
+      - structure/layer_1/
+      root_path: layer_1
+      value: {}
+    - config:
+        allow_root: true
+        data:
+          layer_2:
+            sampler: true
+        default: east
+        filter:
+        - east
+        - west
+        - north
+        - south
+        key: region
+        key_types:
+        - string
+        - slice
+        name: region
+        path: layer_2/
+        reverse_filter: true
+        tpls:
+        - ingress_base.tpl
+      data:
+        class: vertical-class
+        domain: east.vertical.public.domain
+        layer_1:
+          overwrite: this
+          remove: false
+        layer_2:
+          sampler: true
+        layer_3:
+          other: true
+      errors: []
+      keys:
+      - /
+      - east
+      name: region
+      paths:
+      - structure/layer_2/
+      - structure/layer_2/east/
+      root_path: layer_2/
+      value: east
+    - config:
+        allow_root: true
+        data:
+          layer_3:
+            other: true
+        key_types:
+        - string
+        - slice
+        name: layer_3
+        tpls:
+        - ingress_class.tpl
+      data:
+        class: vertical-class
+        domain: east.vertical.public.domain
+        layer_1:
+          overwrite: this
+          remove: false
+        layer_2:
+          sampler: true
+        layer_3:
+          other: true
+      errors: []
+      keys:
+      - /
+      name: layer_3
+      paths:
+      - structure/layer_3/
+      root_path: layer_3
+      value: {}
+    errors: []
+    files:
+    - checksum: 91e7a0f690285bfc24b8d426098dd647cf59d6ade1e311cd861e29f56412aff0
+      content:
+        Data:
+          class: vertical-class
+          domain: east.vertical.public.domain
+          layer_1:
+            overwrite: this
+            remove: false
+          layer_2:
+            sampler: true
+          layer_3:
+            other: true
+          unwanted: Unset me again
+      debug: []
+      errors: []
+      files:
+      - _order: 0
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data:
+          class: vertical-class
+          domain: east.vertical.public.domain
+          layer_1:
+            overwrite: this
+            remove: false
+          layer_2:
+            sampler: true
+          layer_3:
+            other: true
+        file: structure/layer_1/layer1-data.yaml
+        ids:
+        - layer1-data.yaml
+        path: structure/layer_1/
+        post_renderers: []
+        value: {}
+      id:
+      - layer1-data.yaml
+      render: true
+      subpath: .
+    - checksum: e73ebdb9a8d141b5b7fd2885c1fc044a74312adfa47b70189418953dc5d1d0a3
+      content:
+        Value: {}
+      debug: []
+      errors: []
+      files:
+      - _order: 1
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data:
+          class: vertical-class
+          domain: east.vertical.public.domain
+          layer_1:
+            overwrite: this
+            remove: false
+          layer_2:
+            sampler: true
+          layer_3:
+            other: true
+        file: structure/layer_1/layer1-value.yaml
+        ids:
+        - layer1-value.yaml
+        path: structure/layer_1/
+        post_renderers: []
+        value: {}
+      id:
+      - layer1-value.yaml
+      render: true
+      subpath: .
+    - checksum: 5f2d641a754e92a1f140a3f848bae1eda0d2041724f5d6632e0fd0468bdeef32
+      content:
+        Data:
+          class: vertical-class
+          domain: east.vertical.public.domain
+          inject:
+            msg: inject data into shared data store
+          layer_1:
+            overwrite: this
+            remove: false
+          layer_2:
+            sampler: true
+          layer_3:
+            other: true
+      debug: []
+      errors: []
+      files:
+      - _order: 2
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data:
+          class: vertical-class
+          domain: east.vertical.public.domain
+          layer_1:
+            overwrite: this
+            remove: false
+          layer_2:
+            sampler: true
+          layer_3:
+            other: true
+        file: structure/layer_2/layer2-data.yaml
+        ids:
+        - layer2-data.yaml
+        path: structure/layer_2/
+        post_renderers: []
+        value: east
+      id:
+      - layer2-data.yaml
+      render: true
+      subpath: .
+    - checksum: 1f029017f09741e3e8d36030a34d3d3b8663b008b1588eedf886c973af280b84
+      content:
+        Value: east
+      debug: []
+      errors: []
+      files:
+      - _order: 3
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data:
+          class: vertical-class
+          domain: east.vertical.public.domain
+          layer_1:
+            overwrite: this
+            remove: false
+          layer_2:
+            sampler: true
+          layer_3:
+            other: true
+        file: structure/layer_2/layer2-value.yaml
+        ids:
+        - layer2-value.yaml
+        path: structure/layer_2/
+        post_renderers: []
+        value: east
+      id:
+      - layer2-value.yaml
+      render: true
+      subpath: .
+    - checksum: 5f2d641a754e92a1f140a3f848bae1eda0d2041724f5d6632e0fd0468bdeef32
+      content:
+        Data:
+          class: vertical-class
+          domain: east.vertical.public.domain
+          inject:
+            msg: inject data into shared data store
+          layer_1:
+            overwrite: this
+            remove: false
+          layer_2:
+            sampler: true
+          layer_3:
+            other: true
+      debug: []
+      errors: []
+      files:
+      - _order: 4
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data:
+          class: vertical-class
+          domain: east.vertical.public.domain
+          layer_1:
+            overwrite: this
+            remove: false
+          layer_2:
+            sampler: true
+          layer_3:
+            other: true
+        file: structure/layer_3/layer3-data.yaml
+        ids:
+        - layer3-data.yaml
+        path: structure/layer_3/
+        post_renderers: []
+        value: {}
+      id:
+      - layer3-data.yaml
+      render: true
+      subpath: .
+    - checksum: e73ebdb9a8d141b5b7fd2885c1fc044a74312adfa47b70189418953dc5d1d0a3
+      content:
+        Value: {}
+      debug: []
+      errors: []
+      files:
+      - _order: 5
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data:
+          class: vertical-class
+          domain: east.vertical.public.domain
+          layer_1:
+            overwrite: this
+            remove: false
+          layer_2:
+            sampler: true
+          layer_3:
+            other: true
+        file: structure/layer_3/layer3-value.yaml
+        ids:
+        - layer3-value.yaml
+        path: structure/layer_3/
+        post_renderers: []
+        value: {}
+      id:
+      - layer3-value.yaml
+      render: true
+      subpath: .

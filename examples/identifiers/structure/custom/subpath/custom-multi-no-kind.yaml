@@ -1,0 +1,42 @@
+{{- if $.Values.multi -}}
+helmize:
+  id: 
+    - custom-id-1 
+    - custom-id-2
+metadata:
+  labels:
+    subpath-custom-multi-no-kind: "true"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
+---
+helmize:
+  id: 
+    - custom-id-3
+    - custom-id-4
+metadata:
+  labels:
+    subpath-custom-multi-no-kind: "true"
+spec:
+  selector:
+    app: nginx
+  ports:
+  - port: 80
+    name: http
+    targetPort: 80
+  - port: 443
+    name: https
+    targetPort: 80
+{{- end -}}

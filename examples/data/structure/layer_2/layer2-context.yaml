@@ -1,0 +1,3 @@
+{{- if $.Values.showContext -}}
+Context: {{- toYaml $ | nindent 2 }}
+{{- end }}

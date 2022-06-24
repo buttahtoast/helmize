@@ -1,6 +1,0 @@
-id: [ "*.yaml" ]
-cfg:
-  pattern: true
-metadata:
-  labels:
-    added: for-all  

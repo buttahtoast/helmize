@@ -1,0 +1,210 @@
+manifest snapshot:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app: nginx
+      name: nginx-deployment-prod
+    spec:
+      replicas: 3
+      selector:
+        matchLabels:
+          app: nginx
+      template:
+        metadata:
+          labels:
+            app: nginx
+        spec:
+          containers:
+          - image: nginx:1.14.2
+            name: nginx
+            ports:
+            - containerPort: 80
+  2: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app: nginx
+      name: nginx-deployment-prod
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          app: nginx
+      template:
+        metadata:
+          labels:
+            app: nginx
+        spec:
+          containers:
+          - image: nginx:1.14.2
+            name: nginx
+            ports:
+            - containerPort: 80
+summary snapshot:
+  1: |
+    errors: []
+    files:
+    - checksum: ac43cc08df7c51b2b712f32f07f021768cc08ef091ace47aca5166d5d79002e5
+      content:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          labels:
+            app: nginx
+          name: nginx-deployment
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              app: nginx
+          template:
+            metadata:
+              labels:
+                app: nginx
+            spec:
+              containers:
+              - image: nginx:1.14.2
+                name: nginx
+                ports:
+                - containerPort: 80
+      debug: []
+      errors: []
+      files:
+      - _order: 0
+        config:
+          fork: false
+          id:
+          - deploy
+          no_match: append
+          pattern: false
+          render: false
+          subpath: true
+        file: structure/resources/base-deployment.yaml
+        ids:
+        - deploy
+        - deployment-nginx-deployment.yaml
+        path: structure/resources/
+      id:
+      - deploy
+      - deployment-nginx-deployment.yaml
+      render: false
+      subpath: .
+    - checksum: 5b8c5ff45bebba9f2b2f36ad51b30a10edb5866ca8cfca67d5bf5c2e379511b1
+      content:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          labels:
+            app: nginx
+          name: nginx-deployment-prod
+        spec:
+          replicas: 3
+          selector:
+            matchLabels:
+              app: nginx
+          template:
+            metadata:
+              labels:
+                app: nginx
+            spec:
+              containers:
+              - image: nginx:1.14.2
+                name: nginx
+                ports:
+                - containerPort: 80
+      debug: []
+      errors: []
+      files:
+      - _order: 0
+        config:
+          fork: false
+          id:
+          - deploy
+          no_match: append
+          pattern: false
+          render: false
+          subpath: true
+        file: structure/resources/base-deployment.yaml
+        ids:
+        - deploy
+        - deployment-nginx-deployment.yaml
+        path: structure/resources/
+      - _order: 1
+        config:
+          fork: true
+          id:
+          - deploy
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        file: structure/resources/prod-deployment.yaml
+        ids:
+        - deploy
+        path: structure/resources/
+      fork: "true"
+      id:
+      - deploy
+      render: true
+      subpath: .
+    - checksum: f0e8e11ac83d4cdd4c18d0736d541f1b73fa9bc6dd0ce23f5ca2bb39a513857b
+      content:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          labels:
+            app: nginx
+          name: nginx-deployment-prod
+        spec:
+          replicas: 2
+          selector:
+            matchLabels:
+              app: nginx
+          template:
+            metadata:
+              labels:
+                app: nginx
+            spec:
+              containers:
+              - image: nginx:1.14.2
+                name: nginx
+                ports:
+                - containerPort: 80
+      debug: []
+      errors: []
+      files:
+      - _order: 0
+        config:
+          fork: false
+          id:
+          - deploy
+          no_match: append
+          pattern: false
+          render: false
+          subpath: true
+        file: structure/resources/base-deployment.yaml
+        ids:
+        - deploy
+        - deployment-nginx-deployment.yaml
+        path: structure/resources/
+      - _order: 2
+        config:
+          fork: true
+          id:
+          - deploy
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        file: structure/resources/test-deployment.yaml
+        ids:
+        - deploy
+        path: structure/resources/
+      fork: "true"
+      id:
+      - deploy
+      render: true
+      subpath: .

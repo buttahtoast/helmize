@@ -1,9 +1,9 @@
-# Helmize Configuration
+## Helmize Configuration Values
 #  The Values are valid in the values of the parent chart
 #  since library charts do not accept any values
 
-# -- Configuration Location. You can specify a file path in your chart
-config_file: ""
+## Output Options
+#
 
 # -- Enable Summary Output
 summary: false
@@ -11,5 +11,21 @@ summary: false
 # -- Enable Debug Information for Summary Output
 debug: false
 
-# -- Enable timestamp Output
+## Configuration Options
+#
+
+# -- Outputs the Configuration (Only for deploy template)
+show_config: false
+
+# -- Configuration Location. You can specify a file path in your chart
+# @default -- helmize.yaml
+config_file: ""
+
+# -- Helmize Configuration
+config: {}
+
+## Development Options
+#
+
+# -- Enable timestamp Output (Measurements)
 benchmark: false
