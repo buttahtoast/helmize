@@ -2,11 +2,11 @@
   
   Calls Identifier Template
 */}}
-{{- define "inventory.render.func.identifier" -}}
+{{- define "helmize.render.func.identifier" -}}
   {{- if and $.wagon $.ctx -}}
 
     {{/* Run Identifiert Template */}}
-    {{- $identifier_tpl_name := (fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.render.defaults.files.identifier_template" $.ctx) "ctx" $.ctx))).res -}}
+    {{- $identifier_tpl_name := (fromYaml (include "helmize.config.func.resolve" (dict "path" (include "helmize.config.defaults.identifier_template" $.ctx) "ctx" $.ctx))).res -}}
     {{- if $identifier_tpl_name -}}
 
       {{/* included evaluated Template with current Root context */}}
@@ -25,6 +25,6 @@
 
     {{- end -}}
   {{- else -}}
-    {{- include "lib.utils.errors.params" (dict "tpl" "inventory.render.files.multi_yaml" "params" (list "content " "ctx")) -}}
+    {{- include "lib.utils.errors.params" (dict "tpl" "helmize.render.func.identifier" "params" (list "content " "ctx")) -}}
   {{- end -}}
 {{- end -}}

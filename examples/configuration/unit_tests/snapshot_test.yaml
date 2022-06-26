@@ -2,11 +2,15 @@ suite: example/configuration unit tests
 templates:
   - deploy.yaml
 tests:
+
+  ## Configuration Testing
+
   - it: "[Default Config File]: Config snapshot"
     set: 
       show_config: true
     asserts:
       - matchSnapshot: {}
+
   - it: "[Default Config File]: Config snapshot (Values Injected)"
     values:
       - ./values/inject.yaml
@@ -15,32 +19,77 @@ tests:
     asserts:
       - matchSnapshot: {}
 
+  - it: "[Custom Config File]: Load alternate.yaml"
+    set: 
+      show_config: true
+      helmize_file: "alternate.yaml"
+    asserts:
+      - matchSnapshot: {}
+
+  - it: "[Custom Config File]: Load alternate.yaml (Values Injected)"
+    values:
+      - ./values/inject.yaml
+    set: 
+      show_config: true
+      helmize_file: "alternate.yaml"
+    asserts:
+      - matchSnapshot: {}
+
+  - it: "[Custom Config File]: Load non-existent.yaml - Should Fail"
+    set: 
+      show_config: true
+      helmize_file: "non-existent.yaml"
+    asserts:
+      - failedTemplate:
+          errorMessage: ""
+
+  - it: "should fail"
+    set: 
+      show_config: true
+      helmize_file: "non-existent.yaml"
+    asserts:
+      - failedTemplate:
+          errorMessage: ""
+
+
+
+  ## Required Testing
+  #- it: "[Generic]: Missing Required"
+  #  set: 
+  #    cluster:
+  #      location: ""
+  #  asserts:
+  #    - matchSnapshot: {}
+
+
+
+
   ## Filter Testing
-  - it: "[Generic]: Filter Value"
-    values:
-      - ./values/inject.yaml
-    set: 
-      show_config: true
-    asserts:
-      - matchSnapshot: {}
-
-  - it: "[Generic]: Invalid Filter Value"
-    values:
-      - ./values/inject.yaml
-    set: 
-      cluster:
-        region: "not-allowed"
-    asserts:
-      - matchSnapshot: {}
-
-  - it: "[Generic]: Reversed Filter"
-    values:
-      - ./values/inject.yaml
-    set: 
-      show_config: true
-    asserts:
-      - matchSnapshot: {}
-
+  # it: "[Generic]: Filter Value"
+  # values:
+  #   - ./values/inject.yaml
+  # set: 
+  #   show_config: true
+  # asserts:
+  #   - matchSnapshot: {}
+#
+  # it: "[Generic]: Invalid Filter Value"
+  # values:
+  #   - ./values/inject.yaml
+  # set: 
+  #   cluster:
+  #     region: "not-allowed"
+  # asserts:
+  #   - matchSnapshot: {}
+#
+  # it: "[Generic]: Reversed Filter"
+  # values:
+  #   - ./values/inject.yaml
+  # set: 
+  #   show_config: true
+  # asserts:
+  #   - matchSnapshot: {}
+#
 
 
   ## Force Testing

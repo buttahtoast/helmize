@@ -6,8 +6,8 @@
   returns <dict>: Configuration File content
 
 */}}
-{{- define "inventory.config.func.get" -}}
-  {{- $cfg_loc := (include "inventory.config.defaults.config_location" $) -}}
+{{- define "helmize.config.func.get" -}}
+  {{- $cfg_loc := (include "helmize.config.defaults.config_location" $) -}}
 
   {{/* Validate based on type how config is set */}}
   {{- $cfg := .Files.Get $cfg_loc -}}
@@ -27,11 +27,11 @@
     {{- end -}}
 
     {{/* Merge Configuration (With Values) */}}
-    {{- $values_cfg := (default dict (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $.Values "path" (include "inventory.config.defaults.config_values" $)))).res) -}}
+    {{- $values_cfg := (default dict (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $.Values "path" (include "helmize.config.defaults.config_values" $)))).res) -}}
     {{- include "lib.utils.dicts.merge" (dict "base" $cfg "data" $values_cfg) -}}
 
     {{/* Validate Configuration */}}
-    {{- $cfg_validate := fromYaml (include "lib.utils.types.validate" (dict "type" "inventory.config.types.config" "data" $cfg "ctx" $)) -}}
+    {{- $cfg_validate := fromYaml (include "lib.utils.types.validate" (dict "type" "helmize.config.types.config" "data" $cfg "ctx" $)) -}}
     {{- if $cfg_validate.isType -}}
    
       {{/* Export Config & Print */}}

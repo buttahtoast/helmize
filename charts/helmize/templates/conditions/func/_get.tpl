@@ -9,17 +9,17 @@
     errors: <list> Errors encoutered during templating
 
 */}}
-{{- define "inventory.conditions.func.get" -}}
+{{- define "helmize.conditions.func.get" -}}
   {{- $return :=  dict "conditions" list "errors" list -}}
 
   {{/* Get Conditions from config */}}
-  {{- $conditions := (fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.conditions.defaults.conditions" $) "ctx" $))).res -}}  
+  {{- $conditions := (fromYaml (include "helmize.config.func.resolve" (dict "path" (include "helmize.config.defaults.conditions" $) "ctx" $))).res -}}  
   {{- if $conditions -}}
     {{- $check_names := list -}}
     {{- range $cond := $conditions -}}
 
       {{/* Validate each Condition */}}
-      {{- $validate_cond := fromYaml (include "lib.utils.types.validate" (dict "type" "inventory.conditions.types.condition" "data" . "ctx" $)) -}}
+      {{- $validate_cond := fromYaml (include "lib.utils.types.validate" (dict "type" "helmize.conditions.types.condition" "data" . "ctx" $)) -}}
 
       {{/* Check if Type is valid */}}
       {{- if $validate_cond.isType -}}

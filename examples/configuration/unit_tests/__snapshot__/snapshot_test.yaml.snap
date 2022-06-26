@@ -1,210 +1,198 @@
-manifest snapshot:
+'[Custom Config File]: Load alternate.yaml':
   1: |
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      labels:
-        app: nginx
-      name: nginx-deployment-prod
-    spec:
-      replicas: 3
-      selector:
-        matchLabels:
-          app: nginx
-      template:
-        metadata:
-          labels:
-            app: nginx
-        spec:
-          containers:
-          - image: nginx:1.14.2
-            name: nginx
-            ports:
-            - containerPort: 80
-  2: |
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      labels:
-        app: nginx
-      name: nginx-deployment-prod
-    spec:
-      replicas: 2
-      selector:
-        matchLabels:
-          app: nginx
-      template:
-        metadata:
-          labels:
-            app: nginx
-        spec:
-          containers:
-          - image: nginx:1.14.2
-            name: nginx
-            ports:
-            - containerPort: 80
-summary snapshot:
+    config:
+      benchmark: false
+      conditions:
+      - default: east
+        filter:
+        - west
+        - south
+        - north
+        key: alternate.region
+        key_types:
+        - string
+        name: alternate
+        required: false
+      custom_identifier_template: inventory.render.templates.identifier
+      debug: false
+      file_config_key: metadata.helmize
+      file_extensions:
+      - .yaml
+      - .yml
+      - .tpl
+      force: false
+      global: {}
+      helmize: {}
+      helmize_file: ""
+      inventory_directory: other/
+      library:
+        global: {}
+      render_template: inventory.entrypoint.templates.render
+      show_config: false
+      summary: false
+'[Custom Config File]: Load alternate.yaml (Values Injected)':
   1: |
-    errors: []
-    files:
-    - checksum: ac43cc08df7c51b2b712f32f07f021768cc08ef091ace47aca5166d5d79002e5
-      content:
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          labels:
-            app: nginx
-          name: nginx-deployment
-        spec:
-          replicas: 1
-          selector:
-            matchLabels:
-              app: nginx
-          template:
-            metadata:
-              labels:
-                app: nginx
-            spec:
-              containers:
-              - image: nginx:1.14.2
-                name: nginx
-                ports:
-                - containerPort: 80
-      debug: []
-      errors: []
-      files:
-      - _order: 0
-        config:
-          fork: false
-          id:
-          - deploy
-          no_match: append
-          pattern: false
+    config:
+      benchmark: false
+      conditions:
+      - name: catalog
+        required: false
+      - default: east
+        filter:
+        - west
+        - south
+        - north
+        key: alternate.region
+        key_types:
+        - string
+        name: alternate
+        required: false
+      - filter:
+        - __inject__
+        - test
+        - test-q
+        - prod
+        name: environment
+        required: true
+      custom_identifier_template: inventory.render.templates.identifier
+      debug: false
+      file_config_key: metadata.helmize
+      file_excludes:
+      - __inject__
+      - .*
+      file_extensions:
+      - __inject__
+      - tpl
+      force: false
+      global: {}
+      helmize: {}
+      helmize_file: ""
+      inventory_directory: other/
+      library:
+        global: {}
+      render_template: inventory.entrypoint.templates.render
+      show_config: false
+      summary: false
+'[Default Config File]: Config snapshot':
+  1: |
+    config:
+      benchmark: false
+      conditions:
+      - data:
+          static:
+            condition: data
+        default: default
+        file_cfg:
           render: false
-          subpath: true
-        file: structure/resources/base-deployment.yaml
-        ids:
-        - deploy
-        - deployment-nginx-deployment.yaml
-        path: structure/resources/
-      id:
-      - deploy
-      - deployment-nginx-deployment.yaml
-      render: false
-      subpath: .
-    - checksum: 5b8c5ff45bebba9f2b2f36ad51b30a10edb5866ca8cfca67d5bf5c2e379511b1
-      content:
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          labels:
-            app: nginx
-          name: nginx-deployment-prod
-        spec:
-          replicas: 3
-          selector:
-            matchLabels:
-              app: nginx
-          template:
-            metadata:
-              labels:
-                app: nginx
-            spec:
-              containers:
-              - image: nginx:1.14.2
-                name: nginx
-                ports:
-                - containerPort: 80
-      debug: []
-      errors: []
-      files:
-      - _order: 0
-        config:
-          fork: false
-          id:
-          - deploy
-          no_match: append
-          pattern: false
+        filter:
+        - dev
+        key: cluster.environment
+        key_types:
+        - string
+        name: environment
+        required: false
+        tpls:
+        - ingress.tpl
+      - filter:
+        - us
+        - eu
+        - as
+        key: cluster.location
+        key_types:
+        - string
+        name: location
+        required: true
+      - default: east
+        filter:
+        - west
+        - south
+        - north
+        key: cluster.region
+        key_types:
+        - string
+        name: region
+        required: false
+      custom_identifier_template: inventory.render.templates.identifier
+      debug: false
+      file_config_key: metadata.helmize
+      file_excludes:
+      - kustomization
+      - '*tmp'
+      file_extensions:
+      - yaml
+      - yml
+      force: false
+      global: {}
+      helmize: {}
+      helmize_file: ""
+      inventory_directory: structure/
+      library:
+        global: {}
+      render_template: inventory.entrypoint.templates.render
+      show_config: false
+      summary: false
+'[Default Config File]: Config snapshot (Values Injected)':
+  1: |
+    config:
+      benchmark: false
+      conditions:
+      - data:
+          static:
+            condition: data
+        default: default
+        file_cfg:
           render: false
-          subpath: true
-        file: structure/resources/base-deployment.yaml
-        ids:
-        - deploy
-        - deployment-nginx-deployment.yaml
-        path: structure/resources/
-      - _order: 1
-        config:
-          fork: true
-          id:
-          - deploy
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        file: structure/resources/prod-deployment.yaml
-        ids:
-        - deploy
-        path: structure/resources/
-      fork: "true"
-      id:
-      - deploy
-      render: true
-      subpath: .
-    - checksum: f0e8e11ac83d4cdd4c18d0736d541f1b73fa9bc6dd0ce23f5ca2bb39a513857b
-      content:
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          labels:
-            app: nginx
-          name: nginx-deployment-prod
-        spec:
-          replicas: 2
-          selector:
-            matchLabels:
-              app: nginx
-          template:
-            metadata:
-              labels:
-                app: nginx
-            spec:
-              containers:
-              - image: nginx:1.14.2
-                name: nginx
-                ports:
-                - containerPort: 80
-      debug: []
-      errors: []
-      files:
-      - _order: 0
-        config:
-          fork: false
-          id:
-          - deploy
-          no_match: append
-          pattern: false
-          render: false
-          subpath: true
-        file: structure/resources/base-deployment.yaml
-        ids:
-        - deploy
-        - deployment-nginx-deployment.yaml
-        path: structure/resources/
-      - _order: 2
-        config:
-          fork: true
-          id:
-          - deploy
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        file: structure/resources/test-deployment.yaml
-        ids:
-        - deploy
-        path: structure/resources/
-      fork: "true"
-      id:
-      - deploy
-      render: true
-      subpath: .
+        filter:
+        - dev
+        - test
+        - test-q
+        - prod
+        key: cluster.environment
+        key_types:
+        - string
+        name: environment
+        required: true
+        tpls:
+        - ingress.tpl
+      - name: catalog
+        required: false
+      - filter:
+        - us
+        - eu
+        - as
+        key: cluster.location
+        key_types:
+        - string
+        name: location
+        required: true
+      - default: east
+        filter:
+        - west
+        - south
+        - north
+        key: cluster.region
+        key_types:
+        - string
+        name: region
+        required: false
+      custom_identifier_template: inventory.render.templates.identifier
+      debug: false
+      file_config_key: metadata.helmize
+      file_excludes:
+      - kustomization
+      - '*tmp'
+      - .*
+      file_extensions:
+      - yaml
+      - yml
+      - tpl
+      force: false
+      global: {}
+      helmize: {}
+      helmize_file: ""
+      inventory_directory: structure/
+      library:
+        global: {}
+      render_template: inventory.entrypoint.templates.render
+      show_config: false
+      summary: false

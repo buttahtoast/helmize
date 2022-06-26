@@ -76,15 +76,6 @@ _Optional_
 Filter keylist for values that are allowed values. The filter is executed against all inputs for this condition. If a value does not match the filter, an error is created for this condition. You can use regex patterns. The [allow_root](#allow_root) is not affected by any filter and will always be added. The [default](#default) value will also be added to the filter, if set. 
 
 ---
-## reverse_filter
-
-_Optional_
-
-**Type** `boolean`
-
-Reverses the [filter](#filter) configuration so that only values given with the filter are not accepted.
-
----
 
 ## allow_root
 

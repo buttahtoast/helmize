@@ -1,6 +1,6 @@
 
 
-{{- define "inventory.entrypoint.templates.render" -}}
+{{- define "helmize.entrypoint.templates.render" -}}
   {{- if $.deploy.files -}}
     {{- range $file, $prop := $.deploy.files -}}
       {{- if $prop.render -}}

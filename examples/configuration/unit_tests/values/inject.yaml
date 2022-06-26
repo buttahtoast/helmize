@@ -1,4 +1,4 @@
-config:
+helmize:
   file_extensions:
     # Combine with Values from Base Config 
     - "__inject__" 

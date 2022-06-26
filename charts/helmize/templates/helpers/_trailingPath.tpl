@@ -1,3 +1,3 @@
-{{- define "inventory.helpers.trailingPath" -}}
+{{- define "helmize.helpers.trailingPath" -}}
   {{- printf "%s" ($ | trimPrefix "/" | trimPrefix "./" | trimSuffix "/") -}}
 {{- end -}}

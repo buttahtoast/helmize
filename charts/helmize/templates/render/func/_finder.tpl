@@ -10,12 +10,12 @@
     files: <slice> Found files
 
 */}}
-{{- define "inventory.render.func.finder" -}}
+{{- define "helmize.render.func.finder" -}}
   {{- if and $.paths $.ctx -}}
     {{- $return := dict "files" list "errors" list -}}
 
     {{/* Get allowed file extensions */}}
-    {{- $extensions := (fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.render.defaults.file.extensions" $.ctx) "ctx" $.ctx))).res -}}
+    {{- $extensions := (fromYaml (include "helmize.config.func.resolve" (dict "path" (include "helmize.config.defaults.file_extensions" $.ctx) "ctx" $.ctx))).res -}}
     {{- if $extensions -}}
       {{- if not (kindIs "slice" $extensions) -}}
         {{- $extensions = list  ($extensions | toString) -}}
@@ -23,7 +23,7 @@
     {{- end -}}
 
     {{/* Get Excluded Files */}}
-    {{- $excludes := (fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.render.defaults.file.excludes" $.ctx) "ctx" $.ctx))).res -}} 
+    {{- $excludes := (fromYaml (include "helmize.config.func.resolve" (dict "path" (include "helmize.config.defaults.file_excludes" $.ctx) "ctx" $.ctx))).res -}} 
     {{- if $excludes -}}
       {{- if not (kindIs "slice" $excludes) -}}
         {{- $excludes = list  ($excludes | toString) -}}
@@ -34,7 +34,7 @@
     {{- range $c_paths := $.paths -}}
       {{- range $p_path:= $c_paths.paths -}}
         {{- $p_files := list -}}
-        {{ range $file, $_ :=  $.ctx.Files.Glob (include "inventory.render.files.finder.path" (dict "path" $p_path "ext" .)) -}}
+        {{ range $file, $_ :=  $.ctx.Files.Glob (include "helmize.render.func.finder.path" (dict "path" $p_path "ext" .)) -}}
           {{- $valid := 1 -}}
   
           {{/* Validate for each extension, one must match */}}
@@ -76,7 +76,7 @@
 {{- end -}}
 
 
-{{- define "inventory.render.files.finder.path" -}}
+{{- define "helmize.render.func.finder.path" -}}
   {{- $path := $.path | trimPrefix "./" | trimPrefix "/" -}}
   {{- printf "%s**" $path -}}
 {{- end -}}

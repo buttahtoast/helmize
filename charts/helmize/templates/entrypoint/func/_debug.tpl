@@ -5,8 +5,8 @@
   params <dict>: Global Context
 
 */}}
-{{- define "inventory.entrypoint.func.debug" -}}
-  {{- $debug := (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $.Values "path" (include "inventory.entrypoint.defaults.debug_value" $)))).res -}}
+{{- define "helmize.entrypoint.func.debug" -}}
+  {{- $debug := (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $.Values "path" (include "helmize.entrypoint.defaults.debug_value" $)))).res -}}
   {{- if $debug -}}
     {{- true -}}  
   {{- end -}}

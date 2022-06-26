@@ -31,7 +31,7 @@
     Is the content empty, it won't be considered as well.
 
 */}}
-{{- define "inventory.postrenders.func.execute" -}}
+{{- define "helmize.render.func.postrenders.execute" -}}
   {{- if and $.file $.ctx -}}
 
     {{/* Extra Context */}}
@@ -41,17 +41,15 @@
     {{- if $.file.content -}}
 
       {{/* Load Renderers */}}
-      {{- $renders := default list (fromYaml (include "inventory.postrenders.func.get" (dict "ctx" $.ctx))).renders -}}
+      {{- $renders := default list (fromYaml (include "helmize.render.func.postrenders.get" (dict "ctx" $.ctx))).renders -}}
 
       {{/* File Post-Renderers */}}
       {{- with $.file.post_renders -}}
         {{- $renders = concat $renders . -}}
       {{- end -}}
 
-      {{/* Add Post-Renderers as Debug */}}
-      {{- if (include "inventory.entrypoint.func.debug" $.ctx) -}}
-        {{- $_ := set $.file "post_renders" $renders -}}
-      {{- end -}}
+      {{/* Add Post-Renderers */}}
+      {{- $_ := set $.file "post_renders" $renders -}}
 
       {{/* Execute Renderers */}}
       {{- $content_buff := $.file.content -}}
@@ -61,29 +59,29 @@
         {{- $postrender_result_raw := include $ren (dict "content" $content_buff "File" (omit $.file "content") (default "inv" $.extra_ctx_key) (default dict $.extra_ctx) "ctx" $context) -}}
         {{- $postrender_result := fromYaml ($postrender_result_raw) -}}
 
+        {{/* Validate Content */}}
+        {{- if $.file.content -}}
+          {{- if (not (kindIs "map" $.file.content)) -}}
+            {{- $_ := set $.file "errors" (append $.file.errors (dict "error" (printf "Content is kind '%s' but should be 'map'" (kindOf $.file.content)) "post-renderer" $ren "trace" $.file.content)) -}}
+          {{- end -}}
+        {{- else -}}
+          {{- if (include "helmize.entrypoint.func.debug" $.ctx) -}}
+            {{- $_ := set $.file "debug" (append $.file.debug (dict "post-renderer" $ren "debug" "Empty Content")) -}}
+          {{- end -}}
+        {{- end -}}
+
+        {{/* Validate Returned Metadata */}}
         {{- if not (include "lib.utils.errors.unmarshalingError" $postrender_result) -}}
 
           {{/* Debug Output */}}
           {{- if $postrender_result.debug -}}
             {{- $_ := set $.file "debug" (append $.file.debug (dict "post-renderer" $ren "debug" $postrender_result.debug)) -}}
           {{- end -}}
-  
-          {{/* If PostRenderer returns Errors */}}
-          {{- if $postrender_result.errors -}}
-            {{- $_ := set $.file "errors" (concat $.file.errors $postrender_result.errors) -}}
-          {{- else -}}
 
-            {{/* Use content */}}
-            {{- if $postrender_result.content -}}
-              {{- if (kindIs "map" $postrender_result.content) -}}
-                {{- $content_buff = $postrender_result.content -}}
-              {{- else -}}
-                {{- $_ := set $.file "errors" (append $.file.errors (dict "error" (printf "Content is kind '%s' but should be 'map'" (kindOf $postrender_result.content)) "post-renderer" $ren "trace" $postrender_result.content)) -}}
-              {{- end -}}
-            {{- else -}}
-              {{- if (include "inventory.entrypoint.func.debug" $.ctx) -}}
-                {{- $_ := set $.file "debug" (append $.file.debug (dict "post-renderer" $ren "debug" "Empty Content")) -}}
-              {{- end -}}
+          {{/* Returns Post Renderer Errors */}}
+          {{- if $postrender_result.errors -}}
+            {{- range $err := $postrender_result.errors -}}
+              {{- $_ := set $.file "errors" (append $.file.errors (dict "post-renderer" $ren "error" $err)) -}}
             {{- end -}}
           {{- end -}}
 
