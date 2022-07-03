@@ -1,0 +1,7 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: octopus-deployment
+  labels:
+    app: web
+    new_label: "existing_deploy"

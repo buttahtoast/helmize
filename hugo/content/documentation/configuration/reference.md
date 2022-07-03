@@ -23,13 +23,23 @@ file_extensions: [ "yaml" ]
 # http://helmize.dev/documentation/configuration/general/#file_excludes
 file_excludes: [ "kustomization" ]
 
-## Custom Identifier Template
-# http://helmize.dev/documentation/configuration/general/#custom_identifier_template
-custom_identifier_template: "custom.identifier"
+## Identifier Template
+# http://helmize.dev/documentation/configuration/general/#identifier_template
+identifier_template: "custom.identifier.template"
+
+## Render Template
+# http://helmize.dev/documentation/configuration/general/#render_template
+render_template: "custom.render.template"
 
 ## File Configuration Key
 # http://helmize.dev/documentation/configuration/general/#file_config_key
 file_config_key: "custom.config.key"
+
+## Post Renderers
+# http://helmize.dev/documentation/configuration/general/#post_renderers
+post_renderers:
+  - "custom.post-renderer.1"
+  - "custom.post-renderer.2"
 
 ## Conditions
 # http://helmize.dev/documentation/configuration/conditions/
@@ -91,8 +101,14 @@ conditions:
       static:
         condition: data
 
-  ## Tpls
+  ## Data Templates
   # http://helmize.dev/documentation/configuration/conditions/#tpls
     tpls:
       - "ingress.tpl"
+
+  ## Post Renderers
+  # http://helmize.dev/documentation/configuration/conditions/#post_renderers
+    post_renderers:
+      - "custom.condition.post-renderer.1"
+      - "custom.condition.post-renderer.2"
 ```

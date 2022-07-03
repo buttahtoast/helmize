@@ -1,7 +1,7 @@
 +++
 title = "Identifiers"
 description = "Identifiers"
-weight = 1
+weight = 3
 +++
 
 You can implement your own identifier template, if ours is not practical for you. Let's see how it's done.

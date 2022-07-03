@@ -1,23 +1,20 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
-  name: octopus-deployment
+  name: new-deployment
   labels:
     app: web
-    k8s.io/inject_port: "true"
 spec:
   selector:
     matchLabels:
-      octopusexport: OctopusExport
+      app: new-deployment
   replicas: 1
-  updateStrategy:
+  strategy:
     type: RollingUpdate
-  podManagementPolicy: OrderedReady
   template:
     metadata:
       labels:
-        app: web
-        octopusexport: OctopusExport
+        app: new-deployment
     spec:
       containers:
         - name: nginx

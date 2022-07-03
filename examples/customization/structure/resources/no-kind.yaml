@@ -9,6 +9,13 @@ spec:
       image: nginx
       ports:
         - containerPort: 80
+      env:
+        - name: DEMO_GREETING
+          value: "Hello from the environment"
+        - name: DEMO_FAREWELL
+          value: "Such a sweet sorrow"
+        - name: EXISTING_VAR
+          value: "Some existing value"
   affinity:
     podAntiAffinity:
       preferredDuringSchedulingIgnoredDuringExecution:

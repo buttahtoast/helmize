@@ -9,8 +9,8 @@ icon: https://raw.githubusercontent.com/buttahtoast/helmize/main/hugo/icon/icon.
 dependencies:
   - name: library
     version: "2.6.1"
-    repository: "https://oliverbaehler.github.io/helm-charts-1/"
-    #repository: "file://../../../helm-charts-1/charts/library"
+    #repository: "https://oliverbaehler.github.io/helm-charts-1/"
+    repository: "file://../../../helm-charts-1/charts/library"
     #repository: https://buttahtoast.github.io/helm-charts/
 keywords:
   - library

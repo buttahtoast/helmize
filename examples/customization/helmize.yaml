@@ -4,5 +4,13 @@ force: false
 conditions:
   - name: "resources"
     allow_root: true
+  - name: "additional"
+    allow_root: true
+    post_renderers:
+      - customization.postrenderers.additional
 post_renderers:
   - "customization.postrenderers.sidecar"
+  - "customization.postrenderers.env"
+{{- if $.Values.contextRenderer }}
+  - "customization.postrenderers.context"
+{{- end }}

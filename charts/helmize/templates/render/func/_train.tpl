@@ -75,7 +75,7 @@
               {{- $fork := 0 -}}
   
               {{/* File Struct */}}
-              {{- $incoming_wagon := dict "id" list "content" $parsed_content "file_id" $file_id "subpath" (regexReplaceAll $file_id.path $file_id.file "${1}" | trimPrefix "/" | dir) "debug" list "errors" list -}}
+              {{- $incoming_wagon := dict "id" list "content" $parsed_content "file_id" $file_id "subpath" (regexReplaceAll $file_id.path $file_id.file "${1}" | trimPrefix "/" | dir) "post_renderers" $file.post_renderers "debug" list "errors" list -}}
   
               {{/* Benchmark */}}
               {{- include "helmize.helpers.ts" (dict "msg" (printf "Evaluating Configuration") "ctx" $.ts) -}}

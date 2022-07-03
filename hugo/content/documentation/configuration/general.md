@@ -65,7 +65,7 @@ Key within each's file content which holds the [file configuration](../../files/
 
 _Optional_
 
-**Type** `string` **Default** `inventory.render.templates.identifier` 
+**Type** `string` **Default** `helmize.render.templates.identifier` 
 
 Define a custom identifier template
 
@@ -77,11 +77,20 @@ Define a custom identifier template
 
 _Optional_
 
-**Type** `string` **Default** `inventory.entrypoint.templates.render` 
+**Type** `string` **Default** `helmize.entrypoint.templates.render` 
 
 Define a custom render template
 
 [Read more about identifiers](../../customization/render/)
+
+---
+## post_renderers
+
+_Optional_
+
+**Type** `slice` 
+
+Post Renderers are helm templates which are executed after all the files are merged. [Read More](../../customization/post_renderers/). All Post Renderers configured here are executed for all the resulting files. The Post Renderers are executed in given order.
 
 ---
 ## force

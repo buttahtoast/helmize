@@ -85,6 +85,15 @@ _Optional_
 
 In addition to checking all keys, it becomes also valid to have files directly in the root of the condition's path. You may disable this option if you only want resources in subfolders of the condition's folder.
 
+---
+
+## post_renderers
+
+_Optional_
+
+**Type** `slice` 
+
+Post Renderers are helm templates which are executed after all the files are merged. [Read More](../../customization/post_renderers/). On Conditions the post renderer is only run on files which originate from this condition. This also includes the case, if the file is merged with an existing file, the post renderer will be transfered on the merged file and is then executed. The Post Renderers are executed in given order. Post Renderers given by conditions are always executed before the [general Post Renderers](../general/#post_renderers). Based on condition order the Post Renderers are appended on condition basis.
 
 ---
 

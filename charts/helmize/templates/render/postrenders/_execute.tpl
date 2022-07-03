@@ -43,13 +43,13 @@
       {{/* Load Renderers */}}
       {{- $renders := default list (fromYaml (include "helmize.render.func.postrenders.get" (dict "ctx" $.ctx))).renders -}}
 
-      {{/* File Post-Renderers */}}
-      {{- with $.file.post_renders -}}
-        {{- $renders = concat $renders . -}}
+      {{/* Prepend File Post-Renderers */}}
+      {{- with $.file.post_renderers -}}
+        {{- $renders = concat . $renders -}}
       {{- end -}}
 
-      {{/* Add Post-Renderers */}}
-      {{- $_ := set $.file "post_renders" $renders -}}
+      {{/* Redirect All Post Renderers to File */}}
+      {{- $_ := set $.file "post_renderers" $renders -}}
 
       {{/* Execute Renderers */}}
       {{- $content_buff := $.file.content -}}
