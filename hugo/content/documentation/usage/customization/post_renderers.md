@@ -6,10 +6,6 @@ weight = 4
 
 You can implement your own post renderer templates. Post Renderers are executed after all the files are merged within the train. They allow to make changes on the resulting manifests or even validate the integrity of the content.
 
-# Predefined
-
-We will start adding predefined post-renderers in the future, if the seam useful for general use. You are welcome to contribute post-renderes as well. Just open a issue on the github project.
-
 # Configuration
 
 General configuration for Post Renderers.
@@ -17,7 +13,11 @@ General configuration for Post Renderers.
 ## Reference
 
 Post Renderers must be referenced via configuration. You can either enable post renderers for all files via [the helmize configuration]() or [based on condition](../../configuration/conditions/#post_renderers).
-## Content
+
+## Predefined
+
+We will start adding predefined post-renderers in the future, if the seam useful for general use. You are welcome to contribute post-renderes as well. Just open a issue on the github project.
+## Assignment
 
 Content is not returned via YAML but directly performed on the `$.content` map. Since map operations in sprig are directly performed on the given structure, it's unessecary to abstract it via a return value. The below example implements functions of our [library chart](../templating/#library). The advantage of the library functions is they accept key paths and don't fail if a child element does not exist.
 
@@ -61,7 +61,7 @@ If you would like to redirect content from the root context, you need to create 
 
 ## Return
 
-An Identifier can have following return values (YAML Print):
+The following return values (YAML Print) are considered:
 
 * `errors` - `<slice>` <br>
   A list of errors which occured during identifier evaluation. The error will make helmize fail with your error message. 

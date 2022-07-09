@@ -9,7 +9,7 @@
     {{- $render_raw := include "helmize.render.func.resolve" $ -}}
     {{- $render := fromYaml ($render_raw) -}}
     {{- if (not (include "lib.utils.errors.unmarshalingError" $render)) -}}
-        {{- $benchmark := (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $.Values "path" (include "helmize.entrypoint.defaults.benchmark_value" $)))).res -}}
+        {{- $benchmark := (fromYaml (include "lib.utils.dicts.get" (dict "data" $.Values "path" (include "helmize.entrypoint.defaults.benchmark_value" $)))).res -}}
         {{- if $benchmark -}}
           {{- printf "%s" (toYaml $render) -}}
         {{- else -}}

@@ -1,8 +1,8 @@
 +++
 title = "Customization"
 description = "Customization Configurations"
-weight = 3
-geekdocCollapseSection = "true"
+weight = 5
+geekdocCollapseSection = "false"
 +++
 
 Customization Options

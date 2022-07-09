@@ -27,7 +27,7 @@
     {{- end -}}
 
     {{/* Merge Configuration (With Values) */}}
-    {{- $values_cfg := (default dict (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $.Values "path" (include "helmize.config.defaults.config_values" $)))).res) -}}
+    {{- $values_cfg := (default dict (fromYaml (include "lib.utils.dicts.get" (dict "data" $.Values "path" (include "helmize.config.defaults.config_values" $)))).res) -}}
     {{- include "lib.utils.dicts.merge" (dict "base" $cfg "data" $values_cfg) -}}
 
     {{/* Validate Configuration */}}

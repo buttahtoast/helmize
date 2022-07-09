@@ -1,6 +1,8 @@
 inventory_directory: "structure/"
 file_config_key: "metadata.helmize"
 force: false
+identifier_template: "customization.identifier.template"
+render_template: "customization.render.template"
 conditions:
   - name: "resources"
     allow_root: true

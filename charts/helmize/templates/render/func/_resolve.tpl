@@ -14,7 +14,7 @@
 
   {{/* Variables */}}
   {{- $ctx := $ -}}
-  {{- $return := dict "files" list "errors" list "timestamps" list "conditions" -}}
+  {{- $return := dict "wagons" list "errors" list "timestamps" list "conditions" -}}
 
   {{/* Fetch Conditions */}}
   {{- $conds := fromYaml (include "helmize.conditions.func.resolve" (dict "ctx" $ctx)) -}}
@@ -82,8 +82,8 @@
               {{- $_ := set $return "errors" (concat $return.errors $train.errors) -}}
             {{- end -}}
            {{/* Files Redirect */}}
-            {{- with $train.files -}}
-              {{- $_ := set $return "files" . -}}
+            {{- with $train.wagons -}}
+              {{- $_ := set $return "wagons" . -}}
             {{- end -}}
           {{- end -}}
         {{- end -}}  

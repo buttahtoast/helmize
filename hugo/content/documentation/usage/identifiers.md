@@ -1,7 +1,7 @@
 +++
 title = "Identifiers"
 description = "Identifiers"
-weight = 1
+weight = 2
 +++
 
 {{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/identifiers](https://github.com/buttahtoast/helmize/tree/main/examples/identifiers){{< /hint >}}

@@ -1,6 +1,6 @@
 +++
 title = "Files"
-description = "File Configurations"
+description = "File Configuration"
 weight = 2
 +++
 

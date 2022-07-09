@@ -8,8 +8,8 @@
   {{/* Verify if Kind persent */}}
   {{- if $kind -}}
     {{- if (has $kind (list "deployment" "statefulset" "daemonset")) -}}
-      {{- $d := (fromYaml (include "lib.utils.dicts.lookup" (dict "path" $label "data" $.content))).res -}}
-      {{- if (eq (default "false" (fromYaml (include "lib.utils.dicts.lookup" (dict "path" $label "data" $.content))).res) "true") -}}
+      {{- $d := (fromYaml (include "lib.utils.dicts.get" (dict "path" $label "data" $.content))).res -}}
+      {{- if (eq (default "false" (fromYaml (include "lib.utils.dicts.get" (dict "path" $label "data" $.content))).res) "true") -}}
         {{- $_ := set $.content "T" $d -}}
 
         {{/* Iterate over containers and combine env (via merge function) */}}

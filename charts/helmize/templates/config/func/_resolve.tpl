@@ -24,7 +24,7 @@
     {{- end -}}
 
     {{/* Execute Lookup */}}
-    {{- $result := include "lib.utils.dicts.lookup" (dict "data" $cfg "path" $.path "required" (default false $.req)) -}}
+    {{- $result := include "lib.utils.dicts.get" (dict "data" $cfg "path" $.path "required" (default false $.req)) -}}
     {{- printf "%s" ($result) -}}
 
   {{- else -}}

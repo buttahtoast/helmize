@@ -13,7 +13,7 @@
 */}}
 {{- define "helmize.render.func.train" -}}
   {{- if and $.files $.ctx -}}
-    {{- $return := dict "files" list "paths" list "errors" list "debug" list -}}
+    {{- $return := dict "wagons" list "paths" list "errors" list "debug" list -}}
 
     {{/* Variables */}}
     {{- $file_train := list -}}
@@ -82,7 +82,7 @@
 
               {{/* Resolve File Configuration within file, if not set get empty dict */}}
               {{- $file_cfg_path := (fromYaml (include "helmize.config.func.resolve" (dict "path" (include "helmize.config.defaults.file_cfg_key" $) "ctx" $.ctx))).res -}}
-              {{- $file_cfg := mergeOverwrite (get $file "config") (default dict (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $incoming_wagon.content "path" $file_cfg_path))).res) -}}
+              {{- $file_cfg := mergeOverwrite (get $file "config") (default dict (fromYaml (include "lib.utils.dicts.get" (dict "data" $incoming_wagon.content "path" $file_cfg_path))).res) -}}
       
               {{/* Compares against Type, Defaults are already set via conditions */}}
               {{- $file_cfg_type := fromYaml (include "lib.utils.types.validate" (dict "type" "helmize.render.types.file_configuration"  "data" $file_cfg "ctx" $.ctx)) -}}
@@ -273,7 +273,7 @@
       {{- include "helmize.helpers.ts" (dict "msg" "Checksums Done" "ctx" $.ts) -}}
 
       {{/* Convert to Slice */}}
-      {{- $_ := set $return "files" $file_train -}} 
+      {{- $_ := set $return "wagons" $file_train -}} 
     {{- end -}}
 
     {{/* Return */}}

@@ -74,19 +74,21 @@
         {{- if not (include "lib.utils.errors.unmarshalingError" $postrender_result) -}}
 
           {{/* Debug Output */}}
-          {{- if $postrender_result.debug -}}
-            {{- $_ := set $.file "debug" (append $.file.debug (dict "post-renderer" $ren "debug" $postrender_result.debug)) -}}
+          {{- if and $postrender_result.debug (kindIs "slice" $postrender_result.debug) -}}
+            {{- range $deb := $postrender_result.debug -}}
+              {{- $_ := set $.file "debug" (append $.file.debug (dict "post-renderer" $ren "debug" $deb)) -}}
+            {{- end -}}
           {{- end -}}
 
           {{/* Returns Post Renderer Errors */}}
-          {{- if $postrender_result.errors -}}
+          {{- if and $postrender_result.errors (kindIs "slice" $postrender_result.errors) -}}
             {{- range $err := $postrender_result.errors -}}
               {{- $_ := set $.file "errors" (append $.file.errors (dict "post-renderer" $ren "error" $err)) -}}
             {{- end -}}
           {{- end -}}
 
         {{- else -}}
-          {{- $_ := set $.file "errors" (append $.file.errors (dict "error" (cat "Encountered Error during postrendering" $postrender_result.Error) "post-renderer" $ren "trace" $postrender_result_raw)) -}}
+          {{- include "lib.utils.errors.fail" (printf "Template %s returned invalid YAML (%s):\n%s" $ren $postrender_result.Error ($postrender_result_raw | nindent 2)) -}}
         {{- end -}}
       {{- end -}}
       {{- $_ := set $.file "content" $content_buff -}}
