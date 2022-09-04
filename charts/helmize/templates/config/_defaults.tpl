@@ -113,7 +113,7 @@ render_template
 
 */}}
 {{- define "helmize.config.defaults.render_template.value" -}}
-helmize.entrypoint.templates.render
+helmize.entrypoint.templates.default
 {{- end -}}
 
 

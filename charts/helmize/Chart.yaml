@@ -8,10 +8,8 @@ home: https://helmize.dev
 icon: https://raw.githubusercontent.com/buttahtoast/helmize/main/hugo/icon/icon.png
 dependencies:
   - name: library
-    version: "3.0.0"
-    #repository: "https://oliverbaehler.github.io/helm-charts-1/"
-    repository: "file://../../../helm-charts-1/charts/library"
-    #repository: https://buttahtoast.github.io/helm-charts/
+    version: "3.0.0-rc.1"
+    repository: https://buttahtoast.github.io/helm-charts/
 keywords:
   - library
   - sprig
