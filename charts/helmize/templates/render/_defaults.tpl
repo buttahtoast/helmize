@@ -1,55 +1,38 @@
-{{/* Identifier (File Configuration Type) <Template> 
+{{/* Show Config <Flag> 
 
-   Match Strategy Key
-
-*/}}
-{{- define "helmize.render.defaults.file_cfg.identifier" -}}
-id
-{{- end -}}
-
-
-{{/* No Match (File Configuration Type) <Template> 
-
-   Match Strategy Key
+  Show Config Flag Key
 
 */}}
-{{- define "helmize.render.defaults.file_cfg.no_match" -}}
-no_match
+{{- define "helmize.render.defaults.show_config" -}}
+show_config
 {{- end -}}
 
 
-{{- define "helmize.render.defaults.file_cfg.subpath" -}}
-subpath
-{{- end -}}
+{{/* Summary <Flag> 
 
-
-{{- define "helmize.render.defaults.file_cfg.max_match" -}}
-max_match
-{{- end -}}
-
-{{/* Render (File Configuration Type, Local) <Template> 
-
-   Configure if a file should be rendered in the final output. Note that it will still show up in the Summary
+  Summary Flag Key
 
 */}}
-{{- define "helmize.render.defaults.file_cfg.render" -}}
-render
+{{- define "helmize.render.defaults.summary_value" -}}
+summary
 {{- end -}}
 
-{{/* Pattern (File Configuration Type, Local) <Template> 
 
-   IDs are used as Patterns to match against other ids. If Enabled the file won't be added if nothing matches.
+{{/* Debug <Flag> 
+
+  Debug Flag Key
 
 */}}
-{{- define "helmize.render.defaults.file_cfg.fork" -}}
-fork
+{{- define "helmize.render.defaults.debug_value" -}}
+debug
 {{- end -}}
 
-{{/* Pattern (File Configuration Type, Local) <Template> 
 
-   IDs are used as Patterns to match against other ids. If Enabled the file won't be added if nothing matches.
+{{/* Benchmark <Flag> 
+
+  Benchmark Flag Key
 
 */}}
-{{- define "helmize.render.defaults.file_cfg.pattern" -}}
-pattern
+{{- define "helmize.render.defaults.benchmark_value" -}}
+benchmark
 {{- end -}}

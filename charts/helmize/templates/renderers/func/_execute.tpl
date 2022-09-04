@@ -41,7 +41,7 @@
     {{- if $.wagon.content -}}
 
       {{/* Load Renderers */}}
-      {{- $renders := default list (fromYaml (include "helmize.renderers.func.get" (dict "ctx" $.ctx))).renders -}}
+      {{- $renders := default list (fromYaml (include "helmize.renderers.func.get" (dict "ctx" $.ctx))).renderers -}}
 
       {{/* Prepend File Renderers */}}
       {{- with $.wagon.renderers -}}

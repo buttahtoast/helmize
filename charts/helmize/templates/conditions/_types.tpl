@@ -28,7 +28,7 @@
 {{ include "helmize.conditions.defaults.conditions.tpls" $ }}:
   types: [ "slice" ]
 file_cfg:
-  _props: {{- include "helmize.render.types.file_configuration.shared" $ | nindent 4 }}
+  _props: {{- include "helmize.core.types.file_configuration.shared" $ | nindent 4 }}
 {{ include "helmize.config.defaults.renderers" $ }}:
   types: [ "slice" ]
 {{- end -}}

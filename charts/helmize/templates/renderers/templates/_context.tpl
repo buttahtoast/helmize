@@ -1,9 +1,9 @@
-{{/* Context <PostRenderer> 
+{{/* Context <Renderer> 
 
   Sets the entire context for each wagon in the content under $.ctx
 
 */}}
-{{- define "helmize.postrenders.templates.context" -}}
+{{- define "helmize.renderers.templates.context" -}}
 
   {{/* Dereference (No Pointer) */}}
   {{- $ctx := (fromYaml (toYaml $)) -}}

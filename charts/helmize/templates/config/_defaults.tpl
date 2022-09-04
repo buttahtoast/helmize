@@ -93,7 +93,7 @@ identifier_template
 
 */}}
 {{- define "helmize.config.defaults.identifier_template.value" -}}
-helmize.render.templates.identifier
+helmize.core.templates.identifier
 {{- end -}}
 
 
