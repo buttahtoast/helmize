@@ -31,7 +31,7 @@
     Is the content empty, it won't be considered as well.
 
 */}}
-{{- define "helmize.render.func.postrenders.execute" -}}
+{{- define "helmize.renderers.func.execute" -}}
   {{- if and $.wagon $.ctx -}}
 
     {{/* Extra Context */}}
@@ -41,23 +41,23 @@
     {{- if $.wagon.content -}}
 
       {{/* Load Renderers */}}
-      {{- $renders := default list (fromYaml (include "helmize.render.func.postrenders.get" (dict "ctx" $.ctx))).renders -}}
+      {{- $renders := default list (fromYaml (include "helmize.renderers.func.get" (dict "ctx" $.ctx))).renders -}}
 
-      {{/* Prepend File Post-Renderers */}}
-      {{- with $.wagon.post_renderers -}}
+      {{/* Prepend File Renderers */}}
+      {{- with $.wagon.renderers -}}
         {{- $renders = concat . $renders -}}
       {{- end -}}
 
-      {{/* Redirect All Post Renderers to File */}}
-      {{- $_ := set $.wagon "post_renderers" $renders -}}
+      {{/* Redirect All Renderers to File */}}
+      {{- $_ := set $.wagon "renderers" $renders -}}
 
       {{/* Execute Renderers */}}
       {{- $content_buff := $.wagon.content -}}
       {{- range $ren := $renders -}}
 
         {{/* Execute Renderer */}}
-        {{- $postrender_result_raw := include $ren (dict "content" $content_buff "Wagon" (omit $.wagon "content") "ctx" $context) -}}
-        {{- $postrender_result := fromYaml ($postrender_result_raw) -}}
+        {{- $render_result_raw := include $ren (dict "content" $content_buff "Wagon" (omit $.wagon "content") "ctx" $context) -}}
+        {{- $render_result := fromYaml ($render_result_raw) -}}
 
         {{/* Validate Content */}}
         {{- if $.wagon.content -}}
@@ -66,29 +66,29 @@
           {{- end -}}
         {{- else -}}
           {{- if (include "helmize.entrypoint.func.debug" $.ctx) -}}
-            {{- $_ := set $.wagon "debug" (append $.wagon.debug (dict "post-renderer" $ren "debug" "Empty Content")) -}}
+            {{- $_ := set $.wagon "debug" (append $.wagon.debug (dict "renderer" $ren "debug" "Empty Content")) -}}
           {{- end -}}
         {{- end -}}
 
         {{/* Validate Returned Metadata */}}
-        {{- if not (include "lib.utils.errors.unmarshalingError" $postrender_result) -}}
+        {{- if not (include "lib.utils.errors.unmarshalingError" $render_result) -}}
 
           {{/* Debug Output */}}
-          {{- if and $postrender_result.debug (kindIs "slice" $postrender_result.debug) -}}
-            {{- range $deb := $postrender_result.debug -}}
-              {{- $_ := set $.wagon "debug" (append $.wagon.debug (dict "post-renderer" $ren "debug" $deb)) -}}
+          {{- if and $render_result.debug (kindIs "slice" $render_result.debug) -}}
+            {{- range $deb := $render_result.debug -}}
+              {{- $_ := set $.wagon "debug" (append $.wagon.debug (dict "renderer" $ren "debug" $deb)) -}}
             {{- end -}}
           {{- end -}}
 
-          {{/* Returns Post Renderer Errors */}}
-          {{- if and $postrender_result.errors (kindIs "slice" $postrender_result.errors) -}}
-            {{- range $err := $postrender_result.errors -}}
-              {{- $_ := set $.wagon "errors" (append $.wagon.errors (dict "post-renderer" $ren "error" $err)) -}}
+          {{/* Returns Renderer Errors */}}
+          {{- if and $render_result.errors (kindIs "slice" $render_result.errors) -}}
+            {{- range $err := $render_result.errors -}}
+              {{- $_ := set $.wagon "errors" (append $.wagon.errors (dict "renderer" $ren "error" $err)) -}}
             {{- end -}}
           {{- end -}}
 
         {{- else -}}
-          {{- include "lib.utils.errors.fail" (printf "Template %s returned invalid YAML (%s):\n%s" $ren $postrender_result.Error ($postrender_result_raw | nindent 2)) -}}
+          {{- include "lib.utils.errors.fail" (printf "Template %s returned invalid YAML (%s):\n%s" $ren $render_result.Error ($render_result_raw | nindent 2)) -}}
         {{- end -}}
       {{- end -}}
       {{- $_ := set $.wagon "content" $content_buff -}}

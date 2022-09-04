@@ -23,7 +23,7 @@
 {{ include "helmize.config.defaults.render_template" $ }}:
   types: [ "string" ]
   default: {{ include "helmize.config.defaults.render_template.value" $ }} 
-{{ include "helmize.config.defaults.post_renderers" $ }}:
+{{ include "helmize.config.defaults.renderers" $ }}:
   types: [ "slice" ]
 {{ include "helmize.config.defaults.file_cfg_key" $ }}:
   types: [ "string" ]

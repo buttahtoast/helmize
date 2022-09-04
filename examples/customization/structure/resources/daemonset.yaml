@@ -1,3 +1,7 @@
+# Custom Super Identifier
+super_identifier: ""
+
+# Manifest
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:

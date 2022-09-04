@@ -38,7 +38,7 @@
         {{- $_ := set $return "errors" (concat $return.errors .errors) -}}
       {{- else -}}
         {{- if .paths -}}
-          {{- $paths = append $paths (dict "paths" .paths "config" .config.file_cfg "post_renderers" .config.post_renderers "data" .data "value" .value)  -}}
+          {{- $paths = append $paths (dict "paths" .paths "config" .config.file_cfg "renderers" .config.renderers "data" .data "value" .value)  -}}
         {{- end -}}
       {{- end -}}
     {{- end -}}

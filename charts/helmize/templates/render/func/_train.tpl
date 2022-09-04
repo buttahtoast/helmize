@@ -75,7 +75,7 @@
               {{- $fork := 0 -}}
   
               {{/* File Struct */}}
-              {{- $incoming_wagon := dict "id" list "content" $parsed_content "file_id" $file_id "subpath" (regexReplaceAll $file_id.path $file_id.file "${1}" | trimPrefix "/" | dir) "post_renderers" $file.post_renderers "debug" list "errors" list -}}
+              {{- $incoming_wagon := dict "id" list "content" $parsed_content "file_id" $file_id "subpath" (regexReplaceAll $file_id.path $file_id.file "${1}" | trimPrefix "/" | dir) "renderers" (get $file (include "helmize.config.defaults.renderers" $)) "debug" list "errors" list -}}
   
               {{/* Benchmark */}}
               {{- include "helmize.helpers.ts" (dict "msg" (printf "Evaluating Configuration") "ctx" $.ts) -}}
@@ -177,9 +177,9 @@
                                   {{- $_ := set $wagon "files" (concat $wagon.files $incoming_wagon.files) -}}
                                 {{- end -}}
 
-                                {{/* Concat Post Renderers */}}
-                                {{- with $incoming_wagon.post_renderers -}}
-                                  {{- $_ := set $wagon "post_renderers" (concat $wagon.post_renderers $incoming_wagon.post_renderers | uniq) -}}
+                                {{/* Concat Renderers */}}
+                                {{- with $incoming_wagon.renderers -}}
+                                  {{- $_ := set $wagon "renderers" (concat $wagon.renderers $incoming_wagon.renderers | uniq) -}}
                                 {{- end -}}
     
                                 {{/* Merge Contents */}}
@@ -246,15 +246,15 @@
     {{- if $file_train -}}
 
       {{/* Benchmark */}}
-      {{- include "helmize.helpers.ts" (dict "msg" "Running Post-Renderers" "ctx" $.ts) -}}
+      {{- include "helmize.helpers.ts" (dict "msg" "Running enderers" "ctx" $.ts) -}}
 
-      {{/* Run PostRenderers */}}
+      {{/* Run Renderers */}}
       {{- range $wagon := $file_train -}}
-        {{- include "helmize.render.func.postrenders.execute" (dict "wagon" $wagon "ctx" $.ctx) -}}
+        {{- include "helmize.renderers.func.execute" (dict "wagon" $wagon "ctx" $.ctx) -}}
       {{- end -}}
 
       {{/* Benchmark */}}
-      {{- include "helmize.helpers.ts" (dict "msg" "Post-Renderers Done" "ctx" $.ts) -}}
+      {{- include "helmize.helpers.ts" (dict "msg" "Renderers Done" "ctx" $.ts) -}}
 
       {{/* Benchmark */}}
       {{- include "helmize.helpers.ts" (dict "msg" "Running Checksums" "ctx" $.ts) -}}

@@ -22,15 +22,15 @@
 
        {{/* Debug */}}
        {{- $_ := set $return "debug" (append $return.debug (printf "%s is a super identifier" $super_identifier)) -}}
-    
-       {{/* Remove Field from Content */}}
-       {{- include "lib.utils.dicts.unset" (dict "path" $content_path "data" $.wagon.content) -}}
 
     {{/* Throw Error */}}
     {{- else -}}
       {{- $_ := set $return "errors" (append $return.errors (printf "%s did not match regex %s" $super_identifier $regex)) -}}
     {{- end -}}
   {{- end -}}
+
+  {{/* Remove Field from Content */}}
+  {{- include "lib.utils.dicts.unset" (dict "path" $content_path "data" $.wagon.content) -}}
 
   {{- printf "%s" (toYaml $return) -}}
 {{- end -}}

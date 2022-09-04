@@ -122,8 +122,8 @@ helmize.entrypoint.templates.default
   Post Renderers Configuration Key
 
 */}}
-{{- define "helmize.config.defaults.post_renderers" -}}
-post_renderers
+{{- define "helmize.config.defaults.renderers" -}}
+renderers
 {{- end -}}
 
 

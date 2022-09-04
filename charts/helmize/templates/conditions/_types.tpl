@@ -29,6 +29,6 @@
   types: [ "slice" ]
 file_cfg:
   _props: {{- include "helmize.render.types.file_configuration.shared" $ | nindent 4 }}
-{{ include "helmize.config.defaults.post_renderers" $ }}:
+{{ include "helmize.config.defaults.renderers" $ }}:
   types: [ "slice" ]
 {{- end -}}

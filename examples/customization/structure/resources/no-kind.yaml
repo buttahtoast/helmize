@@ -1,4 +1,7 @@
-super_identifier: "meooow"
+# Custom Super Identifier
+super_identifier: "super"
+
+# Manifest
 apiVersion: v1
 metadata:
   name: octopus-deployment

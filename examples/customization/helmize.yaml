@@ -9,15 +9,19 @@ conditions:
   - name: "additional"
     allow_root: true
     default: "resources"
-    post_renderers:
+    renderers:
       - customization.postrenderers.additional
     file_cfg:
       subpath: false
     data:
       sample: data
-post_renderers:
+renderers:
   - "customization.postrenderers.sidecar"
   - "customization.postrenderers.env"
+
+  # Templates that come with helmize but are not enabled by default
 {{- if $.Values.contextRenderer }}
-  - "customization.postrenderers.context"
+  - "helmize.postrenders.templates.context"
 {{- end }}
+  - helmize.postrenders.templates.timestamp
+  - helmize.postrenders.templates.checksum

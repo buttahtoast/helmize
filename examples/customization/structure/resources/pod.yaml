@@ -1,3 +1,7 @@
+# Custom Super Identifier
+super_identifier: ""
+
+# Manifest
 apiVersion: v1
 kind: Pod
 metadata:
