@@ -1,0 +1,7 @@
+## Print only Config Output
+
+# Valid Cluster Configuration
+cluster:
+  environment: "dev"
+  location: "eu"
+  region: "west"

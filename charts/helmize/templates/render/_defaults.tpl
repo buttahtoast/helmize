@@ -1,56 +1,9 @@
-{{/* Excludes <Template> 
-
-  Default Configuration Key within configuration file for file exlusion option
-
-*/}}
-{{- define "inventory.render.defaults.file.excludes" -}}
-file_excludes
-{{- end -}}
-
-
-{{/* Extensions <Template> 
-
-  Default Configuration Key within configuration file for file extensions option
-
-*/}}
-{{- define "inventory.render.defaults.file.extensions" -}}
-file_extensions
-{{- end -}}
-
-{{/* Merge Strategy <Template> 
-
-  Default Configuration Key within configuration for custom identifier evaluation
-
-*/}}
-{{- define "inventory.render.defaults.files.identifier_template" -}}
-custom_identifier_template
-{{- end -}}
-
-{{/* File Configuration Key <Template> 
-
-   Key within Files for file configuration
-
-*/}}
-{{- define "inventory.render.defaults.file_cfg.key" -}}
-file_config_key
-{{- end -}}
-
-
-{{/* File Configuration Value <Template> 
-
-   Default value for File Configuration Key
-
-*/}}
-{{- define "inventory.render.defaults.file_cfg.value" -}}
-helmize
-{{- end -}}
-
 {{/* Identifier (File Configuration Type) <Template> 
 
    Match Strategy Key
 
 */}}
-{{- define "inventory.render.defaults.file_cfg.identifier" -}}
+{{- define "helmize.render.defaults.file_cfg.identifier" -}}
 id
 {{- end -}}
 
@@ -60,17 +13,17 @@ id
    Match Strategy Key
 
 */}}
-{{- define "inventory.render.defaults.file_cfg.no_match" -}}
+{{- define "helmize.render.defaults.file_cfg.no_match" -}}
 no_match
 {{- end -}}
 
 
-{{- define "inventory.render.defaults.file_cfg.subpath" -}}
+{{- define "helmize.render.defaults.file_cfg.subpath" -}}
 subpath
 {{- end -}}
 
 
-{{- define "inventory.render.defaults.file_cfg.max_match" -}}
+{{- define "helmize.render.defaults.file_cfg.max_match" -}}
 max_match
 {{- end -}}
 
@@ -79,7 +32,7 @@ max_match
    Configure if a file should be rendered in the final output. Note that it will still show up in the Summary
 
 */}}
-{{- define "inventory.render.defaults.file_cfg.render" -}}
+{{- define "helmize.render.defaults.file_cfg.render" -}}
 render
 {{- end -}}
 
@@ -88,7 +41,7 @@ render
    IDs are used as Patterns to match against other ids. If Enabled the file won't be added if nothing matches.
 
 */}}
-{{- define "inventory.render.defaults.file_cfg.fork" -}}
+{{- define "helmize.render.defaults.file_cfg.fork" -}}
 fork
 {{- end -}}
 
@@ -97,6 +50,6 @@ fork
    IDs are used as Patterns to match against other ids. If Enabled the file won't be added if nothing matches.
 
 */}}
-{{- define "inventory.render.defaults.file_cfg.pattern" -}}
+{{- define "helmize.render.defaults.file_cfg.pattern" -}}
 pattern
 {{- end -}}

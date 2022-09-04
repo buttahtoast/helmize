@@ -1,0 +1,23 @@
+inventory_directory: "structure/"
+file_config_key: "metadata.helmize"
+force: false
+identifier_template: "customization.identifier.template"
+render_template: "customization.render.template"
+conditions:
+  - name: "resources"
+    allow_root: true
+  - name: "additional"
+    allow_root: true
+    default: "resources"
+    post_renderers:
+      - customization.postrenderers.additional
+    file_cfg:
+      subpath: false
+    data:
+      sample: data
+post_renderers:
+  - "customization.postrenderers.sidecar"
+  - "customization.postrenderers.env"
+{{- if $.Values.contextRenderer }}
+  - "customization.postrenderers.context"
+{{- end }}

@@ -1,0 +1,32 @@
+super_identifier: "meooow"
+apiVersion: v1
+metadata:
+  name: octopus-deployment
+  labels:
+    app: web
+    render: "false"
+spec:
+  containers:
+    - name: nginx
+      image: nginx
+      ports:
+        - containerPort: 80
+      env:
+        - name: DEMO_GREETING
+          value: "Hello from the environment"
+        - name: DEMO_FAREWELL
+          value: "Such a sweet sorrow"
+        - name: EXISTING_VAR
+          value: "Some existing value"
+  affinity:
+    podAntiAffinity:
+      preferredDuringSchedulingIgnoredDuringExecution:
+        - weight: 100
+          podAffinityTerm:
+            labelSelector:
+              matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                    - web
+            topologyKey: kubernetes.io/hostname

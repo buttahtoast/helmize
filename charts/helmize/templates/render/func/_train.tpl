@@ -11,9 +11,9 @@
     errors <int>: amount of errors during file collection
     
 */}}
-{{- define "inventory.render.func.train" -}}
+{{- define "helmize.render.func.train" -}}
   {{- if and $.files $.ctx -}}
-    {{- $return := dict "files" list "paths" list "errors" list "debug" list -}}
+    {{- $return := dict "wagons" list "paths" list "errors" list "debug" list -}}
 
     {{/* Variables */}}
     {{- $file_train := list -}}
@@ -34,7 +34,7 @@
       {{- $file_name := $file.file -}}
 
       {{/* Benchmark */}}
-      {{- include "inventory.helpers.ts" (dict "msg" (printf "File %s initialied" $file_name) "ctx" $.ts) -}}
+      {{- include "helmize.helpers.ts" (dict "msg" (printf "File %s initialied" $file_name) "ctx" $.ts) -}}
 
       {{/* Merge Data Store (Merges Condition Data with File Train Data Store */}}
       {{- $shared_data = mergeOverwrite $shared_data $file.data -}}
@@ -75,24 +75,24 @@
               {{- $fork := 0 -}}
   
               {{/* File Struct */}}
-              {{- $incoming_wagon := dict "id" list "content" $parsed_content "file_id" $file_id "subpath" (regexReplaceAll $file_id.path $file_id.file "${1}" | trimPrefix "/" | dir) "debug" list "errors" list -}}
+              {{- $incoming_wagon := dict "id" list "content" $parsed_content "file_id" $file_id "subpath" (regexReplaceAll $file_id.path $file_id.file "${1}" | trimPrefix "/" | dir) "post_renderers" $file.post_renderers "debug" list "errors" list -}}
   
               {{/* Benchmark */}}
-              {{- include "inventory.helpers.ts" (dict "msg" (printf "Evaluating Configuration") "ctx" $.ts) -}}
+              {{- include "helmize.helpers.ts" (dict "msg" (printf "Evaluating Configuration") "ctx" $.ts) -}}
 
               {{/* Resolve File Configuration within file, if not set get empty dict */}}
-              {{- $file_cfg_path := (fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.render.defaults.file_cfg.key" $) "ctx" $.ctx))).res -}}
-              {{- $file_cfg := mergeOverwrite (get $file "config") (default dict (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $incoming_wagon.content "path" $file_cfg_path))).res) -}}
+              {{- $file_cfg_path := (fromYaml (include "helmize.config.func.resolve" (dict "path" (include "helmize.config.defaults.file_cfg_key" $) "ctx" $.ctx))).res -}}
+              {{- $file_cfg := mergeOverwrite (get $file "config") (default dict (fromYaml (include "lib.utils.dicts.get" (dict "data" $incoming_wagon.content "path" $file_cfg_path))).res) -}}
       
               {{/* Compares against Type, Defaults are already set via conditions */}}
-              {{- $file_cfg_type := fromYaml (include "lib.utils.types.validate" (dict "type" "inventory.render.types.file_configuration"  "data" $file_cfg "ctx" $.ctx)) -}}
+              {{- $file_cfg_type := fromYaml (include "lib.utils.types.validate" (dict "type" "helmize.render.types.file_configuration"  "data" $file_cfg "ctx" $.ctx)) -}}
               {{- if $file_cfg_type.isType -}}
 
                 {{/* Set Configuration */}}
                 {{- $_ := set $incoming_wagon "config" $file_cfg -}}
 
                 {{/* Redirect Render config */}}
-                {{- $_ := set $incoming_wagon "render" (get $file_cfg (include "inventory.render.defaults.file_cfg.render" $)) -}}
+                {{- $_ := set $incoming_wagon "render" (get $file_cfg (include "helmize.render.defaults.file_cfg.render" $)) -}}
 
               {{- else -}}
                 {{/* Error Redirect */}}
@@ -100,13 +100,13 @@
               {{- end -}}
   
               {{/* Benchmark */}}
-              {{- include "inventory.helpers.ts" (dict "msg" (printf "Running Identifier") "ctx" $.ts) -}}
+              {{- include "helmize.helpers.ts" (dict "msg" (printf "Running Identifier") "ctx" $.ts) -}}
     
               {{/* Evaluate Identifier */}}
-              {{- include "inventory.render.func.identifier" (dict "wagon" $incoming_wagon "ctx" $context) -}}
+              {{- include "helmize.render.func.identifier" (dict "wagon" $incoming_wagon "ctx" $context) -}}
                  
               {{/* Benchmark */}}
-              {{- include "inventory.helpers.ts" (dict "msg" (printf "Got Identifier") "ctx" $.ts) -}}
+              {{- include "helmize.helpers.ts" (dict "msg" (printf "Got Identifier") "ctx" $.ts) -}}
 
               {{/* Unset Configuration In Content */}}
               {{- include "lib.utils.dicts.unset"  (dict "data" $incoming_wagon.content "path" $file_cfg_path) -}}
@@ -120,7 +120,7 @@
                 {{- $_ := set $incoming_wagon "files" (list (omit (set (set (set $file "_order" $order) "config" $file_cfg) "ids" $incoming_wagon.id) "partial_files")) -}}
 
                 {{/* Further Debug */}}
-                {{- if (include "inventory.entrypoint.func.debug" $.ctx) -}}
+                {{- if (include "helmize.entrypoint.func.debug" $.ctx) -}}
                   {{- $_ := set $return "debug" (append $return.debug (dict "Source" $file.file "Manifest" $incoming_wagon)) -}}
                 {{- end -}}
   
@@ -128,7 +128,7 @@
                 {{- range $i, $wagon := $file_train -}}
     
                   {{/* Validate Subpath */}}
-                  {{- if (or (not (get $file_cfg (include "inventory.render.defaults.file_cfg.subpath" $))) (and (get $file_cfg (include "inventory.render.defaults.file_cfg.subpath" $)) (eq $incoming_wagon.subpath $wagon.subpath))) -}}
+                  {{- if (or (not (get $file_cfg (include "helmize.render.defaults.file_cfg.subpath" $))) (and (get $file_cfg (include "helmize.render.defaults.file_cfg.subpath" $)) (eq $incoming_wagon.subpath $wagon.subpath))) -}}
     
                     {{/* ForEach incomfing ID iterate */}}
                     {{- range $id := $incoming_wagon.id -}}
@@ -140,13 +140,13 @@
                         {{- if (not $fork) -}}
 
                           {{/* Validate Match Counter */}}
-                          {{- if (le ((default 0 (get $file_cfg (include "inventory.render.defaults.file_cfg.max_match" $))) | int) ($match_count | int)) -}}
+                          {{- if (le ((default 0 (get $file_cfg (include "helmize.render.defaults.file_cfg.max_match" $))) | int) ($match_count | int)) -}}
         
                             {{/* Check Match */}}
-                            {{- if (or (eq $id $wagon_id) (and (get $file_cfg (include "inventory.render.defaults.file_cfg.pattern" $)) (regexFind $id $wagon_id))) -}}
+                            {{- if (or (eq $id $wagon_id) (and (get $file_cfg (include "helmize.render.defaults.file_cfg.pattern" $)) (regexFind $id $wagon_id))) -}}
             
                               {{/* Fork to new File */}}
-                              {{- if (get $file_cfg (include "inventory.render.defaults.file_cfg.fork" $)) -}}
+                              {{- if (get $file_cfg (include "helmize.render.defaults.file_cfg.fork" $)) -}}
     
                                 {{/* Create new reference */}}
                                 {{- $fork = toYaml $incoming_wagon -}}
@@ -213,10 +213,10 @@
                 {{- else if not ($matched) -}}
   
                   {{/* Skip if pattern enabled */}}
-                  {{- if not (get $file_cfg (include "inventory.render.defaults.file_cfg.pattern" $)) -}}
+                  {{- if not (get $file_cfg (include "helmize.render.defaults.file_cfg.pattern" $)) -}}
   
                     {{/* Skip File if configured */}}
-                    {{- if not (eq (get $file_cfg (include "inventory.render.defaults.file_cfg.no_match" $)) "skip") -}}
+                    {{- if not (eq (get $file_cfg (include "helmize.render.defaults.file_cfg.no_match" $)) "skip") -}}
                       {{- $file_train = append $file_train (omit $incoming_wagon "config" "file_id" | deepCopy) -}}
                       {{- $order = addf $order 1 -}}
                     {{- end -}}
@@ -238,7 +238,7 @@
       {{- end -}}
 
       {{/* Benchmark */}}
-      {{- include "inventory.helpers.ts" (dict "msg" (printf "File Executed") "ctx" $.ts) -}}
+      {{- include "helmize.helpers.ts" (dict "msg" (printf "File Executed") "ctx" $.ts) -}}
 
     {{- end -}}
 
@@ -246,31 +246,34 @@
     {{- if $file_train -}}
 
       {{/* Benchmark */}}
-      {{- include "inventory.helpers.ts" (dict "msg" "Running Post-Renderers" "ctx" $.ts) -}}
+      {{- include "helmize.helpers.ts" (dict "msg" "Running Post-Renderers" "ctx" $.ts) -}}
 
       {{/* Run PostRenderers */}}
-      {{- range $file := $file_train -}}
-        {{- include "inventory.postrenders.func.execute" (dict "file" $file "ctx" $.ctx) -}}
+      {{- range $wagon := $file_train -}}
+        {{- include "helmize.render.func.postrenders.execute" (dict "wagon" $wagon "ctx" $.ctx) -}}
       {{- end -}}
 
       {{/* Benchmark */}}
-      {{- include "inventory.helpers.ts" (dict "msg" "Post-Renderers Done" "ctx" $.ts) -}}
+      {{- include "helmize.helpers.ts" (dict "msg" "Post-Renderers Done" "ctx" $.ts) -}}
 
       {{/* Benchmark */}}
-      {{- include "inventory.helpers.ts" (dict "msg" "Running Checksums" "ctx" $.ts) -}}
+      {{- include "helmize.helpers.ts" (dict "msg" "Running Checksums" "ctx" $.ts) -}}
 
       {{/* Post Manipulations */}}
       {{- range $file := $file_train -}}
         {{- with $file.content -}}
           {{- $_ := set $file "checksum" (sha256sum (toYaml .)) -}}
         {{- end -}}
+        {{- range $err := $file.errors -}}
+          {{- $_ := set $return "errors" (append $return.errors (set $err "file" $file.id)) -}}
+        {{- end -}}
       {{- end -}}
 
       {{/* Benchmark */}}
-      {{- include "inventory.helpers.ts" (dict "msg" "Checksums Done" "ctx" $.ts) -}}
+      {{- include "helmize.helpers.ts" (dict "msg" "Checksums Done" "ctx" $.ts) -}}
 
       {{/* Convert to Slice */}}
-      {{- $_ := set $return "files" $file_train -}} 
+      {{- $_ := set $return "wagons" $file_train -}} 
     {{- end -}}
 
     {{/* Return */}}

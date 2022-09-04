@@ -1,1 +1,1 @@
-{{- include "inventory.entrypoint.func.deploy" $ | nindent 0 }}
+{{- include "helmize.entrypoint.func.deploy" $ | nindent 0 }}

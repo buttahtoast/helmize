@@ -13,16 +13,16 @@
     errors: <slice> Errors encoutered during parsing
 
 */}}
-{{- define "inventory.render.templates.identifier" -}}
-
+{{- define "helmize.render.templates.identifier" -}}
+  {{- $return := dict "errors" list "debug" list -}}
   {{/* File has content */}}
   {{- if $.wagon.content -}}
 
     {{/* Concat Identifier Path */}}
-    {{- $identifier_path := printf "%s.%s" (fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.render.defaults.file_cfg.key" $) "ctx" $.ctx))).res (include "inventory.render.defaults.file_cfg.identifier" $) -}}
+    {{- $identifier_path := printf "%s.%s" (fromYaml (include "helmize.config.func.resolve" (dict "path" (include "helmize.config.defaults.file_cfg_key" $) "ctx" $.ctx))).res (include "helmize.render.defaults.file_cfg.identifier" $) -}}
 
     {{/* Check if dedicated id field is set */}}
-    {{- $config_id := (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $.wagon.content "path" $identifier_path))).res -}}
+    {{- $config_id := (fromYaml (include "lib.utils.dicts.get" (dict "data" $.wagon.content "path" $identifier_path))).res -}}
     {{- if $config_id -}}
       {{- if (kindIs "slice" $config_id) -}}
         {{- $_ := set $.wagon "id" (concat $.wagon.id $config_id) -}}
@@ -39,6 +39,6 @@
         {{- end -}}
       {{- end -}}
     {{- end -}}
-
   {{- end -}}
+  {{- printf "%s" (toYaml $return) -}}
 {{- end -}}

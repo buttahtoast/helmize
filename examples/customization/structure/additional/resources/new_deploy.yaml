@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: new-deployment
+  labels:
+    app: web
+spec:
+  selector:
+    matchLabels:
+      app: new-deployment
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: new-deployment
+    spec:
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          env:
+            - name: DEMO_GREETING
+              value: "Hello from the environment"
+            - name: DEMO_FAREWELL
+              value: "Such a sweet sorrow"
+            - name: EXISTING_VAR
+              value: "Some existing value"
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - weight: 100
+              podAffinityTerm:
+                labelSelector:
+                  matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                        - web
+                topologyKey: kubernetes.io/hostname
