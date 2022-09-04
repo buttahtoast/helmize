@@ -31,34 +31,14 @@ There are certain requirements charts have to match, to be maintained in your He
 
 ## Documentation
 
-The documentation for each chart is done with [helm-docs](https://github.com/norwoodj/helm-docs). This way we can ensure that values are consistent with the chart documentation.
-
-We have a script on the repository which will execute the helm-docs docker container, so that you don't have to worry about downloading the binary etc. Simply execute the script (Bash compatible, might require sudo privileges):
+The documentation for each chart is done with [helm-docs](https://github.com/norwoodj/helm-docs). This way we can ensure that values are consistent with the chart documentation:
 
 ```
-bash scripts/helm-docs.sh
+make helm-docs
 ```
-
-**NOTE**: When creating your own `README.md.gotmpl`, don't forget to add it to your `.helmignore` file.
-
-### Major Changes
-
-Your chart should have a dedicated documentation part, where major changes to the chart are mentioned which cause a new major release. Here's a little example on how you could do that:
-
-```
-# Major Changes
-
-Major Changes are documented with the version affected. **Before upgrading to a new version, check this section out!**
-
-| **Chart Version** | **Change/Description** | **Commits/PRs** |
-| :---------------- | :--------------------- | :-------------- |
-||||
-```
-
 ### Upgrades
 
 If your chart requires manual interaction for version upgrades (might be the case for major upgrades) you need to mention the exact instructions in a dedicated documentation part of your chart. That's not the case for upgrades, where no specific interaction is required.
-
 
 ## Dependencies
 
