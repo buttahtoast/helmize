@@ -1,4 +1,0 @@
-inventory_directory: "structure/"
-conditions:
-  - name: "values"
-    allow_root: true

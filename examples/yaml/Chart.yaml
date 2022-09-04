@@ -1,5 +1,5 @@
 apiVersion: v2
-name: advanced-yaml
+name: example-yaml
 description: Advanced YAML file examples
 type: application
 version: 0.1.0

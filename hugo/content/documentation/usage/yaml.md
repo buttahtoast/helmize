@@ -1,10 +1,10 @@
 +++
-title = "Advanced YAML"
+title = "YAML"
 description = "Advanced YAML Files"
 weight = 5
 +++
 
-{{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/advanced-yaml](https://github.com/buttahtoast/helmize/tree/main/examples/advanced-yaml){{< /hint >}}
+{{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/yaml](https://github.com/buttahtoast/helmize/tree/main/examples/yaml){{< /hint >}}
 
 There's currently one known limitation with YAML and go sprig. Should we discover more, we will add it to this section.
 
