@@ -47,7 +47,7 @@
         {{/* Add Condition Keys */}}
         {{- $key := "" -}}
         {{- if $value_key -}}
-          {{- $key = (fromYaml (include "lib.utils.dicts.lookup" (dict "data" $.ctx.Values "path" $value_key "required" (default false (get $condition (include "helmize.conditions.defaults.conditions.required" $)))))).res -}}
+          {{- $key = (fromYaml (include "lib.utils.dicts.get" (dict "data" $.ctx.Values "path" $value_key "required" (default false (get $condition (include "helmize.conditions.defaults.conditions.required" $)))))).res -}}
         {{- end -}}
         
         {{/* Assign Default if available */}}
