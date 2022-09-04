@@ -81,48 +81,8 @@ paths:
   - daemonset-octopus-deployment.yaml
   partial_files:
   - |-
-    apiVersion: apps/v1
-    kind: DaemonSet
-    metadata:
-      name: octopus-deployment
-      labels:
-        app: web
-    spec:
-      selector:
-        matchLabels:
-          octopusexport: OctopusExport
-      updateStrategy:
-        type: RollingUpdate
-      template:
-        metadata:
-          labels:
-            app: web
-            octopusexport: OctopusExport
-        spec:
-          containers:
-            - name: nginx
-              image: nginx
-              ports:
-                - containerPort: 80
-              env:
-                - name: DEMO_GREETING
-                  value: "Hello from the environment"
-                - name: DEMO_FAREWELL
-                  value: "Such a sweet sorrow"
-                - name: EXISTING_VAR
-                  value: "Some existing value"
-          affinity:
-            podAntiAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-                - weight: 100
-                  podAffinityTerm:
-                    labelSelector:
-                      matchExpressions:
-                        - key: app
-                          operator: In
-                          values:
-                            - web
-                    topologyKey: kubernetes.io/hostname
+    # Content omitted
+    # ...
   path: structure/resources/
   post_renderers: []
   value: {}
@@ -139,49 +99,8 @@ paths:
     - deployment-octopus-deployment.yaml
     partial_files:
     - |-
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: octopus-deployment
-        labels:
-          app: web
-      spec:
-        selector:
-          matchLabels:
-            octopusexport: OctopusExport
-        replicas: 1
-        strategy:
-          type: RollingUpdate
-        template:
-          metadata:
-            labels:
-              app: web
-              octopusexport: OctopusExport
-          spec:
-            containers:
-              - name: nginx
-                image: nginx
-                ports:
-                  - containerPort: 80
-                env:
-                  - name: DEMO_GREETING
-                    value: "Hello from the environment"
-                  - name: DEMO_FAREWELL
-                    value: "Such a sweet sorrow"
-                  - name: EXISTING_VAR
-                    value: "Some existing value"
-            affinity:
-              podAntiAffinity:
-                preferredDuringSchedulingIgnoredDuringExecution:
-                  - weight: 100
-                    podAffinityTerm:
-                      labelSelector:
-                        matchExpressions:
-                          - key: app
-                            operator: In
-                            values:
-                              - web
-                      topologyKey: kubernetes.io/hostname
+       # Content omitted
+       # ...
     path: structure/resources/
     post_renderers: []
     value: {}
@@ -226,6 +145,9 @@ content: {}
 
 # Render State
 render: true
+
+# Indicates if this wagon was forked, only present when Wagon is a fork.
+fork: true
 
 # Holds all identifiers for this file
 id:
@@ -304,17 +226,18 @@ errors:
 
 ## Global Context
 
-  * **$.Value**: The Value of the condition which is running (selected the file)
-  * **$.Data**: The Shared Data Structure. [Read More](../data).
-
-
-## Global Context
-
 The Global Context is the default helm context for a chart enriched with some extra fields for helmize.
 
 {{< expand "Global Context" "..." >}}
+
+Key population:
+
+  1. `$.Config` - [Helmize Configuration](../../configuration/helmize)
+  2. `$.Data` - [Condition Data](../data/)
+  3. `$.Value` - The value of the condition which selected this file
+
 ```
-# Helmize Configuration
+# Helmize Configuration (1)
 Config:
   benchmark: false
   conditions:
@@ -342,6 +265,16 @@ Config:
   show_config: false
   summary: false
 
+# Condition Data (2)  
+Data: {}
+
+# Condition Value (3)
+Value: {}
+
+# Wagon Context of current file (4)
+Wagon: <Wagon Context>
+
+
 ## Usual Helm Context
 
 Values:
@@ -361,13 +294,5 @@ Template:
   Name: example-customization/templates/deploy.yaml
 
 etc..
-
-## The following 
-
-# Combined Data (Influenced by )  
-Data: {}
-
-# The Value of the condition which selected this
-Value: {}
 ```
 {{< /expand >}}

@@ -58,7 +58,6 @@ If you would like to redirect content from the root context, you need to create 
 
 {{- end -}}
 ```
-
 ## Return
 
 The following return values (YAML Print) are considered:
@@ -94,106 +93,22 @@ That's how the Root Context (`$`) looks like given to the post-renderer template
 
 {{< expand "Context" "..." >}}
 
+Key population:
+
+  1. `$.Wagon` - [Wagon Context (without `.content`)](#wagon-context)
+  2. `$.ctx` - [Global Context](../../templating/#global-context)
+
 ```yaml
-## Content Of the current file
+# Content Of the current file
 content:
-  apiVersion: apps/v1
-  kind: StatefulSet
-  metadata:
-    labels:
-      app: web
-      inject_port: "true"
-    name: octopus-deployment
-  spec:
-    podManagementPolicy: OrderedReady
-    replicas: 1
-    selector:
-      matchLabels:
-        octopusexport: OctopusExport
-    template:
-      metadata:
-        labels:
-          app: web
-          octopusexport: OctopusExport
-      spec:
-        affinity:
-          podAntiAffinity:
-            preferredDuringSchedulingIgnoredDuringExecution:
-            - podAffinityTerm:
-                labelSelector:
-                  matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                    - web
-                topologyKey: kubernetes.io/hostname
-              weight: 100
-        containers:
-        - env:
-          - name: EXISTING_VAR
-            value: Overwrite Value
-          - name: DEMO_GREETING
-            value: Hello from the environment
-          - name: DEMO_FAREWELL
-            value: Such a sweet sorrow
-          - name: injected
-            value: env
-          image: nginx
-          name: nginx
-          ports:
-          - containerPort: 80
-        - command:
-          - java
-          - -XX:+UnlockExperimentalVMOptions
-          - -XX:+UseCGroupMemoryLimitForHeap
-          - -XX:MaxRAMFraction=1
-          - -XshowSettings:vm
-          - -jar
-          - jmx_prometheus_httpserver.jar
-          - "90001"
-          - /opt/jmx-config/jmx-prometheus.yml
-          env:
-          - name: EXISTING_VAR
-            value: Overwrite Value
-          - name: injected
-            value: env
-          name: jmx
-          ports:
-          - containerPort: 9001
-            name: jmx
-    updateStrategy:
-      type: RollingUpdate
+  # Content omitted
+  # ...
 
+## Wagon Context (1)
+Wagon:
+  ...
 
-## File Information
-File:
-  debug: []
-  errors: []
-  files:
-  - _order: 4
-    config:
-      fork: false
-      no_match: append
-      pattern: false
-      render: true
-      subpath: true
-    data: {}
-    file: structure/resources/statefulset.yaml
-    ids:
-    - statefulset-octopus-deployment.yaml
-    path: structure/resources/
-    post_renderers: []
-    value: {}
-  id:
-  - statefulset-octopus-deployment.yaml
-  post_renders:
-  - customization.postrenderers.sidecar
-  - customization.postrenderers.env
-  - customization.postrenderers.context
-  render: true
-  subpath: .
-
-## Global Helm Context
+## Global Context (2)
 ctx:
   ...
 ```

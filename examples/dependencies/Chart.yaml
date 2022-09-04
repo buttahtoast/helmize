@@ -1,0 +1,19 @@
+apiVersion: v2
+name: example-customization
+description: Helmize Customization Example
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+dependencies:
+
+# Helmize Dependency
+- name: helmize
+  version: ">=0.0.0-0"
+  repository: "file://../../charts/helmize"
+
+# Other Charts
+- name: kube-prometheus-stack
+  version: "38.0.0"
+  repository: "https://prometheus-community.github.io/helm-charts"
+  condition: kube_prometheus_stack.enabled
+

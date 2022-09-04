@@ -32,41 +32,41 @@
 
 */}}
 {{- define "helmize.render.func.postrenders.execute" -}}
-  {{- if and $.file $.ctx -}}
+  {{- if and $.wagon $.ctx -}}
 
     {{/* Extra Context */}}
     {{- $context := $.ctx -}}
 
     {{/* File has Content */}}
-    {{- if $.file.content -}}
+    {{- if $.wagon.content -}}
 
       {{/* Load Renderers */}}
       {{- $renders := default list (fromYaml (include "helmize.render.func.postrenders.get" (dict "ctx" $.ctx))).renders -}}
 
       {{/* Prepend File Post-Renderers */}}
-      {{- with $.file.post_renderers -}}
+      {{- with $.wagon.post_renderers -}}
         {{- $renders = concat . $renders -}}
       {{- end -}}
 
       {{/* Redirect All Post Renderers to File */}}
-      {{- $_ := set $.file "post_renderers" $renders -}}
+      {{- $_ := set $.wagon "post_renderers" $renders -}}
 
       {{/* Execute Renderers */}}
-      {{- $content_buff := $.file.content -}}
+      {{- $content_buff := $.wagon.content -}}
       {{- range $ren := $renders -}}
 
         {{/* Execute Renderer */}}
-        {{- $postrender_result_raw := include $ren (dict "content" $content_buff "File" (omit $.file "content") (default "inv" $.extra_ctx_key) (default dict $.extra_ctx) "ctx" $context) -}}
+        {{- $postrender_result_raw := include $ren (dict "content" $content_buff "Wagon" (omit $.wagon "content") "ctx" $context) -}}
         {{- $postrender_result := fromYaml ($postrender_result_raw) -}}
 
         {{/* Validate Content */}}
-        {{- if $.file.content -}}
-          {{- if (not (kindIs "map" $.file.content)) -}}
-            {{- $_ := set $.file "errors" (append $.file.errors (dict "error" (printf "Content is kind '%s' but should be 'map'" (kindOf $.file.content)) "post-renderer" $ren "trace" $.file.content)) -}}
+        {{- if $.wagon.content -}}
+          {{- if (not (kindIs "map" $.wagon.content)) -}}
+            {{- $_ := set $.wagon "errors" (append $.wagon.errors (dict "error" (printf "Content is kind '%s' but should be 'map'" (kindOf $.wagon.content)) "post-renderer" $ren "trace" $.wagon.content)) -}}
           {{- end -}}
         {{- else -}}
           {{- if (include "helmize.entrypoint.func.debug" $.ctx) -}}
-            {{- $_ := set $.file "debug" (append $.file.debug (dict "post-renderer" $ren "debug" "Empty Content")) -}}
+            {{- $_ := set $.wagon "debug" (append $.wagon.debug (dict "post-renderer" $ren "debug" "Empty Content")) -}}
           {{- end -}}
         {{- end -}}
 
@@ -76,14 +76,14 @@
           {{/* Debug Output */}}
           {{- if and $postrender_result.debug (kindIs "slice" $postrender_result.debug) -}}
             {{- range $deb := $postrender_result.debug -}}
-              {{- $_ := set $.file "debug" (append $.file.debug (dict "post-renderer" $ren "debug" $deb)) -}}
+              {{- $_ := set $.wagon "debug" (append $.wagon.debug (dict "post-renderer" $ren "debug" $deb)) -}}
             {{- end -}}
           {{- end -}}
 
           {{/* Returns Post Renderer Errors */}}
           {{- if and $postrender_result.errors (kindIs "slice" $postrender_result.errors) -}}
             {{- range $err := $postrender_result.errors -}}
-              {{- $_ := set $.file "errors" (append $.file.errors (dict "post-renderer" $ren "error" $err)) -}}
+              {{- $_ := set $.wagon "errors" (append $.wagon.errors (dict "post-renderer" $ren "error" $err)) -}}
             {{- end -}}
           {{- end -}}
 
@@ -91,7 +91,7 @@
           {{- include "lib.utils.errors.fail" (printf "Template %s returned invalid YAML (%s):\n%s" $ren $postrender_result.Error ($postrender_result_raw | nindent 2)) -}}
         {{- end -}}
       {{- end -}}
-      {{- $_ := set $.file "content" $content_buff -}}
+      {{- $_ := set $.wagon "content" $content_buff -}}
     {{- end -}}
 
   {{- end -}}

@@ -249,8 +249,8 @@
       {{- include "helmize.helpers.ts" (dict "msg" "Running Post-Renderers" "ctx" $.ts) -}}
 
       {{/* Run PostRenderers */}}
-      {{- range $file := $file_train -}}
-        {{- include "helmize.render.func.postrenders.execute" (dict "file" $file "ctx" $.ctx) -}}
+      {{- range $wagon := $file_train -}}
+        {{- include "helmize.render.func.postrenders.execute" (dict "wagon" $wagon "ctx" $.ctx) -}}
       {{- end -}}
 
       {{/* Benchmark */}}
