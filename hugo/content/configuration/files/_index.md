@@ -159,9 +159,3 @@ _Optional_
 **Type** `boolean` **Default** `false`
 
 Forks are new files based on their matches. If a files matches any file's id it will create a new file. Only one fork can be created, so the first match creates the new file.
-
-### Example 
-
-[See the example chart]
-
-

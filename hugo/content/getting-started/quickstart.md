@@ -28,7 +28,7 @@ dependencies:
 - name: helmize
   # Make sure to use a fixed version
   version: ">=0.0.0-0"
-  repository: "https://buttahtoast.github.io/helm-charts/"
+  repository: "https://helmize.dev/"
 ...
 ```
 
@@ -43,7 +43,7 @@ Now we need to add a template which includes the entrypoint for helmize:
 
 ```Shell
 cat << EOF > ./templates/deploy.yaml
-{{- include "inventory.entrypoint.func.deploy" $ | nindent 0 }}
+{{- include "helmize.deploy" $ | nindent 0 }}
 EOF
 ```
 
@@ -52,7 +52,6 @@ Now we create a very simplistic configuration in the chart root:
 ```Shell
 cat << EOF > ./helmize.yaml
 inventory_directory: "structure/"
-templates_directory: "tpls/"
 conditions:
   - name: "base"
     path: "/base/"
@@ -293,7 +292,6 @@ Now we want to add a condition, that podinfo is different names on different env
 ```Shell
 cat << EOF > ./helmize.yaml
 inventory_directory: "structure/"
-templates_directory: "tpls/"
 conditions:
 
   - name: "base"
@@ -869,85 +867,3 @@ spec:
 {{< /expand >}}
 
 As seen with these two examples, conditions are a great mechanism to combine different indepdendent factors. You can extended the conditions at anytime without restructering the entire folder structure.
-
-## Dropins
-
-[Read more on dropins](../../documentation/configuration/dropins/)
-
-We create a simple that's not really useful but helps you understand how dropins work:
-
-
-```Shell
-cat << EOF >> ./helmize.yaml
-dropins: 
-  - patterns: [ ".*" ]
-    data:
-      labels:
-        "custom.label": "data"
-    tpls:
-      - "*.tpl"
-EOF    
-```
-
-This Dropin makes use of the [Label Post Renderer]() and adds the `registry.tpl`
-
-{{< expand "registry.tpl" "..." >}}
-
-First we have to create the templates directory we configured via `templates_directory`
-
-```Shell
-mkdir tpls/
-```
-
-Then Let's add this Template under `templates/registry.tpl`
-
-```
-{{/* Does not do much, but you can use templating to map values or use defaulting */}}
-{{- if $.Values.registry }}
-registry: {{ $.Values.registry }}
-{{- end }}
-
-{{/*
-  Adds Another Label for the Post Renderer
-*/}}
-labels:
-  registy.template: "label"
-```
-
-Since we include any files with the `*.tpl` ending in the `templates` directory this template will be used. If you want to be more explicit you would need to add only the `registry.tpl`
-
-
-```Shell
-cat << EOF >> ./helmize.yaml
-dropins: 
-  - patterns: [ ".*" ]
-    data:
-      labels:
-        "custom.label": "data"
-    tpls:
-      - "registry.tpl"
-EOF    
-```
-
-In the `structure/base/podinfo/deploy.yaml` we change the image to default on the registry if it's set, others use `ghcr.io`:
-
-```
-...
-      - name: frontend
-        image: {{ default "ghcr.io" $.Data.registry }}/stefanprodan/podinfo:6.0.3
-        imagePullPolicy: IfNotPresent
-...
-```
-
-Now if we template with the `registry` set, we should see it
-
-```
-helm template . --set registry="custom.registry"
-```
-
-So we can access the results of dropings via the `$.Data` map in our file structure. [Read More](../documentation/structure/files/)
-
-{{< /expand >}}
-
-
-Now have seen the basi principles helmize brings. It's an help to organize large deployments and gives you greate customization which is value driven. The next step is to try it out for yourself! If there are still a lot of question marks, check out the [examples](../../examples) where we reference some implementations of helmize which might help you get started with your own use-case.

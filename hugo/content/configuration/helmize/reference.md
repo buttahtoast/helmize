@@ -8,35 +8,35 @@ Example configuration reference with documentation links.
 
 ```YAML
 ## Inventory Directory
-# http://helmize.dev/documentation/configuration/general/#inventory_directory
+# http://helmize.dev/configuration/helmize/#inventory_directory
 inventory_directory: "groups/"
 
 ## Force
-# http://helmize.dev/configuration/general/#force
+# http://helmize.dev/configuration/helmize/#force
 force: false 
 
 ## File Extensions
-# http://helmize.dev/configuration/general/#file_extensions
+# http://helmize.dev/configuration/helmize/#file_extensions
 file_extensions: [ "yaml" ]
 
 ## File Excludes
-# http://helmize.dev/configuration/general/#file_excludes
+# http://helmize.dev/configuration/helmize/#file_excludes
 file_excludes: [ "kustomization" ]
 
 ## Identifier Template
-# http://helmize.dev/configuration/general/#identifier_template
+# http://helmize.dev/configuration/helmize/#identifier_template
 identifier_template: "custom.identifier.template"
 
 ## Render Template
-# http://helmize.dev/configuration/general/#render_template
+# http://helmize.dev/configuration/helmize/#render_template
 render_template: "custom.render.template"
 
 ## File Configuration Key
-# http://helmize.dev/configuration/general/#file_config_key
+# http://helmize.dev/configuration/helmize/#file_config_key
 file_config_key: "custom.config.key"
 
-## General Renderers
-# http://helmize.dev/configuration/general/#post_renderers
+## helmize Renderers
+# http://helmize.dev/configuration/helmize/#post_renderers
 renderers:
   - "custom.post-renderer.1"
   - "custom.post-renderer.2"

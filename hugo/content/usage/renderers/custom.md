@@ -1,5 +1,5 @@
 +++
-title = "Custom"
+title = "Custom Renderers"
 description = "Custom Renderers"
 weight = 4
 +++

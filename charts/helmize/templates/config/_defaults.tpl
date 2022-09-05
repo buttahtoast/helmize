@@ -4,7 +4,7 @@
 
 */}}
 {{- define "helmize.config.defaults.config_location" -}}
-  {{- default "helmize.yaml" $.Values.helmize_file -}}
+  {{- default "helmize.yaml" (get $.Values (include "helmize.render.defaults.helmize_file" $)) -}}
 {{- end }}
 
 {{/* Values Config <Template> 

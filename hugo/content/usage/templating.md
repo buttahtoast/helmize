@@ -1,7 +1,7 @@
 +++
 title = "Templating"
 description = "Templating"
-weight = 3
+weight = 1
 +++
 
 

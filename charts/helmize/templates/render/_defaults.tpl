@@ -1,3 +1,13 @@
+{{/* Helmize File <Flag> 
+
+  Helmize File Flag Key
+
+*/}}
+{{- define "helmize.render.defaults.helmize_file" -}}
+helmize_file
+{{- end -}}
+
+
 {{/* Show Config <Flag> 
 
   Show Config Flag Key

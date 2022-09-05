@@ -7,7 +7,7 @@
    {{- end -}}
 
    {{/* Include Default Wagon Render Template */}}
-   {{- include "helmize.entrypoint.templates.default.wagon" (dict "wagon" $wagon "ctx" $.ctx) -}}
+   {{- include "helmize.render.templates.default.wagon" (dict "wagon" $wagon "ctx" $.ctx) -}}
 
   {{- end -}}
 {{- end -}}

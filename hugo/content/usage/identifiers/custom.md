@@ -1,5 +1,5 @@
 +++
-title = "Custom"
+title = "Custom Template"
 description = "Custom Identifier Template"
 weight = 3
 +++

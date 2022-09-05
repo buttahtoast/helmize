@@ -1,7 +1,7 @@
 +++
 title = "YAML"
 description = "Advanced YAML Files"
-weight = 1
+weight = 2
 +++
 
 {{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/yaml](https://github.com/buttahtoast/helmize/tree/main/examples/yaml){{< /hint >}}

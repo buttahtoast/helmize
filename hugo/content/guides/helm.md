@@ -16,3 +16,11 @@ Helm offers the option to embed your own post renderers. They allow to usage of 
 
 [Helm-Secrets](https://github.com/jkroepke/helm-secrets) is a great plugin which allows to encrypt helm secrets via sops.
 
+### Other Solutions
+
+There are different Solutions which help you to organize your secrets in a safe way:
+
+  * [External Secrets](https://github.com/external-secrets/kubernetes-external-secrets)
+  * [SOPS](https://github.com/mozilla/sops)
+  * [Sealed Secrets](https://github.com/bitnami-labs/sealed-secrets.git)
+

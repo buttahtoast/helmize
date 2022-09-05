@@ -1,7 +1,7 @@
 +++
 title = "Data"
 description = "Data Handling"
-weight = 2
+weight = 3
 +++
 
 {{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/data](https://github.com/buttahtoast/helmize/tree/main/examples/data){{< /hint >}}
