@@ -6,12 +6,12 @@ weight = 2
 
 Conditions translate into paths where files are looked up based on given values which are relevant for deployment. Conditions are declared as list, based on the order the files are looked up and merged.
 
-# Options
+## Options
 
 Each condition can have the followin configurations.
 
 ---
-## name
+### name
 
 _Required_
 
@@ -20,7 +20,7 @@ _Required_
 Used across helmize to reference to condition.
 
 ---
-## key
+### key
 
 _Optional_
 
@@ -29,7 +29,7 @@ _Optional_
 Path to the value in the user delivered values which is used as key to lookup. The key is relative the Values (`$.Values`) and therefor must be within the Values. 
 
 ---
-## key_types
+### key_types
 
 _Optional_
 
@@ -40,7 +40,7 @@ Define the types the key must have. For example if you only want to allow a sing
 * [http://masterminds.github.io/sprig/reflection.html](http://masterminds.github.io/sprig/reflection.html)
 
 ---
-## required
+### required
 
 _Optional_
 
@@ -49,7 +49,7 @@ _Optional_
 The declared key must have a value. If no value is given the templating fails.
 
 ---
-## default
+### default
 
 _Optional_
 
@@ -58,7 +58,7 @@ _Optional_
 If the declared key does not contain a value, this default value will be used. The default value will be set the key if not set, so it's available via the Values.
 
 ---
-## path
+### path
 
 _Optional_
 
@@ -67,7 +67,7 @@ _Optional_
 The path defines under which directory path the given values for the condition are looked up. If no path is given, the  condition's [name](#name) is used as path. Note that the path is complementary to the [inventory_directory](../general/#inventory_directory)
 
 ---
-## filter
+### filter
 
 _Optional_
 
@@ -77,7 +77,7 @@ Filter keylist for values that are allowed values. The filter is executed agains
 
 ---
 
-## any
+### any
 
 _Optional_
 
@@ -87,7 +87,7 @@ Consider any file in any subpath in the condition directory (Adding `/` as path)
 
 ---
 
-## renderers
+### renderers
 
 _Optional_
 
@@ -97,7 +97,7 @@ Post Renderers are helm templates which are executed after all the files are mer
 
 ---
 
-## file_cfg
+### file_cfg
 
 _Optional_
 
@@ -106,7 +106,7 @@ _Optional_
 You can define file configurations for the entire condition. The file configurations are applied for all files in the directory of this condition. If 
 
 ---
-# Condition Data 
+## Condition Data 
 
 It's possible to give specific data with a condition. The data for the condition is then available for all files matching this condition and will be preserved for files which are rendered after this condition applied. 
 
@@ -114,7 +114,7 @@ It's possible to give specific data with a condition. The data for the condition
 
 ---
 
-## data
+### data
 
 _Optional_
 
@@ -123,7 +123,7 @@ _Optional_
 Define static data which will be availble for templating.
 
 ---
-## tpls
+### tpls
 
 {{< hint "info" >}}Using templates might have a decrease in performance as consequence. Calling the sprig `tpl` functions tends to be a bit slow. However it might be a worthy trade-off for certain scenarios{{< /hint >}}
 

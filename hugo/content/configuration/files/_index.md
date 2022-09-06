@@ -26,12 +26,14 @@ metadata:
 
 You can change the configuration key via [file_config_key](../../configuration/general#file_config_key)
 
-# Per File Configuration
+## Options
+
+### Per File Configuration
 
 Each File can have the following properties.
 
 ---
-## id
+#### id
 
 _Optional_
 
@@ -41,12 +43,12 @@ Define custom id(s) for this file. [Read more about identifiers](identifiers/)
 
 ---
 
-# Shared Configuration
+### Shared Configuration
 
 The following properites can be set within each file but may also be configured conditions. Configurations on file basis are merged over condition file configurations.
 
 ---
-## no_match
+#### no_match
 
 _Optional_
 
@@ -60,7 +62,7 @@ Define what happens if a file does not match any existing file with it's identif
 This option is interesting for patches.  
 
 ---
-## max_match
+#### max_match
 
 _Optional_
 
@@ -70,7 +72,7 @@ Limit the amount of matches this file can have. `0` are unlimited matches.
 
 
 ---
-## render
+#### render
 
 _Optional_
 
@@ -79,7 +81,7 @@ _Optional_
 Define if a file should be rendered. The file will still show up in the summary but no be rendered when templating normally. When files are merged this option is overwritten as well. Eg. when the base file has `render` set to `false` and a file merges with it, with `render`set to `true`, the result will be `true`
 
 ---
-## subpath
+#### subpath
 
 _Optional_
 
@@ -111,7 +113,7 @@ data:
 {{< /expand >}}
 
 ---
-## pattern
+#### pattern
 
 {{< hint "info" >}}When pattern is active, the file can oly be merged. If there's no match, the file will be skipped, no matter which configuration is set for property `no_match`{{< /hint >}}
 
@@ -152,7 +154,7 @@ conditions:
 
 ---
 
-## fork 
+#### fork 
 
 _Optional_
 

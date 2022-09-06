@@ -4,26 +4,16 @@ description = "Custom Render Template"
 weight = 3
 +++
 
+{{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/example-customization](https://github.com/buttahtoast/helmize/tree/main/examples/example-customization){{< /hint >}}
+
+
 You can implement your own render template. The render template constructs the output YAML when templating the entire structure.
 
-# Configuration
+## Configuration
 
 General configuration for a Render Template.
 
-## Reference
-
-The render template which should be used is defined in the [helmize configuration](../../configuration/helmize/#render_template)
-
-
-
-
-
-# Configuration
-
-You can implement your own render template, if ours is not practical for you. Let's see how it's done.
-
-
-## Template
+### Template
 
 Here’s a minimalstic Renderer Template to get started.
 
@@ -40,14 +30,14 @@ Here’s a minimalstic Renderer Template to get started.
 {{- end -}}
 ```
 
-## Context
+### Context
 
 An Identifier template receives the following context (Values Change per File):
 
 {{< expand "Context" "..." >}}
 
 
-# Example
+## Example
 
 {{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/customization](https://github.com/buttahtoast/helmize/tree/main/examples/customization){{< /hint >}}
 
@@ -84,7 +74,7 @@ Once the render template is created we need to reference in the [configuration](
 render_template: "customization.render.template"
 conditions:
   - name: "resources"
-    allow_root: true
+    any: true
   - name: "additional"
-    allow_root: true
+    any: true
 ```

@@ -9,13 +9,13 @@ weight = 3
 Data is shared over a specific field across all files. Data can originate from [Conditions]() or you can manipulate the data to a certain extend.
 
 
-# Manipulate
+## Manipulate
 
 {{< hint "warning" >}}With Data manipulation you can potentialy break the entire functionality. Make sure to only manipulate values under $.Data and be aware of what you are doing.{{< /hint >}}
 
 You can manipulate data from files into the shared file store, since the `set` and `unset` execute on the interface and do not return a result. Such operations can be done in files with don't have any content at all and no matching id, since the given context which templates the file is target by those operations.
 
-## Inject
+### Inject
 
 This way you add data, which will be available for all the following files:
 
@@ -39,7 +39,7 @@ Overwrite the key `layer1.overwrite`
 
 The `layer1.overwrite` will not be overwritten in the result.
 
-## Unset
+### Unset
 
 {{< hint "info" >}}Unseting data which originates from [condition data](../../configuration/conditions/#condition-data) will only unset it for the current file (All YAMLs within that file). For the next file the condition data is newly merged and therefor present again.{{< /hint >}}
 

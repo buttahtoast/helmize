@@ -5,11 +5,11 @@ weight = 4
 geekdocCollapseSection = "false"
 +++
 
-{{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/identifiers](https://github.com/buttahtoast/helmize/tree/main/examples/identifiers){{< /hint >}}
+{{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/example-identifiers](https://github.com/buttahtoast/helmize/tree/main/examples/example-identifiers){{< /hint >}}
 
-Identifiers are used to identify a file or a partial file. Based on identifiers files are merged together. [File Configurations](../config) may influence the behavior. The subpath is not relevant in the identifier evaluation.
+Identifiers are used to identify a file or a partial file. Based on identifiers files are merged together. [File Configurations](../../configuration/files/) may influence the behavior. The subpath is not relevant in the identifier evaluation.
 
-# Predefined
+## Predefined
 
 {{< hint "warning" >}}
 Regardless if you are using the default identifier template or your own. If the template returns an empty ID the file name where the resource originate from is used. Should there be multiple resources in that file which don't evaluate dedicated identifiers, they are both assigned the same identifier (filename) and therefor merged.
@@ -17,17 +17,22 @@ Regardless if you are using the default identifier template or your own. If the 
 
 [Custom IDs](#custom-id) are always used. If a manifest has the field `kind` and `metadata.name` it's combined to `{kind}-{metadata.name}.yaml` which is added as identifier. If no [custom IDs](#custom-id) are set or those two data fields, the filename is used. The current template for identifiert evaluation can be found here:
 
-  * [https://github.com/buttahtoast/helm-charts/blob/master/charts/helmize/templates/render/templates/_identifier.tpl](https://github.com/buttahtoast/helm-charts/blob/master/charts/helmize/templates/render/templates/_identifier.tpl)
+  * [https://github.com/buttahtoast/helmize/blob/master/charts/helmize/templates/core/templates/_identifier.tpl](https://github.com/buttahtoast/helmize/blob/master/charts/helmize/templates/core/templates/_identifier.tpl)
 
-[You can change the identifier template](../../customization/identifiers/)
+[You can change the identifier template](custom/)
 
-<h1>Outcomes</h1>
+## Reference
+
+The identifier template which should be used is defined in the [helmize configuration](../../configuration/helmize/#identifier_template)
+
+
+<h2>Outcomes</h2>
 
 Here are different outcomes for identifiers.
 
 ---
 
-<h2>Kind and Name</h2>
+<h3>Kind and Name</h3>
 
 In this example the `kind` and `metadata.name` are set.
 
@@ -98,7 +103,7 @@ Second one has ID:
 
 ---
 
-<h2>Without Kind and Name</h2>
+<h3>Without Kind and Name</h3>
 
 In this example the `kind` and `metadata.name` are not set. In this case the filename is used as id.
 
@@ -156,7 +161,7 @@ Both elements have the same ID and merged:
 
 ---
 
-<h2>Custom ID</h2>
+<h3>Custom ID</h3>
 
 In this example we define custom identifiers via the [id](../../files/#id) field.
 
@@ -230,7 +235,7 @@ Second one has ID:
 
 ---
 
-<h2>Custom ID + Kind and Name</h2>
+<h3>Custom ID + Kind and Name</h3>
 
 In this example we define custom identifiers via the `id` field. In addition the `kind` and `metadata.name` are set.
 

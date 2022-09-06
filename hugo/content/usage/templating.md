@@ -4,37 +4,26 @@ description = "Templating"
 weight = 1
 +++
 
-
-# Library
+## Library
 
 Helmize comes with our helm library as dependency. The library provides a lot of functions which simplify the maniplution of dicts, slices, etc. You should definitly make use of it's functionalities. See the full documentation of the library chart here:
 
   * [https://github.com/buttahtoast/helm-charts/tree/master/charts/library#templates](https://github.com/buttahtoast/helm-charts/tree/master/charts/library#templates)
 
+## Contexts
 
-# Templates
+Contexts are data structures. In Sprig a template receives a context. Based on which context is given, you have acces to certain data.
 
+### Train Context
 
-## Library
-
-
-## Access Configuration
-
-
-
-
-# Contexts
-
-Contexts are data structures. Templates 
-
-## Train Context
+The train is a construct which mainly holds the general configuration and consists of [wagons](#wagon).
 
 {{< expand "Train Context" "..." >}}
 ```
 # Conditions from Configuration
 conditions:
 - config:
-    allow_root: true
+    any: true
     key_types:
     - string
     - slice
@@ -49,13 +38,13 @@ conditions:
   root_path: resources
   value: {}
 - config:
-    allow_root: true
+    any: true
     key_types:
     - string
     - slice
     name: additional
     post_renderers:
-    - customization.postrenderers.additional
+    - customization.renderers.additional
   data: {}
   errors: []
   keys:
@@ -102,7 +91,7 @@ paths:
        # Content omitted
        # ...
     path: structure/resources/
-    post_renderers: []
+    renderers: []
     value: {}
   - _order: 2
     config:
@@ -126,11 +115,11 @@ errors:
 - error: No Kind Defined
   file:
   - deployment
-  post-renderer: customization.postrenderers.sidecar
+  renderer: customization.postrenderers.sidecar
 ```
 {{< /expand >}}
 
-## Wagon Context
+### Wagon Context
 
 A wagon is the construct which abstracts a group of files into one file. The files are grouped into wagons based on their identifier. The Train is a list of wagon contexts.
 
@@ -158,7 +147,7 @@ id:
 subpath: .
 
 # All Executed Post-Renderers for this file in execution order
-post_renderers: 
+renderers: 
   - customization.postrenderers.additional
   - customization.postrenderers.sidecar
   - customization.postrenderers.env
@@ -190,8 +179,8 @@ files:
   ids:
   - deployment-octopus-deployment.yaml
 
-  # Post-Renderers given by Condition
-  post_renderers: []
+  # Renderers given by Conditions
+  renderers: []
 
   # Condition Value
   value: {}
@@ -208,7 +197,7 @@ files:
   ids:
   - deployment-octopus-deployment.yaml
   path: structure/additional/
-  post_renderers: []
+  renderers: []
   value: {}
 
 # Debug Messages (Given by Identifier/Post Render Templates)
@@ -219,29 +208,22 @@ errors:
   - error: No Kind Defined
     file:
     - deployment
-    post-renderer: customization.postrenderers.sidecar
+    renderer: customization.postrenderers.sidecar
 ```
 {{< /expand >}}
 
 
-## Global Context
+### Global Context
 
 The Global Context is the default helm context for a chart enriched with some extra fields for helmize.
 
 {{< expand "Global Context" "..." >}}
-
-Key population:
-
-  1. `$.Config` - [Helmize Configuration](../../configuration/helmize)
-  2. `$.Data` - [Condition Data](../data/)
-  3. `$.Value` - The value of the condition which selected this file
-
 ```
 # Helmize Configuration (1)
 Config:
   benchmark: false
   conditions:
-  - allow_root: true
+  - any: true
     name: resources
   debug: false
   file_config_key: metadata.helmize
@@ -257,7 +239,7 @@ Config:
   inventory_directory: structure/
   library:
     global: {}
-  post_renderers:
+  renderers:
   - customization.postrenderers.sidecar
   - customization.postrenderers.env
   - customization.postrenderers.context

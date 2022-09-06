@@ -3,7 +3,7 @@
   {{- $kind := (lower (default "" $.content.kind) | toString) -}}
 
   {{/* Verify if Kind persent */}}
-  {{- if $kind -}}
+  {{- if and $kind $.content.spec -}}
 
     {{/* Same Spec Path */}}
     {{- if (has $kind (list "deployment" "statefulset" "daemonset")) -}}

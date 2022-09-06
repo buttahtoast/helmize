@@ -4,23 +4,23 @@ description = "Helmize Configuration"
 weight = 1
 geekdocCollapseSection = "true"
 +++
-# Options
+## Options
 
 The following options are available in the `helmize.yaml`. [Read More](../)
 
 ---
 
-## conditions
+### conditions
 
 _Required_
 
 **Type** `slice`
 
-[Read more about conditions](../conditions/)
+[Read more about conditions](conditions/)
 
 ---
 
-## inventory_directory
+### inventory_directory
 
 _Optional_
 
@@ -30,7 +30,7 @@ Define a directory where the entire structure for helmize is located below. This
 
 ---
 
-## file_extensions
+### file_extensions
 
 _Optional_
 
@@ -40,7 +40,7 @@ Define which file extensions should be considered while looking through the dire
 
 ---
 
-## file_excludes
+### file_excludes
 
 _Optional_
 
@@ -50,9 +50,7 @@ Define which file names should be considered while looking through the directori
 
 ---
 
-## file_config_key
-
-[Example]()
+### file_config_key
 
 _Optional_
 
@@ -62,7 +60,7 @@ Key within each's file content which holds the [file configuration](../../files/
 
 ---
 
-## identifier_template
+### identifier_template
 
 _Optional_
 
@@ -70,11 +68,11 @@ _Optional_
 
 Define a custom identifier template
 
-[Read more about identifiers](../../customization/identifiers/)
+[Read more about identifiers](../../usage/identifiers/)
 
 ---
 
-## render_template
+### render_template
 
 _Optional_
 
@@ -82,10 +80,10 @@ _Optional_
 
 Define a custom render template
 
-[Read more about rendering](../../customization/render/)
+[Read more about Render](../../usage/render/)
 
 ---
-## renderers
+### renderers
 
 _Optional_
 
@@ -96,7 +94,7 @@ Renderers are helm templates which are executed after all the files are merged. 
 [Read more about Renderers](../../usage/renderers/)
 
 ---
-## force
+### force
 
 _Optional_
 

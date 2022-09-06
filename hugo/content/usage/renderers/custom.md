@@ -6,11 +6,11 @@ weight = 4
 
 You can implement your own Renderer templates.
 
-# Configuration
+## Configuration
 
 General configuration for Renderers.
 
-## Assignment
+### Assignment
 
 Content is not returned via YAML but directly performed on the `$.content` map. Since map operations in sprig are directly performed on the given structure, it's unessecary to abstract it via a return value. The below example implements functions of our [library chart](../templating/#library). The advantage of the library functions is they accept key paths and don't fail if a child element does not exist.
 
@@ -51,7 +51,7 @@ If you would like to redirect content from the root context, you need to create 
 
 {{- end -}}
 ```
-## Return
+### Return
 
 The following return values (YAML Print) are considered:
 
@@ -63,7 +63,7 @@ The following return values (YAML Print) are considered:
 
 The Values are not required to be returned, only if you would like to invoke error/debug messages
 
-## Template
+### Template
 
 Here's a minimalstic Renderer template to get started.
 
@@ -80,7 +80,7 @@ Here's a minimalstic Renderer template to get started.
 {{- end -}}
 ```
 
-## Context
+### Context
 
 That's how the Root Context (`$`) looks like given to the renderer templates.
 
@@ -107,7 +107,7 @@ ctx:
 ```
 {{< /expand >}}
 
-# Example
+## Example
 
 Let's create a new Renderer which injects a jmx sidecar to all pod parent manifests. We must create our Renderer in the `templates` directory of our chart.
 

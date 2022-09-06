@@ -4,15 +4,17 @@ description = "Custom Identifier Template"
 weight = 3
 +++
 
+{{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/example-customization](https://github.com/buttahtoast/helmize/tree/main/examples/example-customization){{< /hint >}}
+
 You can implement your own identifier template, if ours is not practical for you. Let's see how it's done.
 
-# Configuration
+## Configuration
 
 General configuration for Identifiers.
 
-## Assignment
+### Assignment
 
-After the Identifier template is executed, the content in `$.wagon.id` is considered as the result of the template and is used for each file. Should the value of this field be unset or empty, the filename of the current executed file is used. You should avoid using the filename because it may result in unwanted behavior if you have [multi yaml files](../../files/). The value for `$.wagon.id` is directly set on the context eg.
+After the Identifier template is executed, the content in `$.wagon.id` is considered as the result of the template and is used for each file. Should the value of this field be unset or empty, the filename of the current executed file is used. You should avoid using the filename because it may result in unwanted behavior if you have [multi yaml files](../../yaml). The value for `$.wagon.id` is directly set on the context eg.
 
 ```
 {{- define "customization.identifier.template" -}}
@@ -20,7 +22,7 @@ After the Identifier template is executed, the content in `$.wagon.id` is consid
 {{- end -}}
 ```
 
-## Return
+### Return
 
 The following return values (YAML Print) are considered:
 
@@ -32,7 +34,7 @@ The following return values (YAML Print) are considered:
 
 The Values are not required to be returned, only if you would like to invoke error/debug messages. 
 
-### Validation
+#### Validation
 
 The returned YAML is validated, if the YAML is not valid an error is thrown:
 
@@ -46,7 +48,7 @@ Template customization.identifier.template returned invalid YAML (error converti
 
 In this case your printed YAML from the template is wrong, please fix.
 
-## Template
+### Template
 
 Here's a minimalstic Post Renderer template to get started.
 
@@ -64,7 +66,7 @@ Here's a minimalstic Post Renderer template to get started.
 ```
 
 
-## Context
+### Context
 
 An Identifier template receives the following context (Values Change per File):
 
@@ -139,9 +141,7 @@ ctx:
 ```
 {{< /expand >}}
 
-# Example
-
-{{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/customization](https://github.com/buttahtoast/helmize/tree/main/examples/customization){{< /hint >}}
+## Example
 
 
 Let's create a new Render template which only renders resources, if a specific annotation is set.

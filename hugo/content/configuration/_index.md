@@ -9,7 +9,7 @@ weight = 2
 
 The configuration is the core component which defines how your deployment structure will be organized. [See which options you can configure](helmize/)
 
-# Values
+## Values
 
 {{< hint "info" >}}Using configuration via Values is great for testing or subcharts{{< /hint >}}
 
@@ -34,7 +34,7 @@ helmize:
 The configuration via values is merged on top of the [helmize configuration from file](#file), should it exist.
 
 
-# File 
+## File 
 
 {{< hint "info" >}}Using a file for configuration has the advantage, that you can use templating within the file, which is not possible with the Values approach.{{< /hint >}}
 
@@ -42,7 +42,7 @@ The configuration via values is merged on top of the [helmize configuration from
 By default the configuration is located in a `helmize.yaml` file within your charts root folder. You will get errors if the configuration file is missing, has wrong formatting or types.
 
 
-## Templating
+### Templating
 
 The entire configuration file is templated. So you can also use sprig within the configuration file. You must make sure that after the templating the content resolves to valid YAML, otherwise the exection will fail. The file must be within the chart directry but **not within the templates/ folder**.
 

@@ -4,15 +4,13 @@ description = "Advanced YAML Files"
 weight = 2
 +++
 
-{{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/yaml](https://github.com/buttahtoast/helmize/tree/main/examples/yaml){{< /hint >}}
+{{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/example-yaml](https://github.com/buttahtoast/helmize/tree/main/examples/example-yaml){{< /hint >}}
 
-There's currently one known limitation with YAML and go sprig. Should we discover more, we will add it to this section.
+<h2>Multi YAML</h2>
 
-<h1>Multi YAML</h1>
+Helmize supports multi YAML files (Multiple YAMLs in one file separeted by `- - -`). The implementation is relativ primitive: If a file contains it's split into multiple sub files, which then are treated as seperated files for further processing.
 
-Helmize supports multi YAML files (Multiple YAMLs in one file separeted by ). The implementation is relativ primitive: If a file contains it's split into multiple sub files, which then are treated as seperated files for further processing.
-
-<h2>Limitation</h2>
+<h3>Limitation</h3>
 
 The `fromYaml` function can not parse multiple yaml files, but is aware of the delimiter. If you have the following example:
 
@@ -40,7 +38,7 @@ First: YAML
 
 Meaning the function only parses the first YAML found.
 
-<h2>Workaround</h2>
+<h3>Workaround</h3>
 
 This is simplified version of how helmize parses multi YAML files. In the first step the entire file is templated (So it's also possible to generate more files via templating within a file). The input is still of type string.  No the entire content is split by `---` resulting in sub files. In the iteration it's checked if there is any content (when two `---` come after each other the `splitList` function will create a entry with `" "`. Therefor we check if its empy without spaces). Then the content is loaded to yaml (and verified if the yaml is valid). 
 
@@ -83,11 +81,11 @@ third: YAML
 
 Understanding this might help working with multi YAML files.
 
-<h2>Hints</h2>
+<h3>Hints</h3>
 
 Here are some hints regarding Multi YAML files
 
-<h3>Nested YAML Data</h3>
+<h4>Nested YAML Data</h4>
 
 You can still use multi line YAML's, our implementation should not interefer with them:
 
@@ -113,7 +111,7 @@ data:
       maximumLives:5
 ```
 
-<h3>Wrong Templating</h3>
+<h4>Wrong Templating</h4>
 
 There might be cases where to templating does not validate correctly and therefor you might have unexpected output. Take for example this template:
 
@@ -255,7 +253,7 @@ paths:
 ```
 {{< /expand >}}
 
-<h2>Examples</h2>
+<h3>Examples</h3>
 
 [You can find this example here](https://github.com/buttahtoast/helmize/tree/main/examples/multi-yaml)
 
