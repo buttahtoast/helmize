@@ -20,7 +20,7 @@
   types: [ "string" ]
 {{ include "helmize.conditions.defaults.conditions.filter" $ }}: 
   types: [ "string", "slice" ]
-{{ include "helmize.conditions.defaults.conditions.allow_root" $ }}:
+{{ include "helmize.conditions.defaults.conditions.any" $ }}:
   types: [ "int", "bool" ]
   default: false
 {{ include "helmize.conditions.defaults.conditions.data" $ }}:

@@ -2,17 +2,20 @@ suite: example/file-cfg snapshot tests
 templates:
   - deploy.yaml
 tests:
-  - it: "[Default Config File]: Manifest snapshot"
+  - it: "[Config File]: Manifest snapshot"
     asserts:
       - matchSnapshot: {}
-  - it: "[Default Config File]: Manifest snapshot (Show Config)"
+
+  - it: "[Config File]: Manifest snapshot (Show Config)"
     set:
       show_config: true
     asserts:
       - matchSnapshot: {}
-  - it: "[Default Config File]: Manifest snapshot/Inline Config"
+
+  - it: "[Config File]: Manifest snapshot/Inline Config (Show Config)"
     set:
-      config:
+      show_config: true
+      helmize:
         conditions:
         - __inject__
         - name: "patches"
@@ -25,14 +28,10 @@ tests:
             render: true
           data: 
             additional: true
-
-
-        
     asserts:
       - matchSnapshot: {}
 
-
-  - it: summary snapshot
+  - it: "[Config File]: Summary Snapshot"
     set: 
       summary: true
     asserts:

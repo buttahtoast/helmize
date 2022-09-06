@@ -2,12 +2,16 @@ conditions:
 
 {{- if $.Values.custom }}
   - name: "custom"
+    any: true
 {{- end }}
 
 {{- if $.Values.file_name }}
   - name: "file_name"
+    any: true
 {{- end }}
 
 {{- if $.Values.kind }}
   - name: "kind"
+    any: true
+    key: "test"
 {{- end }}

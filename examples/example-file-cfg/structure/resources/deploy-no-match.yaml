@@ -1,13 +1,16 @@
+## Deployment with no matching ids
+# Test 'no_match' file configuration
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
+  name: no-match
   labels:
-    app: nginx
+    app: no-match
   helmize:
     id: 
-      - deploy
-    render: false
+      - no-match
+    no_match: skip
+    render: true
 spec:
   replicas: 1
   selector:

@@ -110,7 +110,7 @@
         {{- end -}}
 
         {{/* Add Base */}}
-        {{- if (get $condition (include "helmize.conditions.defaults.conditions.allow_root" $)) -}}
+        {{- if (get $condition (include "helmize.conditions.defaults.conditions.any" $)) -}}
           {{- $condition_keys = prepend  $condition_keys "/" -}}
         {{- end -}}
 

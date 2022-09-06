@@ -4,13 +4,34 @@ description = "General Configuration"
 weight = 2
 +++
 
-The configuration is the core component which defines how your deployment structure will be organized
+{{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/example-file-cfg](https://github.com/buttahtoast/helmize/tree/main/examples/example-file-cfg){{< /hint >}}
+
+
+The configuration is the core component which defines how your deployment structure will be organized. [See which options you can configure](helmize/)
 
 # Values
 
 {{< hint "info" >}}Using configuration via Values is great for testing or subcharts{{< /hint >}}
 
-All configurations can be set via values under the key `config`. 
+All configurations can be set via values under the key `helmize`:
+
+```
+helmize:
+  conditions:
+  - __inject__
+  - name: "patches"
+    file_cfg:
+      pattern: false
+      render: false
+    required: false
+  - name: "render_all"
+    file_cfg:
+      render: true
+    data: 
+      additional: true
+```
+
+The configuration via values is merged on top of the [helmize configuration from file](#file), should it exist.
 
 
 # File 

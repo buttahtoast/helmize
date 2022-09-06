@@ -77,17 +77,17 @@ Filter keylist for values that are allowed values. The filter is executed agains
 
 ---
 
-## allow_root
+## any
 
 _Optional_
 
 **Type** `boolean` **Default** `false`
 
-In addition to checking all keys, it becomes also valid to have files directly in the root of the condition's path. You may disable this option if you only want resources in subfolders of the condition's folder.
+Consider any file in any subpath in the condition directory (Adding `/` as path).
 
 ---
 
-## post_renderers
+## renderers
 
 _Optional_
 

@@ -1,7 +1,7 @@
 ---
-id:
-  - no-match
-cfg:
+helmize:
+  id:
+    - no-match
   no_match: "skip"
 data:
   game.properties: |

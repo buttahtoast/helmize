@@ -1,7 +1,12 @@
 ---
-id:
-  - custom-id-1
-  - custom-id-2
+helmize:
+  id:
+    - custom-id-1
+    - custom-id-2
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: multiline-yaml-1
 data:
   game.properties: |
     enemy:
@@ -11,9 +16,14 @@ data:
     player:
       maximumLives:5
 ---
-id:
-  - custom-id-3
-  - custom-id-4
+helmize:
+  id:
+    - custom-id-3
+    - custom-id-4
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: multiline-yaml-2
 data:
   game.properties: |
     enemy:

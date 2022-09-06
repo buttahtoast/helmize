@@ -10,7 +10,7 @@ data:
 
 {{- define "data" -}}
 data: 
-  name_1: val_1
-  name_2: val_2
-  name_3: val_3
+  cfg-1: val_1
+  cfg-2: val_2
+  cfg-3: val_3
 {{- end -}}

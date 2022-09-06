@@ -14,7 +14,7 @@
 
   {{/* Variables */}}
   {{- $ctx := $ -}}
-  {{- $return := dict "wagons" list "errors" list "timestamps" list "conditions" -}}
+  {{- $return := dict "wagons" list "errors" list "paths" list "timestamps" list "conditions" -}}
 
   {{/* Fetch Conditions */}}
   {{- $conds := fromYaml (include "helmize.conditions.func.resolve" (dict "ctx" $ctx)) -}}
@@ -45,6 +45,7 @@
 
     {{/* Benchmark */}}
     {{- include "helmize.helpers.ts" (dict "msg" "Conditions initialized" "ctx" $return) -}}
+    {{- $_ := set $return "paths" $paths  -}}
 
     {{/* Only Lookup files if any path is present */}}
     {{- if $paths -}}

@@ -1,0 +1,579 @@
+'[Config File]: Manifest snapshot':
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app: nginx
+      name: nginx-deployment-prod
+    spec:
+      replicas: 3
+      selector:
+        matchLabels:
+          app: nginx
+      template:
+        metadata:
+          labels:
+            app: nginx
+        spec:
+          containers:
+          - image: nginx:1.14.2
+            name: nginx
+            ports:
+            - containerPort: 80
+  2: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        app: nginx
+      name: nginx-deployment-test
+    spec:
+      replicas: 2
+      selector:
+        matchLabels:
+          app: nginx
+      template:
+        metadata:
+          labels:
+            app: nginx
+        spec:
+          containers:
+          - image: nginx:1.14.2
+            name: nginx
+            ports:
+            - containerPort: 80
+      test:
+        forks_data:
+          sampler: true
+        registry_data:
+          sampler: true
+        resources_data:
+          sampler: true
+        sample: data
+'[Config File]: Manifest snapshot (Show Config)':
+  1: |
+    config:
+      benchmark: false
+      conditions:
+      - any: true
+        data:
+          resources_data:
+            sampler: true
+        file_cfg:
+          render: true
+        name: resources
+      - any: true
+        data:
+          forks_data:
+            sampler: true
+        file_cfg:
+          fork: true
+          subpath: false
+        name: forks
+      - any: true
+        data:
+          registry_data:
+            sampler: true
+        file_cfg:
+          pattern: true
+          render: true
+          subpath: true
+        name: patches
+        tpls:
+        - registry.tpl
+      debug: false
+      file_config_key: metadata.helmize
+      file_extensions:
+      - .yaml
+      - .yml
+      - .tpl
+      force: false
+      global: {}
+      helmize: {}
+      helmize_file: ""
+      identifier_template: helmize.core.templates.identifier
+      inventory_directory: structure/
+      library:
+        global: {}
+      render_template: helmize.render.templates.default
+      show_config: false
+      summary: false
+'[Config File]: Manifest snapshot/Inline Config (Show Config)':
+  1: |
+    config:
+      benchmark: false
+      conditions:
+      - any: true
+        data:
+          registry_data:
+            sampler: true
+        file_cfg:
+          pattern: true
+          render: false
+          subpath: true
+        name: patches
+        required: false
+        tpls:
+        - registry.tpl
+      - any: true
+        data:
+          resources_data:
+            sampler: true
+        file_cfg:
+          render: true
+        name: resources
+      - any: true
+        data:
+          forks_data:
+            sampler: true
+        file_cfg:
+          fork: true
+          subpath: false
+        name: forks
+      - data:
+          additional: true
+        file_cfg:
+          render: true
+        name: render_all
+      debug: false
+      file_config_key: metadata.helmize
+      file_extensions:
+      - .yaml
+      - .yml
+      - .tpl
+      force: false
+      global: {}
+      helmize: {}
+      helmize_file: ""
+      identifier_template: helmize.core.templates.identifier
+      inventory_directory: structure/
+      library:
+        global: {}
+      render_template: helmize.render.templates.default
+      show_config: false
+      summary: false
+'[Config File]: Summary Snapshot':
+  1: |
+    conditions:
+    - config:
+        any: true
+        data:
+          resources_data:
+            sampler: true
+        file_cfg:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        key_types:
+        - string
+        - slice
+        name: resources
+      data:
+        forks_data:
+          sampler: true
+        registry_data:
+          sampler: true
+        resources_data:
+          sampler: true
+        sample: data
+      errors: []
+      keys:
+      - /
+      name: resources
+      paths:
+      - structure/resources/
+      root_path: resources
+      value: {}
+    - config:
+        any: true
+        data:
+          forks_data:
+            sampler: true
+        file_cfg:
+          fork: true
+          no_match: append
+          pattern: false
+          render: true
+          subpath: false
+        key_types:
+        - string
+        - slice
+        name: forks
+      data:
+        forks_data:
+          sampler: true
+        registry_data:
+          sampler: true
+        resources_data:
+          sampler: true
+        sample: data
+      errors: []
+      keys:
+      - /
+      name: forks
+      paths:
+      - structure/forks/
+      root_path: forks
+      value: {}
+    - config:
+        any: true
+        data:
+          registry_data:
+            sampler: true
+        file_cfg:
+          fork: false
+          no_match: append
+          pattern: true
+          render: true
+          subpath: true
+        key_types:
+        - string
+        - slice
+        name: patches
+        tpls:
+        - registry.tpl
+      data:
+        forks_data:
+          sampler: true
+        registry_data:
+          sampler: true
+        resources_data:
+          sampler: true
+        sample: data
+      errors: []
+      keys:
+      - /
+      name: patches
+      paths:
+      - structure/patches/
+      root_path: patches
+      value: {}
+    errors: []
+    paths:
+    - config:
+        fork: false
+        no_match: append
+        pattern: false
+        render: true
+        subpath: true
+      data:
+        forks_data:
+          sampler: true
+        registry_data:
+          sampler: true
+        resources_data:
+          sampler: true
+        sample: data
+      paths:
+      - structure/resources/
+      renderers: null
+      value: {}
+    - config:
+        fork: true
+        no_match: append
+        pattern: false
+        render: true
+        subpath: false
+      data:
+        forks_data:
+          sampler: true
+        registry_data:
+          sampler: true
+        resources_data:
+          sampler: true
+        sample: data
+      paths:
+      - structure/forks/
+      renderers: null
+      value: {}
+    - config:
+        fork: false
+        no_match: append
+        pattern: true
+        render: true
+        subpath: true
+      data:
+        forks_data:
+          sampler: true
+        registry_data:
+          sampler: true
+        resources_data:
+          sampler: true
+        sample: data
+      paths:
+      - structure/patches/
+      renderers: null
+      value: {}
+    wagons:
+    - checksum: 2818bd9ed9799b979013efc6ccfc7f6cae69cc5a8c75107234cda58e39fd283c
+      content:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          labels:
+            app: nginx
+            shared: labels
+          name: nginx-deployment
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              app: nginx
+          template:
+            metadata:
+              labels:
+                app: nginx
+            spec:
+              containers:
+              - image: nginx:1.14.2
+                name: nginx
+                ports:
+                - containerPort: 80
+      debug: []
+      errors: []
+      files:
+      - _order: 0
+        config:
+          fork: false
+          id:
+          - deploy
+          no_match: append
+          pattern: false
+          render: false
+          subpath: true
+        data:
+          forks_data:
+            sampler: true
+          registry_data:
+            sampler: true
+          resources_data:
+            sampler: true
+          sample: data
+        file: structure/resources/base-deployment.yaml
+        ids:
+        - deploy
+        - deployment-nginx-deployment.yaml
+        path: structure/resources/
+        renderers: []
+        value: {}
+      - _order: 3
+        config:
+          fork: false
+          id:
+          - .*
+          no_match: append
+          pattern: true
+          render: true
+          subpath: true
+        data:
+          forks_data:
+            sampler: true
+          registry_data:
+            sampler: true
+          resources_data:
+            sampler: true
+          sample: data
+        file: structure/patches/label.yaml
+        ids:
+        - .*
+        path: structure/patches/
+        renderers: []
+        value: {}
+      - _order: 3
+        config:
+          fork: false
+          id:
+          - .*
+          no_match: append
+          pattern: true
+          render: true
+          subpath: true
+        data:
+          forks_data:
+            sampler: true
+          registry_data:
+            sampler: true
+          resources_data:
+            sampler: true
+          sample: data
+        file: structure/patches/label.yaml
+        ids:
+        - .*
+        path: structure/patches/
+        renderers: []
+        value: {}
+      id:
+      - deploy
+      - deployment-nginx-deployment.yaml
+      render: false
+      renderers: []
+      subpath: .
+    - checksum: 5b8c5ff45bebba9f2b2f36ad51b30a10edb5866ca8cfca67d5bf5c2e379511b1
+      content:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          labels:
+            app: nginx
+          name: nginx-deployment-prod
+        spec:
+          replicas: 3
+          selector:
+            matchLabels:
+              app: nginx
+          template:
+            metadata:
+              labels:
+                app: nginx
+            spec:
+              containers:
+              - image: nginx:1.14.2
+                name: nginx
+                ports:
+                - containerPort: 80
+      debug: []
+      errors: []
+      files:
+      - _order: 0
+        config:
+          fork: false
+          id:
+          - deploy
+          no_match: append
+          pattern: false
+          render: false
+          subpath: true
+        data:
+          forks_data:
+            sampler: true
+          registry_data:
+            sampler: true
+          resources_data:
+            sampler: true
+          sample: data
+        file: structure/resources/base-deployment.yaml
+        ids:
+        - deploy
+        - deployment-nginx-deployment.yaml
+        path: structure/resources/
+        renderers: []
+        value: {}
+      - _order: 1
+        config:
+          fork: true
+          id:
+          - deploy
+          no_match: append
+          pattern: false
+          render: true
+          subpath: false
+        data:
+          forks_data:
+            sampler: true
+          registry_data:
+            sampler: true
+          resources_data:
+            sampler: true
+          sample: data
+        file: structure/forks/prod/prod-deployment.yaml
+        ids:
+        - deploy
+        path: structure/forks/
+        renderers: []
+        value: {}
+      fork: "true"
+      id:
+      - deploy
+      render: true
+      renderers: []
+      subpath: prod
+    - checksum: cee2fb51f15f5e9cf355f00f43d8c5250a545186ebe8d4ea9145aea230bcdb6c
+      content:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          labels:
+            app: nginx
+          name: nginx-deployment-test
+        spec:
+          replicas: 2
+          selector:
+            matchLabels:
+              app: nginx
+          template:
+            metadata:
+              labels:
+                app: nginx
+            spec:
+              containers:
+              - image: nginx:1.14.2
+                name: nginx
+                ports:
+                - containerPort: 80
+          test:
+            forks_data:
+              sampler: true
+            registry_data:
+              sampler: true
+            resources_data:
+              sampler: true
+            sample: data
+      debug: []
+      errors: []
+      files:
+      - _order: 0
+        config:
+          fork: false
+          id:
+          - deploy
+          no_match: append
+          pattern: false
+          render: false
+          subpath: true
+        data:
+          forks_data:
+            sampler: true
+          registry_data:
+            sampler: true
+          resources_data:
+            sampler: true
+          sample: data
+        file: structure/resources/base-deployment.yaml
+        ids:
+        - deploy
+        - deployment-nginx-deployment.yaml
+        path: structure/resources/
+        renderers: []
+        value: {}
+      - _order: 2
+        config:
+          fork: true
+          id:
+          - deploy
+          no_match: append
+          pattern: false
+          render: true
+          subpath: false
+        data:
+          forks_data:
+            sampler: true
+          registry_data:
+            sampler: true
+          resources_data:
+            sampler: true
+          sample: data
+        file: structure/forks/test/test-deployment.yaml
+        ids:
+        - deploy
+        path: structure/forks/
+        renderers: []
+        value: {}
+      fork: "true"
+      id:
+      - deploy
+      render: true
+      renderers: []
+      subpath: test

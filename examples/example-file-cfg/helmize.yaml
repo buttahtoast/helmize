@@ -1,12 +1,13 @@
-inventory_directory: "structure/"
 conditions:
   - name: "resources"
+    any: true
     file_cfg:
       render: true
     data: 
       resources_data:
         sampler: true
   - name: "forks"
+    any: true
     file_cfg:
       fork: true
       subpath: false
@@ -14,10 +15,10 @@ conditions:
       forks_data:
         sampler: true
   - name: "patches"
+    any: true
     file_cfg:
       pattern: true
       subpath: false
-      render: false
     tpls:
       - registry.tpl
     data: 

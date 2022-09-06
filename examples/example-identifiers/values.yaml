@@ -9,3 +9,7 @@ kind: true
 
 # -- Enable Multi YAMl Identifers
 multi: true
+
+test:
+  - path1
+  - path2

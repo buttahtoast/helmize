@@ -38,13 +38,13 @@ filter
 {{- end -}}
 
 
-{{/* Allow Root (Conditions Type) <Template> 
+{{/* Any (Conditions Type) <Template> 
 
-    Allow Root Configuration Key
+    Any Configuration Key
 
 */}}
-{{- define "helmize.conditions.defaults.conditions.allow_root" -}}
-allow_root
+{{- define "helmize.conditions.defaults.conditions.any" -}}
+any
 {{- end -}}
 
 
