@@ -198,7 +198,7 @@ Summary snapshot:
   1: |
     conditions:
     - config:
-        allow_root: true
+        any: true
         key_types:
         - string
         - slice
@@ -213,7 +213,7 @@ Summary snapshot:
       root_path: resources
       value: {}
     - config:
-        allow_root: true
+        any: true
         key_types:
         - string
         - slice
@@ -228,6 +228,19 @@ Summary snapshot:
       root_path: patches
       value: {}
     errors: []
+    paths:
+    - config: null
+      data: {}
+      paths:
+      - structure/resources/
+      renderers: null
+      value: {}
+    - config: null
+      data: {}
+      paths:
+      - structure/patches/
+      renderers: null
+      value: {}
     wagons:
     - checksum: 25506fc6f877f9c0b88a27e370f5d9f9cae85cbb8afbddb652b0b9dedb8bcdd7
       content:

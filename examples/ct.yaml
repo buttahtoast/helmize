@@ -13,4 +13,3 @@ additional-commands:
   - "helm unittest --color -f unit_tests/*_test.yaml -3 {{ .Path }}"
 execlude:
   - example-customization
-  - example-yaml 

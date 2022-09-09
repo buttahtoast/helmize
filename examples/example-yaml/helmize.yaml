@@ -1,6 +1,6 @@
 inventory_directory: "structure/"
 conditions:
   - name: "resources"
-    allow_root: true
+    any: true
   - name: "patches"
-    allow_root: true
+    any: true
