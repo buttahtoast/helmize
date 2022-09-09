@@ -1,4 +1,4 @@
-'[YAML]: Manifest Snapshot':
+Manifest snapshot:
   1: |
     apiVersion: v1
     data:
@@ -194,7 +194,7 @@
     kind: ConfigMap
     metadata:
       name: configmap-cfg-3
-'[YAML]: Summary Snapshot':
+Summary snapshot:
   1: |
     conditions:
     - config:
