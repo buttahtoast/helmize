@@ -47,7 +47,7 @@ summary snapshot:
   1: |
     conditions:
     - config:
-        allow_root: true
+        any: true
         data:
           layer_1:
             overwrite: this
@@ -75,7 +75,7 @@ summary snapshot:
       root_path: layer_1
       value: {}
     - config:
-        allow_root: true
+        any: true
         data:
           layer_2:
             sampler: true
@@ -115,7 +115,7 @@ summary snapshot:
       root_path: layer_2/
       value: east
     - config:
-        allow_root: true
+        any: true
         data:
           layer_3:
             other: true
@@ -144,7 +144,54 @@ summary snapshot:
       root_path: layer_3
       value: {}
     errors: []
-    files:
+    paths:
+    - config: null
+      data:
+        class: vertical-class
+        domain: east.vertical.public.domain
+        layer_1:
+          overwrite: this
+          remove: false
+        layer_2:
+          sampler: true
+        layer_3:
+          other: true
+      paths:
+      - structure/layer_1/
+      renderers: null
+      value: {}
+    - config: null
+      data:
+        class: vertical-class
+        domain: east.vertical.public.domain
+        layer_1:
+          overwrite: this
+          remove: false
+        layer_2:
+          sampler: true
+        layer_3:
+          other: true
+      paths:
+      - structure/layer_2/
+      - structure/layer_2/east/
+      renderers: null
+      value: east
+    - config: null
+      data:
+        class: vertical-class
+        domain: east.vertical.public.domain
+        layer_1:
+          overwrite: this
+          remove: false
+        layer_2:
+          sampler: true
+        layer_3:
+          other: true
+      paths:
+      - structure/layer_3/
+      renderers: null
+      value: {}
+    wagons:
     - checksum: 91e7a0f690285bfc24b8d426098dd647cf59d6ade1e311cd861e29f56412aff0
       content:
         Data:
@@ -182,11 +229,12 @@ summary snapshot:
         ids:
         - layer1-data.yaml
         path: structure/layer_1/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - layer1-data.yaml
       render: true
+      renderers: []
       subpath: .
     - checksum: e73ebdb9a8d141b5b7fd2885c1fc044a74312adfa47b70189418953dc5d1d0a3
       content:
@@ -215,11 +263,12 @@ summary snapshot:
         ids:
         - layer1-value.yaml
         path: structure/layer_1/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - layer1-value.yaml
       render: true
+      renderers: []
       subpath: .
     - checksum: 5f2d641a754e92a1f140a3f848bae1eda0d2041724f5d6632e0fd0468bdeef32
       content:
@@ -259,11 +308,12 @@ summary snapshot:
         ids:
         - layer2-data.yaml
         path: structure/layer_2/
-        post_renderers: []
+        renderers: []
         value: east
       id:
       - layer2-data.yaml
       render: true
+      renderers: []
       subpath: .
     - checksum: 1f029017f09741e3e8d36030a34d3d3b8663b008b1588eedf886c973af280b84
       content:
@@ -292,11 +342,12 @@ summary snapshot:
         ids:
         - layer2-value.yaml
         path: structure/layer_2/
-        post_renderers: []
+        renderers: []
         value: east
       id:
       - layer2-value.yaml
       render: true
+      renderers: []
       subpath: .
     - checksum: 5f2d641a754e92a1f140a3f848bae1eda0d2041724f5d6632e0fd0468bdeef32
       content:
@@ -336,11 +387,12 @@ summary snapshot:
         ids:
         - layer3-data.yaml
         path: structure/layer_3/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - layer3-data.yaml
       render: true
+      renderers: []
       subpath: .
     - checksum: e73ebdb9a8d141b5b7fd2885c1fc044a74312adfa47b70189418953dc5d1d0a3
       content:
@@ -369,9 +421,10 @@ summary snapshot:
         ids:
         - layer3-value.yaml
         path: structure/layer_3/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - layer3-value.yaml
       render: true
+      renderers: []
       subpath: .

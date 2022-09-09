@@ -1,1811 +1,521 @@
-manifest snapshot:
+'[Reference]: Manifest Snapshot':
   1: |
     apiVersion: apps/v1
     kind: Deployment
     metadata:
       labels:
-        custom: "true"
-        custom-multi: "true"
-        custom-multi-no-kind: "true"
-        custom-no-kind: "true"
-        subpath-custom-multi-no-subpath: "true"
-        subpath-custom-no-kind-no-subpath: "true"
-        subpath-custom-no-subpath: "true"
-      name: nginx-deployment
+        env: test
+        location: east
+      name: frontend
     spec:
-      replicas: 3
+      minReadySeconds: 3
+      progressDeadlineSeconds: 120
+      revisionHistoryLimit: 5
       selector:
         matchLabels:
-          app: nginx
+          app: frontend
+      strategy:
+        rollingUpdate:
+          maxUnavailable: 0
+        type: RollingUpdate
       template:
         metadata:
+          annotations:
+            prometheus.io/port: "9797"
+            prometheus.io/scrape: "true"
           labels:
-            app: nginx
+            app: frontend
         spec:
           containers:
-          - image: nginx:1.14.2
-            name: nginx
+          - command:
+            - ./podinfo
+            - --port=9898
+            - --port-metrics=9797
+            - --level=info
+            - --backend-url=http://backend:9898/echo
+            - --cache-server=cache:6379
+            - --level=debug
+            env:
+            - name: PODINFO_UI_COLOR
+              value: '#FAB418'
+            image: ghcr.io/stefanprodan/podinfo:6.0.3
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              exec:
+                command:
+                - podcli
+                - check
+                - http
+                - localhost:9898/healthz
+              initialDelaySeconds: 5
+              timeoutSeconds: 5
+            name: frontend
             ports:
-            - containerPort: 80
+            - containerPort: 20000
+              name: grpc
+              protocol: TCP
+            - containerPort: 9898
+              name: http
+              protocol: TCP
+            - containerPort: 9797
+              name: http-metrics
+              protocol: TCP
+            readinessProbe:
+              exec:
+                command:
+                - podcli
+                - check
+                - http
+                - localhost:9898/readyz
+              initialDelaySeconds: 5
+              timeoutSeconds: 5
+            resources:
+              limits:
+                cpu: 1000m
+                memory: 128Mi
+              requests:
+                cpu: 100m
+                memory: 32Mi
   2: |
     apiVersion: v1
     kind: Service
     metadata:
-      labels:
-        custom-multi: "true"
-        custom-multi-no-kind: "true"
-        subpath-custom-multi-no-subpath: "true"
-        subpath-custom-no-kind-no-subpath: "true"
-      name: nginx
+      name: frontend
     spec:
       ports:
       - name: http
         port: 80
-        targetPort: 80
-      - name: https
-        port: 443
-        targetPort: 80
+        protocol: TCP
+        targetPort: http
       selector:
-        app: nginx
+        app: frontend
+      type: ClusterIP
   3: |
-    apiVersion: apps/v1
-    kind: Deployment
+    apiVersion: autoscaling/v2beta2
+    kind: HorizontalPodAutoscaler
     metadata:
-      labels:
-        subpath-custom: "true"
-        subpath-custom-multi: "true"
-        subpath-custom-multi-no-kind: "true"
-        subpath-custom-multi-no-subpath: "true"
-        subpath-custom-no-kind: "true"
-        subpath-custom-no-kind-no-subpath: "true"
-        subpath-custom-no-subpath: "true"
-      name: nginx-deployment
+      name: frontend
     spec:
-      replicas: 3
-      selector:
-        matchLabels:
-          app: nginx
-      template:
-        metadata:
-          labels:
-            app: nginx
-        spec:
-          containers:
-          - image: nginx:1.14.2
-            name: nginx
-            ports:
-            - containerPort: 80
+      maxReplicas: 4
+      metrics:
+      - resource:
+          name: cpu
+          target:
+            averageUtilization: 99
+            type: Utilization
+        type: Resource
+      minReplicas: 1
+      scaleTargetRef:
+        apiVersion: apps/v1
+        kind: Deployment
+        name: frontend-test
   4: |
-    apiVersion: v1
-    kind: Service
+    apiVersion: networking.k8s.io/v1
+    kind: Ingress
     metadata:
-      labels:
-        subpath-custom-multi: "true"
-        subpath-custom-multi-no-kind: "true"
-        subpath-custom-multi-no-subpath: "true"
-      name: nginx
+      annotations:
+        nginx.ingress.kubernetes.io/rewrite-target: /
+      name: frontend
     spec:
-      ports:
-      - name: http
-        port: 80
-        targetPort: 80
-      - name: https
-        port: 443
-        targetPort: 80
-      selector:
-        app: nginx
-  5: |
-    metadata:
-      labels:
-        file-name-multi: "true"
-    spec:
-      ports:
-      - name: http
-        port: 80
-        targetPort: 80
-      - name: https
-        port: 443
-        targetPort: 80
-      replicas: 3
-      selector:
-        app: nginx
-        matchLabels:
-          app: nginx
-      template:
-        metadata:
-          labels:
-            app: nginx
-        spec:
-          containers:
-          - image: nginx:1.14.2
-            name: nginx
-            ports:
-            - containerPort: 80
-  6: |
-    metadata:
-      labels:
-        file-name: "true"
-    spec:
-      replicas: 3
-      selector:
-        matchLabels:
-          app: nginx
-      template:
-        metadata:
-          labels:
-            app: nginx
-        spec:
-          containers:
-          - image: nginx:1.14.2
-            name: nginx
-            ports:
-            - containerPort: 80
-  7: |
-    metadata:
-      labels:
-        subpath-file-name-multi-no-subpath: "true"
-    spec:
-      ports:
-      - name: http
-        port: 80
-        targetPort: 80
-      - name: https
-        port: 443
-        targetPort: 80
-      replicas: 3
-      selector:
-        app: nginx
-        matchLabels:
-          app: nginx
-      template:
-        metadata:
-          labels:
-            app: nginx
-        spec:
-          containers:
-          - image: nginx:1.14.2
-            name: nginx
-            ports:
-            - containerPort: 80
-  8: |
-    metadata:
-      labels:
-        subpath-file-name-multi: "true"
-    spec:
-      ports:
-      - name: http
-        port: 80
-        targetPort: 80
-      - name: https
-        port: 443
-        targetPort: 80
-      replicas: 3
-      selector:
-        app: nginx
-        matchLabels:
-          app: nginx
-      template:
-        metadata:
-          labels:
-            app: nginx
-        spec:
-          containers:
-          - image: nginx:1.14.2
-            name: nginx
-            ports:
-            - containerPort: 80
-  9: |
-    metadata:
-      labels:
-        subpath-file-name-no-subpath: "true"
-    spec:
-      replicas: 3
-      selector:
-        matchLabels:
-          app: nginx
-      template:
-        metadata:
-          labels:
-            app: nginx
-        spec:
-          containers:
-          - image: nginx:1.14.2
-            name: nginx
-            ports:
-            - containerPort: 80
-  10: |
-    metadata:
-      labels:
-        subpath-file-name: "true"
-    spec:
-      replicas: 3
-      selector:
-        matchLabels:
-          app: nginx
-      template:
-        metadata:
-          labels:
-            app: nginx
-        spec:
-          containers:
-          - image: nginx:1.14.2
-            name: nginx
-            ports:
-            - containerPort: 80
-  11: |
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      labels:
-        kind: "true"
-        kind-multi: "true"
-        subpath-kind-multi-no-subpath: "true"
-        subpath-kind-no-subpath: "true"
-      name: nginx-deployment
-    spec:
-      replicas: 3
-      selector:
-        matchLabels:
-          app: nginx
-      template:
-        metadata:
-          labels:
-            app: nginx
-        spec:
-          containers:
-          - image: nginx:1.14.2
-            name: nginx
-            ports:
-            - containerPort: 80
-  12: |
-    apiVersion: v1
-    kind: Service
-    metadata:
-      labels:
-        kind-multi: "true"
-        subpath-kind-multi-no-subpath: "true"
-      name: nginx
-    spec:
-      ports:
-      - name: http
-        port: 80
-        targetPort: 80
-      - name: https
-        port: 443
-        targetPort: 80
-      selector:
-        app: nginx
-  13: |
-    apiVersion: apps/v1
-    kind: Deployment
-    metadata:
-      labels:
-        subpath-kind: "true"
-        subpath-kind-multi: "true"
-        subpath-kind-no-subpath: "true"
-      name: nginx-deployment
-    spec:
-      replicas: 3
-      selector:
-        matchLabels:
-          app: nginx
-      template:
-        metadata:
-          labels:
-            app: nginx
-        spec:
-          containers:
-          - image: nginx:1.14.2
-            name: nginx
-            ports:
-            - containerPort: 80
-  14: |
-    apiVersion: v1
-    kind: Service
-    metadata:
-      labels:
-        subpath-kind-multi: "true"
-      name: nginx
-    spec:
-      ports:
-      - name: http
-        port: 80
-        targetPort: 80
-      - name: https
-        port: 443
-        targetPort: 80
-      selector:
-        app: nginx
-summary snapshot:
+      ingressClassName: company-domain
+      rules:
+      - http:
+          paths:
+          - backend:
+              service:
+                name: frontend
+                port:
+                  number: 80
+            host: frontend.test.east.company.com
+            path: /
+            pathType: Prefix
+      tls:
+      - hosts:
+        - frontend.test.east.company.com
+        secretName: frontend-tls
+'[Reference]: Summary Snapshot':
   1: |
     conditions:
     - config:
-        allow_root: true
+        any: true
         key_types:
         - string
         - slice
-        name: custom
-      data: {}
+        name: base
+        path: /base/
+      data:
+        ingress_class: company-domain
+        ingress_name: frontend.test.east.company.com
       errors: []
       keys:
       - /
-      name: custom
+      name: base
       paths:
-      - structure/custom/
-      root_path: custom
+      - structure/base/
+      root_path: /base/
       value: {}
     - config:
-        allow_root: true
+        any: false
+        default: test
+        filter:
+        - test
+        - prod
+        key: env
         key_types:
         - string
         - slice
-        name: file_name
-      data: {}
+        name: environment
+        path: env/
+        reverse_filter: true
+      data:
+        ingress_class: company-domain
+        ingress_name: frontend.test.east.company.com
       errors: []
       keys:
-      - /
-      name: file_name
+      - test
+      name: environment
       paths:
-      - structure/file_name/
-      root_path: file_name
-      value: {}
+      - structure/env/test/
+      root_path: env/
+      value: test
     - config:
-        allow_root: true
+        any: false
+        default: east
+        key: location
         key_types:
         - string
         - slice
-        name: kind
-      data: {}
+        name: location
+      data:
+        ingress_class: company-domain
+        ingress_name: frontend.test.east.company.com
+      errors: []
+      keys:
+      - east
+      name: location
+      paths:
+      - structure/location/east/
+      root_path: location
+      value: east
+    - config:
+        any: true
+        data:
+          ingress_class: company-domain
+        key_types:
+        - string
+        - slice
+        name: expose
+        tpls:
+        - tpls/ingress.tpl
+      data:
+        ingress_class: company-domain
+        ingress_name: frontend.test.east.company.com
       errors: []
       keys:
       - /
-      name: kind
+      name: expose
       paths:
-      - structure/kind/
-      root_path: kind
+      - structure/expose/
+      root_path: expose
       value: {}
     errors: []
-    files:
-    - checksum: e0515b0cce6ae94dfef7c4b7c4d969d5a069d4f40b3812dbde08a08b541a4404
+    paths:
+    - config: null
+      data:
+        ingress_class: company-domain
+        ingress_name: frontend.test.east.company.com
+      paths:
+      - structure/base/
+      renderers: null
+      value: {}
+    - config: null
+      data:
+        ingress_class: company-domain
+        ingress_name: frontend.test.east.company.com
+      paths:
+      - structure/env/test/
+      renderers: null
+      value: test
+    - config: null
+      data:
+        ingress_class: company-domain
+        ingress_name: frontend.test.east.company.com
+      paths:
+      - structure/location/east/
+      renderers: null
+      value: east
+    - config: null
+      data:
+        ingress_class: company-domain
+        ingress_name: frontend.test.east.company.com
+      paths:
+      - structure/expose/
+      renderers: null
+      value: {}
+    wagons:
+    - checksum: f1fc3b2bc79e44aa79c8170f6b69f509f67a2eaf88482d754675bee5b704150f
       content:
         apiVersion: apps/v1
         kind: Deployment
         metadata:
           labels:
-            custom: "true"
-            custom-multi: "true"
-            custom-multi-no-kind: "true"
-            custom-no-kind: "true"
-            subpath-custom-multi-no-subpath: "true"
-            subpath-custom-no-kind-no-subpath: "true"
-            subpath-custom-no-subpath: "true"
-          name: nginx-deployment
+            env: test
+            location: east
+          name: frontend
         spec:
-          replicas: 3
+          minReadySeconds: 3
+          progressDeadlineSeconds: 120
+          revisionHistoryLimit: 5
           selector:
             matchLabels:
-              app: nginx
+              app: frontend
+          strategy:
+            rollingUpdate:
+              maxUnavailable: 0
+            type: RollingUpdate
           template:
             metadata:
+              annotations:
+                prometheus.io/port: "9797"
+                prometheus.io/scrape: "true"
               labels:
-                app: nginx
+                app: frontend
             spec:
               containers:
-              - image: nginx:1.14.2
-                name: nginx
+              - command:
+                - ./podinfo
+                - --port=9898
+                - --port-metrics=9797
+                - --level=info
+                - --backend-url=http://backend:9898/echo
+                - --cache-server=cache:6379
+                - --level=debug
+                env:
+                - name: PODINFO_UI_COLOR
+                  value: '#FAB418'
+                image: ghcr.io/stefanprodan/podinfo:6.0.3
+                imagePullPolicy: IfNotPresent
+                livenessProbe:
+                  exec:
+                    command:
+                    - podcli
+                    - check
+                    - http
+                    - localhost:9898/healthz
+                  initialDelaySeconds: 5
+                  timeoutSeconds: 5
+                name: frontend
                 ports:
-                - containerPort: 80
+                - containerPort: 20000
+                  name: grpc
+                  protocol: TCP
+                - containerPort: 9898
+                  name: http
+                  protocol: TCP
+                - containerPort: 9797
+                  name: http-metrics
+                  protocol: TCP
+                readinessProbe:
+                  exec:
+                    command:
+                    - podcli
+                    - check
+                    - http
+                    - localhost:9898/readyz
+                  initialDelaySeconds: 5
+                  timeoutSeconds: 5
+                resources:
+                  limits:
+                    cpu: 1000m
+                    memory: 128Mi
+                  requests:
+                    cpu: 100m
+                    memory: 32Mi
       debug: []
       errors: []
       files:
       - _order: 0
         config:
           fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
           no_match: append
           pattern: false
           render: true
           subpath: true
-        data: {}
-        file: structure/custom/custom-multi-no-kind.yaml
+        data:
+          ingress_class: company-domain
+          ingress_name: frontend.test.east.company.com
+        file: structure/base/podinfo/deploy.yaml
         ids:
-        - custom-id-1
-        - custom-id-2
-        path: structure/custom/
-        post_renderers: []
+        - deployment-frontend.yaml
+        path: structure/base/
+        renderers: []
         value: {}
       - _order: 2
         config:
           fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
           no_match: append
           pattern: false
           render: true
           subpath: true
-        data: {}
-        file: structure/custom/custom-multi.yaml
+        data:
+          ingress_class: company-domain
+          ingress_name: frontend.test.east.company.com
+        file: structure/env/test/podinfo/deploy.yaml
         ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 2
+        - deployment-frontend.yaml
+        path: structure/env/test/
+        renderers: []
+        value: test
+      - _order: 4
         config:
           fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
           no_match: append
           pattern: false
           render: true
           subpath: true
-        data: {}
-        file: structure/custom/custom-multi.yaml
+        data:
+          ingress_class: company-domain
+          ingress_name: frontend.test.east.company.com
+        file: structure/location/east/podinfo/deploy.yaml
         ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 6
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/custom-no-kind.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 6
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/custom-no-kind.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 8
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/custom.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 8
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/custom.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 10
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-multi-no-kind-no-subpath.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 10
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-multi-no-kind-no-subpath.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 16
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-multi-no-subpath.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 16
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-multi-no-subpath.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 28
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-no-kind-no-subpath.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 28
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-no-kind-no-subpath.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 34
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-no-subpath.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 34
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-no-subpath.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
+        - deployment-frontend.yaml
+        path: structure/location/east/
+        renderers: []
+        value: east
       id:
-      - custom-id-1
-      - custom-id-2
+      - deployment-frontend.yaml
       render: true
-      subpath: .
-    - checksum: 4c7109922061ba47d244f6f556e9bf459f7f68915a20e09d744da64bdbddaa79
+      renderers: []
+      subpath: podinfo
+    - checksum: 08b06c48a587e3fe6179875f70331bb97562a6e584dcb32807ce9eac7572fc8d
       content:
         apiVersion: v1
         kind: Service
         metadata:
-          labels:
-            custom-multi: "true"
-            custom-multi-no-kind: "true"
-            subpath-custom-multi-no-subpath: "true"
-            subpath-custom-no-kind-no-subpath: "true"
-          name: nginx
+          name: frontend
         spec:
           ports:
           - name: http
             port: 80
-            targetPort: 80
-          - name: https
-            port: 443
-            targetPort: 80
+            protocol: TCP
+            targetPort: http
           selector:
-            app: nginx
+            app: frontend
+          type: ClusterIP
       debug: []
       errors: []
       files:
       - _order: 1
         config:
           fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
           no_match: append
           pattern: false
           render: true
           subpath: true
-        data: {}
-        file: structure/custom/custom-multi-no-kind.yaml
+        data:
+          ingress_class: company-domain
+          ingress_name: frontend.test.east.company.com
+        file: structure/base/podinfo/service.yaml
         ids:
-        - custom-id-3
-        - custom-id-4
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 4
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/custom-multi.yaml
-        ids:
-        - custom-id-3
-        - custom-id-4
-        - service-nginx.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 4
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/custom-multi.yaml
-        ids:
-        - custom-id-3
-        - custom-id-4
-        - service-nginx.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 12
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-multi-no-kind-no-subpath.yaml
-        ids:
-        - custom-id-3
-        - custom-id-4
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 12
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-multi-no-kind-no-subpath.yaml
-        ids:
-        - custom-id-3
-        - custom-id-4
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 20
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-multi-no-subpath.yaml
-        ids:
-        - custom-id-3
-        - custom-id-4
-        - service-nginx.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 20
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-multi-no-subpath.yaml
-        ids:
-        - custom-id-3
-        - custom-id-4
-        - service-nginx.yaml
-        path: structure/custom/
-        post_renderers: []
+        - service-frontend.yaml
+        path: structure/base/
+        renderers: []
         value: {}
       id:
-      - custom-id-3
-      - custom-id-4
+      - service-frontend.yaml
       render: true
+      renderers: []
+      subpath: podinfo
+    - checksum: b3e231fd6bc48aa8e1c94208952372b01cec1f7afb7b756c386cd38d007bb976
+      content:
+        apiVersion: autoscaling/v2beta2
+        kind: HorizontalPodAutoscaler
+        metadata:
+          name: frontend
+        spec:
+          maxReplicas: 4
+          metrics:
+          - resource:
+              name: cpu
+              target:
+                averageUtilization: 99
+                type: Utilization
+            type: Resource
+          minReplicas: 1
+          scaleTargetRef:
+            apiVersion: apps/v1
+            kind: Deployment
+            name: frontend-test
+      debug: []
+      errors: []
+      files:
+      - _order: 3
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data:
+          ingress_class: company-domain
+          ingress_name: frontend.test.east.company.com
+        file: structure/env/test/podinfo/hpa.yaml
+        ids:
+        - horizontalpodautoscaler-frontend.yaml
+        path: structure/env/test/
+        renderers: []
+        value: test
+      id:
+      - horizontalpodautoscaler-frontend.yaml
+      render: true
+      renderers: []
+      subpath: podinfo
+    - checksum: 0a7f494f88765c2177e7000566cb57610bd4259c801035dd7a5bf44fdd0545b6
+      content:
+        apiVersion: networking.k8s.io/v1
+        kind: Ingress
+        metadata:
+          annotations:
+            nginx.ingress.kubernetes.io/rewrite-target: /
+          name: frontend
+        spec:
+          ingressClassName: company-domain
+          rules:
+          - http:
+              paths:
+              - backend:
+                  service:
+                    name: frontend
+                    port:
+                      number: 80
+                host: frontend.test.east.company.com
+                path: /
+                pathType: Prefix
+          tls:
+          - hosts:
+            - frontend.test.east.company.com
+            secretName: frontend-tls
+      debug: []
+      errors: []
+      files:
+      - _order: 5
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data:
+          ingress_class: company-domain
+          ingress_name: frontend.test.east.company.com
+        file: structure/expose/ingress.tpl
+        ids:
+        - ingress-frontend.yaml
+        path: structure/expose/
+        renderers: []
+        value: {}
+      id:
+      - ingress-frontend.yaml
+      render: true
+      renderers: []
       subpath: .
-    - checksum: 71a6197c5798ae7d169a5db4eba651ed30d1522a65c90027cee23bd29e4bfbfb
-      content:
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          labels:
-            subpath-custom: "true"
-            subpath-custom-multi: "true"
-            subpath-custom-multi-no-kind: "true"
-            subpath-custom-multi-no-subpath: "true"
-            subpath-custom-no-kind: "true"
-            subpath-custom-no-kind-no-subpath: "true"
-            subpath-custom-no-subpath: "true"
-          name: nginx-deployment
-        spec:
-          replicas: 3
-          selector:
-            matchLabels:
-              app: nginx
-          template:
-            metadata:
-              labels:
-                app: nginx
-            spec:
-              containers:
-              - image: nginx:1.14.2
-                name: nginx
-                ports:
-                - containerPort: 80
-      debug: []
-      errors: []
-      files:
-      - _order: 14
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/subpath/custom-multi-no-kind.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 16
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-multi-no-subpath.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 16
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-multi-no-subpath.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 24
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/subpath/custom-multi.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 24
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/subpath/custom-multi.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 28
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-no-kind-no-subpath.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 28
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-no-kind-no-subpath.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 32
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/subpath/custom-no-kind.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 32
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/subpath/custom-no-kind.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 34
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-no-subpath.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 34
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-no-subpath.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 38
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/subpath/custom.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 38
-        config:
-          fork: false
-          id:
-          - custom-id-1
-          - custom-id-2
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/subpath/custom.yaml
-        ids:
-        - custom-id-1
-        - custom-id-2
-        - deployment-nginx-deployment.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      id:
-      - custom-id-1
-      - custom-id-2
-      render: true
-      subpath: subpath
-    - checksum: 0ecbf022f95996b2c7192c8f36d2d0d6d812b96640c056dcb5312cac35d5f532
-      content:
-        apiVersion: v1
-        kind: Service
-        metadata:
-          labels:
-            subpath-custom-multi: "true"
-            subpath-custom-multi-no-kind: "true"
-            subpath-custom-multi-no-subpath: "true"
-          name: nginx
-        spec:
-          ports:
-          - name: http
-            port: 80
-            targetPort: 80
-          - name: https
-            port: 443
-            targetPort: 80
-          selector:
-            app: nginx
-      debug: []
-      errors: []
-      files:
-      - _order: 15
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/subpath/custom-multi-no-kind.yaml
-        ids:
-        - custom-id-3
-        - custom-id-4
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 20
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-multi-no-subpath.yaml
-        ids:
-        - custom-id-3
-        - custom-id-4
-        - service-nginx.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 20
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/custom/subpath/custom-multi-no-subpath.yaml
-        ids:
-        - custom-id-3
-        - custom-id-4
-        - service-nginx.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 26
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/subpath/custom-multi.yaml
-        ids:
-        - custom-id-3
-        - custom-id-4
-        - service-nginx.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      - _order: 26
-        config:
-          fork: false
-          id:
-          - custom-id-3
-          - custom-id-4
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/custom/subpath/custom-multi.yaml
-        ids:
-        - custom-id-3
-        - custom-id-4
-        - service-nginx.yaml
-        path: structure/custom/
-        post_renderers: []
-        value: {}
-      id:
-      - custom-id-3
-      - custom-id-4
-      render: true
-      subpath: subpath
-    - checksum: 2b9edf7b3b8ffd801b8ffee7c566cfd5e784237f133edd29acdd8864b9cf29de
-      content:
-        metadata:
-          labels:
-            file-name-multi: "true"
-        spec:
-          ports:
-          - name: http
-            port: 80
-            targetPort: 80
-          - name: https
-            port: 443
-            targetPort: 80
-          replicas: 3
-          selector:
-            app: nginx
-            matchLabels:
-              app: nginx
-          template:
-            metadata:
-              labels:
-                app: nginx
-            spec:
-              containers:
-              - image: nginx:1.14.2
-                name: nginx
-                ports:
-                - containerPort: 80
-      debug: []
-      errors: []
-      files:
-      - _order: 40
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/file_name/file-name-multi.yaml
-        ids:
-        - file-name-multi.yaml
-        path: structure/file_name/
-        post_renderers: []
-        value: {}
-      - _order: 41
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/file_name/file-name-multi.yaml
-        ids:
-        - file-name-multi.yaml
-        path: structure/file_name/
-        post_renderers: []
-        value: {}
-      id:
-      - file-name-multi.yaml
-      render: true
-      subpath: .
-    - checksum: 579756a1610b7b5935e77fd1f0691ca2313769387ea8f4977bbf8d09653e9a40
-      content:
-        metadata:
-          labels:
-            file-name: "true"
-        spec:
-          replicas: 3
-          selector:
-            matchLabels:
-              app: nginx
-          template:
-            metadata:
-              labels:
-                app: nginx
-            spec:
-              containers:
-              - image: nginx:1.14.2
-                name: nginx
-                ports:
-                - containerPort: 80
-      debug: []
-      errors: []
-      files:
-      - _order: 42
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/file_name/file-name.yaml
-        ids:
-        - file-name.yaml
-        path: structure/file_name/
-        post_renderers: []
-        value: {}
-      id:
-      - file-name.yaml
-      render: true
-      subpath: .
-    - checksum: 0f19bd2ce7bc5d3174888b967fb444ad53101f9e0b8c0c387f3cf18fb0ba5cbf
-      content:
-        metadata:
-          labels:
-            subpath-file-name-multi-no-subpath: "true"
-        spec:
-          ports:
-          - name: http
-            port: 80
-            targetPort: 80
-          - name: https
-            port: 443
-            targetPort: 80
-          replicas: 3
-          selector:
-            app: nginx
-            matchLabels:
-              app: nginx
-          template:
-            metadata:
-              labels:
-                app: nginx
-            spec:
-              containers:
-              - image: nginx:1.14.2
-                name: nginx
-                ports:
-                - containerPort: 80
-      debug: []
-      errors: []
-      files:
-      - _order: 43
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/file_name/subpath/file-name-multi-no-subpath.yaml
-        ids:
-        - file-name-multi-no-subpath.yaml
-        path: structure/file_name/
-        post_renderers: []
-        value: {}
-      - _order: 44
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/file_name/subpath/file-name-multi-no-subpath.yaml
-        ids:
-        - file-name-multi-no-subpath.yaml
-        path: structure/file_name/
-        post_renderers: []
-        value: {}
-      id:
-      - file-name-multi-no-subpath.yaml
-      render: true
-      subpath: subpath
-    - checksum: ffe1c57718a8778f28febe998e97f66a76c9439d35be03934424ac01a83582b4
-      content:
-        metadata:
-          labels:
-            subpath-file-name-multi: "true"
-        spec:
-          ports:
-          - name: http
-            port: 80
-            targetPort: 80
-          - name: https
-            port: 443
-            targetPort: 80
-          replicas: 3
-          selector:
-            app: nginx
-            matchLabels:
-              app: nginx
-          template:
-            metadata:
-              labels:
-                app: nginx
-            spec:
-              containers:
-              - image: nginx:1.14.2
-                name: nginx
-                ports:
-                - containerPort: 80
-      debug: []
-      errors: []
-      files:
-      - _order: 45
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/file_name/subpath/file-name-multi.yaml
-        ids:
-        - file-name-multi.yaml
-        path: structure/file_name/
-        post_renderers: []
-        value: {}
-      - _order: 46
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/file_name/subpath/file-name-multi.yaml
-        ids:
-        - file-name-multi.yaml
-        path: structure/file_name/
-        post_renderers: []
-        value: {}
-      id:
-      - file-name-multi.yaml
-      render: true
-      subpath: subpath
-    - checksum: f66dc8b5da86e383bf0a10b29b1b7ec779f47c50309dd745cab3d83f63c1a452
-      content:
-        metadata:
-          labels:
-            subpath-file-name-no-subpath: "true"
-        spec:
-          replicas: 3
-          selector:
-            matchLabels:
-              app: nginx
-          template:
-            metadata:
-              labels:
-                app: nginx
-            spec:
-              containers:
-              - image: nginx:1.14.2
-                name: nginx
-                ports:
-                - containerPort: 80
-      debug: []
-      errors: []
-      files:
-      - _order: 47
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/file_name/subpath/file-name-no-subpath.yaml
-        ids:
-        - file-name-no-subpath.yaml
-        path: structure/file_name/
-        post_renderers: []
-        value: {}
-      id:
-      - file-name-no-subpath.yaml
-      render: true
-      subpath: subpath
-    - checksum: 29e3c9e3dbd6b85cb6e33277a0ec8852d9c8376d7e58fd4685d4d34d0fcd6523
-      content:
-        metadata:
-          labels:
-            subpath-file-name: "true"
-        spec:
-          replicas: 3
-          selector:
-            matchLabels:
-              app: nginx
-          template:
-            metadata:
-              labels:
-                app: nginx
-            spec:
-              containers:
-              - image: nginx:1.14.2
-                name: nginx
-                ports:
-                - containerPort: 80
-      debug: []
-      errors: []
-      files:
-      - _order: 48
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/file_name/subpath/file-name.yaml
-        ids:
-        - file-name.yaml
-        path: structure/file_name/
-        post_renderers: []
-        value: {}
-      id:
-      - file-name.yaml
-      render: true
-      subpath: subpath
-    - checksum: e4036d40c43b13d515639dfeba269e2a82de120dbded134507e348dd5726745c
-      content:
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          labels:
-            kind: "true"
-            kind-multi: "true"
-            subpath-kind-multi-no-subpath: "true"
-            subpath-kind-no-subpath: "true"
-          name: nginx-deployment
-        spec:
-          replicas: 3
-          selector:
-            matchLabels:
-              app: nginx
-          template:
-            metadata:
-              labels:
-                app: nginx
-            spec:
-              containers:
-              - image: nginx:1.14.2
-                name: nginx
-                ports:
-                - containerPort: 80
-      debug: []
-      errors: []
-      files:
-      - _order: 49
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/kind/kind-multi.yaml
-        ids:
-        - deployment-nginx-deployment.yaml
-        path: structure/kind/
-        post_renderers: []
-        value: {}
-      - _order: 51
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/kind/kind.yaml
-        ids:
-        - deployment-nginx-deployment.yaml
-        path: structure/kind/
-        post_renderers: []
-        value: {}
-      - _order: 52
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/kind/subpath/kind-multi-no-subpath.yaml
-        ids:
-        - deployment-nginx-deployment.yaml
-        path: structure/kind/
-        post_renderers: []
-        value: {}
-      - _order: 56
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/kind/subpath/kind-no-subpath.yaml
-        ids:
-        - deployment-nginx-deployment.yaml
-        path: structure/kind/
-        post_renderers: []
-        value: {}
-      id:
-      - deployment-nginx-deployment.yaml
-      render: true
-      subpath: .
-    - checksum: a8ac700241b4eec9b79b747a7471722b68f2c64ad9ee504174c8e001146d8a2f
-      content:
-        apiVersion: v1
-        kind: Service
-        metadata:
-          labels:
-            kind-multi: "true"
-            subpath-kind-multi-no-subpath: "true"
-          name: nginx
-        spec:
-          ports:
-          - name: http
-            port: 80
-            targetPort: 80
-          - name: https
-            port: 443
-            targetPort: 80
-          selector:
-            app: nginx
-      debug: []
-      errors: []
-      files:
-      - _order: 50
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/kind/kind-multi.yaml
-        ids:
-        - service-nginx.yaml
-        path: structure/kind/
-        post_renderers: []
-        value: {}
-      - _order: 53
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/kind/subpath/kind-multi-no-subpath.yaml
-        ids:
-        - service-nginx.yaml
-        path: structure/kind/
-        post_renderers: []
-        value: {}
-      id:
-      - service-nginx.yaml
-      render: true
-      subpath: .
-    - checksum: fce93ae564856476aac6fb6a2e91d95fa8428b2b94394347adafd973cc81d914
-      content:
-        apiVersion: apps/v1
-        kind: Deployment
-        metadata:
-          labels:
-            subpath-kind: "true"
-            subpath-kind-multi: "true"
-            subpath-kind-no-subpath: "true"
-          name: nginx-deployment
-        spec:
-          replicas: 3
-          selector:
-            matchLabels:
-              app: nginx
-          template:
-            metadata:
-              labels:
-                app: nginx
-            spec:
-              containers:
-              - image: nginx:1.14.2
-                name: nginx
-                ports:
-                - containerPort: 80
-      debug: []
-      errors: []
-      files:
-      - _order: 54
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/kind/subpath/kind-multi.yaml
-        ids:
-        - deployment-nginx-deployment.yaml
-        path: structure/kind/
-        post_renderers: []
-        value: {}
-      - _order: 56
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data: {}
-        file: structure/kind/subpath/kind-no-subpath.yaml
-        ids:
-        - deployment-nginx-deployment.yaml
-        path: structure/kind/
-        post_renderers: []
-        value: {}
-      - _order: 58
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/kind/subpath/kind.yaml
-        ids:
-        - deployment-nginx-deployment.yaml
-        path: structure/kind/
-        post_renderers: []
-        value: {}
-      id:
-      - deployment-nginx-deployment.yaml
-      render: true
-      subpath: subpath
-    - checksum: 630e36eff4922705c994c16f3ae2b7f9f0f2d80adf2f9a5b3112afea1b0352c9
-      content:
-        apiVersion: v1
-        kind: Service
-        metadata:
-          labels:
-            subpath-kind-multi: "true"
-          name: nginx
-        spec:
-          ports:
-          - name: http
-            port: 80
-            targetPort: 80
-          - name: https
-            port: 443
-            targetPort: 80
-          selector:
-            app: nginx
-      debug: []
-      errors: []
-      files:
-      - _order: 55
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data: {}
-        file: structure/kind/subpath/kind-multi.yaml
-        ids:
-        - service-nginx.yaml
-        path: structure/kind/
-        post_renderers: []
-        value: {}
-      id:
-      - service-nginx.yaml
-      render: true
-      subpath: subpath

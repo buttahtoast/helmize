@@ -2,10 +2,10 @@ suite: example/data snapshot tests
 templates:
   - deploy.yaml
 tests:
-  - it: manifest snapshot
+  - it: Manifest snapshot
     asserts:
       - matchSnapshot: {}
-  - it: summary snapshot
+  - it: Summary snapshot
     set: 
       summary: true
     asserts:

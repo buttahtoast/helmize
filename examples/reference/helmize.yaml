@@ -1,47 +1,22 @@
 
 inventory_directory: "structure/"
-
 conditions:
-
   - name: "base"
-
     path: "/base/"
-
     any: true
-
-
-
   - name: "environment"
-
     key: "env"
-
     path: "env/"
-
     default: "test"
-
     filter: [ "test", "prod" ]
-
     reverse_filter: true
-
-
-
   - name: "location"
-
     key: "location"
-
     default: "east"
-
-
-
   - name: "expose"
-
     any: true
-
     data:
-
       ingress_class: "company-domain"
-
     tpls:
-
       - tpls/ingress.tpl
 

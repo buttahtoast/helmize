@@ -320,7 +320,7 @@ summary snapshot:
   1: |
     conditions:
     - config:
-        allow_root: true
+        any: true
         key_types:
         - string
         - slice
@@ -335,7 +335,7 @@ summary snapshot:
       root_path: custom
       value: {}
     - config:
-        allow_root: true
+        any: true
         key_types:
         - string
         - slice
@@ -350,7 +350,8 @@ summary snapshot:
       root_path: file_name
       value: {}
     - config:
-        allow_root: true
+        any: true
+        key: test
         key_types:
         - string
         - slice
@@ -365,7 +366,26 @@ summary snapshot:
       root_path: kind
       value: {}
     errors: []
-    files:
+    paths:
+    - config: null
+      data: {}
+      paths:
+      - structure/custom/
+      renderers: null
+      value: {}
+    - config: null
+      data: {}
+      paths:
+      - structure/file_name/
+      renderers: null
+      value: {}
+    - config: null
+      data: {}
+      paths:
+      - structure/kind/
+      renderers: null
+      value: {}
+    wagons:
     - checksum: e0515b0cce6ae94dfef7c4b7c4d969d5a069d4f40b3812dbde08a08b541a4404
       content:
         apiVersion: apps/v1
@@ -414,7 +434,7 @@ summary snapshot:
         - custom-id-1
         - custom-id-2
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 2
         config:
@@ -433,7 +453,7 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 2
         config:
@@ -452,7 +472,7 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 6
         config:
@@ -470,7 +490,7 @@ summary snapshot:
         - custom-id-1
         - custom-id-2
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 6
         config:
@@ -488,7 +508,7 @@ summary snapshot:
         - custom-id-1
         - custom-id-2
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 8
         config:
@@ -507,7 +527,7 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 8
         config:
@@ -526,7 +546,7 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 10
         config:
@@ -544,7 +564,7 @@ summary snapshot:
         - custom-id-1
         - custom-id-2
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 10
         config:
@@ -562,7 +582,7 @@ summary snapshot:
         - custom-id-1
         - custom-id-2
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 16
         config:
@@ -581,7 +601,7 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 16
         config:
@@ -600,7 +620,7 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 28
         config:
@@ -618,7 +638,7 @@ summary snapshot:
         - custom-id-1
         - custom-id-2
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 28
         config:
@@ -636,7 +656,7 @@ summary snapshot:
         - custom-id-1
         - custom-id-2
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 34
         config:
@@ -655,7 +675,7 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 34
         config:
@@ -674,12 +694,13 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - custom-id-1
       - custom-id-2
       render: true
+      renderers: []
       subpath: .
     - checksum: 4c7109922061ba47d244f6f556e9bf459f7f68915a20e09d744da64bdbddaa79
       content:
@@ -721,7 +742,7 @@ summary snapshot:
         - custom-id-3
         - custom-id-4
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 4
         config:
@@ -740,7 +761,7 @@ summary snapshot:
         - custom-id-4
         - service-nginx.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 4
         config:
@@ -759,7 +780,7 @@ summary snapshot:
         - custom-id-4
         - service-nginx.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 12
         config:
@@ -777,7 +798,7 @@ summary snapshot:
         - custom-id-3
         - custom-id-4
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 12
         config:
@@ -795,7 +816,7 @@ summary snapshot:
         - custom-id-3
         - custom-id-4
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 20
         config:
@@ -814,7 +835,7 @@ summary snapshot:
         - custom-id-4
         - service-nginx.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 20
         config:
@@ -833,12 +854,13 @@ summary snapshot:
         - custom-id-4
         - service-nginx.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - custom-id-3
       - custom-id-4
       render: true
+      renderers: []
       subpath: .
     - checksum: 71a6197c5798ae7d169a5db4eba651ed30d1522a65c90027cee23bd29e4bfbfb
       content:
@@ -888,7 +910,7 @@ summary snapshot:
         - custom-id-1
         - custom-id-2
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 16
         config:
@@ -907,7 +929,7 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 16
         config:
@@ -926,7 +948,7 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 24
         config:
@@ -945,7 +967,7 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 24
         config:
@@ -964,7 +986,7 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 28
         config:
@@ -982,7 +1004,7 @@ summary snapshot:
         - custom-id-1
         - custom-id-2
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 28
         config:
@@ -1000,7 +1022,7 @@ summary snapshot:
         - custom-id-1
         - custom-id-2
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 32
         config:
@@ -1018,7 +1040,7 @@ summary snapshot:
         - custom-id-1
         - custom-id-2
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 32
         config:
@@ -1036,7 +1058,7 @@ summary snapshot:
         - custom-id-1
         - custom-id-2
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 34
         config:
@@ -1055,7 +1077,7 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 34
         config:
@@ -1074,7 +1096,7 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 38
         config:
@@ -1093,7 +1115,7 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 38
         config:
@@ -1112,12 +1134,13 @@ summary snapshot:
         - custom-id-2
         - deployment-nginx-deployment.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - custom-id-1
       - custom-id-2
       render: true
+      renderers: []
       subpath: subpath
     - checksum: 0ecbf022f95996b2c7192c8f36d2d0d6d812b96640c056dcb5312cac35d5f532
       content:
@@ -1158,7 +1181,7 @@ summary snapshot:
         - custom-id-3
         - custom-id-4
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 20
         config:
@@ -1177,7 +1200,7 @@ summary snapshot:
         - custom-id-4
         - service-nginx.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 20
         config:
@@ -1196,7 +1219,7 @@ summary snapshot:
         - custom-id-4
         - service-nginx.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 26
         config:
@@ -1215,7 +1238,7 @@ summary snapshot:
         - custom-id-4
         - service-nginx.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 26
         config:
@@ -1234,12 +1257,13 @@ summary snapshot:
         - custom-id-4
         - service-nginx.yaml
         path: structure/custom/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - custom-id-3
       - custom-id-4
       render: true
+      renderers: []
       subpath: subpath
     - checksum: 2b9edf7b3b8ffd801b8ffee7c566cfd5e784237f133edd29acdd8864b9cf29de
       content:
@@ -1284,7 +1308,7 @@ summary snapshot:
         ids:
         - file-name-multi.yaml
         path: structure/file_name/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 41
         config:
@@ -1298,11 +1322,12 @@ summary snapshot:
         ids:
         - file-name-multi.yaml
         path: structure/file_name/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - file-name-multi.yaml
       render: true
+      renderers: []
       subpath: .
     - checksum: 579756a1610b7b5935e77fd1f0691ca2313769387ea8f4977bbf8d09653e9a40
       content:
@@ -1339,11 +1364,12 @@ summary snapshot:
         ids:
         - file-name.yaml
         path: structure/file_name/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - file-name.yaml
       render: true
+      renderers: []
       subpath: .
     - checksum: 0f19bd2ce7bc5d3174888b967fb444ad53101f9e0b8c0c387f3cf18fb0ba5cbf
       content:
@@ -1388,7 +1414,7 @@ summary snapshot:
         ids:
         - file-name-multi-no-subpath.yaml
         path: structure/file_name/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 44
         config:
@@ -1402,11 +1428,12 @@ summary snapshot:
         ids:
         - file-name-multi-no-subpath.yaml
         path: structure/file_name/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - file-name-multi-no-subpath.yaml
       render: true
+      renderers: []
       subpath: subpath
     - checksum: ffe1c57718a8778f28febe998e97f66a76c9439d35be03934424ac01a83582b4
       content:
@@ -1451,7 +1478,7 @@ summary snapshot:
         ids:
         - file-name-multi.yaml
         path: structure/file_name/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 46
         config:
@@ -1465,11 +1492,12 @@ summary snapshot:
         ids:
         - file-name-multi.yaml
         path: structure/file_name/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - file-name-multi.yaml
       render: true
+      renderers: []
       subpath: subpath
     - checksum: f66dc8b5da86e383bf0a10b29b1b7ec779f47c50309dd745cab3d83f63c1a452
       content:
@@ -1506,11 +1534,12 @@ summary snapshot:
         ids:
         - file-name-no-subpath.yaml
         path: structure/file_name/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - file-name-no-subpath.yaml
       render: true
+      renderers: []
       subpath: subpath
     - checksum: 29e3c9e3dbd6b85cb6e33277a0ec8852d9c8376d7e58fd4685d4d34d0fcd6523
       content:
@@ -1547,11 +1576,12 @@ summary snapshot:
         ids:
         - file-name.yaml
         path: structure/file_name/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - file-name.yaml
       render: true
+      renderers: []
       subpath: subpath
     - checksum: e4036d40c43b13d515639dfeba269e2a82de120dbded134507e348dd5726745c
       content:
@@ -1594,7 +1624,7 @@ summary snapshot:
         ids:
         - deployment-nginx-deployment.yaml
         path: structure/kind/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 51
         config:
@@ -1608,7 +1638,7 @@ summary snapshot:
         ids:
         - deployment-nginx-deployment.yaml
         path: structure/kind/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 52
         config:
@@ -1622,7 +1652,7 @@ summary snapshot:
         ids:
         - deployment-nginx-deployment.yaml
         path: structure/kind/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 56
         config:
@@ -1636,11 +1666,12 @@ summary snapshot:
         ids:
         - deployment-nginx-deployment.yaml
         path: structure/kind/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - deployment-nginx-deployment.yaml
       render: true
+      renderers: []
       subpath: .
     - checksum: a8ac700241b4eec9b79b747a7471722b68f2c64ad9ee504174c8e001146d8a2f
       content:
@@ -1676,7 +1707,7 @@ summary snapshot:
         ids:
         - service-nginx.yaml
         path: structure/kind/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 53
         config:
@@ -1690,11 +1721,12 @@ summary snapshot:
         ids:
         - service-nginx.yaml
         path: structure/kind/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - service-nginx.yaml
       render: true
+      renderers: []
       subpath: .
     - checksum: fce93ae564856476aac6fb6a2e91d95fa8428b2b94394347adafd973cc81d914
       content:
@@ -1736,7 +1768,7 @@ summary snapshot:
         ids:
         - deployment-nginx-deployment.yaml
         path: structure/kind/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 56
         config:
@@ -1750,7 +1782,7 @@ summary snapshot:
         ids:
         - deployment-nginx-deployment.yaml
         path: structure/kind/
-        post_renderers: []
+        renderers: []
         value: {}
       - _order: 58
         config:
@@ -1764,11 +1796,12 @@ summary snapshot:
         ids:
         - deployment-nginx-deployment.yaml
         path: structure/kind/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - deployment-nginx-deployment.yaml
       render: true
+      renderers: []
       subpath: subpath
     - checksum: 630e36eff4922705c994c16f3ae2b7f9f0f2d80adf2f9a5b3112afea1b0352c9
       content:
@@ -1803,9 +1836,10 @@ summary snapshot:
         ids:
         - service-nginx.yaml
         path: structure/kind/
-        post_renderers: []
+        renderers: []
         value: {}
       id:
       - service-nginx.yaml
       render: true
+      renderers: []
       subpath: subpath

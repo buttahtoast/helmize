@@ -5,6 +5,7 @@
     metadata:
       labels:
         app: nginx
+        shared: labels
       name: nginx-deployment-prod
     spec:
       replicas: 3
@@ -27,6 +28,7 @@
     metadata:
       labels:
         app: nginx
+        shared: labels
       name: nginx-deployment-test
     spec:
       replicas: 2
@@ -43,14 +45,7 @@
             name: nginx
             ports:
             - containerPort: 80
-      test:
-        forks_data:
-          sampler: true
-        registry_data:
-          sampler: true
-        resources_data:
-          sampler: true
-        sample: data
+      test: null
 '[Config File]: Manifest snapshot (Show Config)':
   1: |
     config:
@@ -77,8 +72,7 @@
             sampler: true
         file_cfg:
           pattern: true
-          render: true
-          subpath: true
+          subpath: false
         name: patches
         tpls:
         - registry.tpl
@@ -111,7 +105,7 @@
         file_cfg:
           pattern: true
           render: false
-          subpath: true
+          subpath: false
         name: patches
         required: false
         tpls:
@@ -228,7 +222,7 @@
           no_match: append
           pattern: true
           render: true
-          subpath: true
+          subpath: false
         key_types:
         - string
         - slice
@@ -294,7 +288,7 @@
         no_match: append
         pattern: true
         render: true
-        subpath: true
+        subpath: false
       data:
         forks_data:
           sampler: true
@@ -352,7 +346,7 @@
           resources_data:
             sampler: true
           sample: data
-        file: structure/resources/base-deployment.yaml
+        file: structure/resources/deployment.yaml
         ids:
         - deploy
         - deployment-nginx-deployment.yaml
@@ -367,7 +361,7 @@
           no_match: append
           pattern: true
           render: true
-          subpath: true
+          subpath: false
         data:
           forks_data:
             sampler: true
@@ -390,7 +384,7 @@
           no_match: append
           pattern: true
           render: true
-          subpath: true
+          subpath: false
         data:
           forks_data:
             sampler: true
@@ -411,13 +405,14 @@
       render: false
       renderers: []
       subpath: .
-    - checksum: 5b8c5ff45bebba9f2b2f36ad51b30a10edb5866ca8cfca67d5bf5c2e379511b1
+    - checksum: 16871458efc80cb84f1fca5de42e01100cb2401bc6a3bd1bfb40fb128be50905
       content:
         apiVersion: apps/v1
         kind: Deployment
         metadata:
           labels:
             app: nginx
+            shared: labels
           name: nginx-deployment-prod
         spec:
           replicas: 3
@@ -454,7 +449,7 @@
           resources_data:
             sampler: true
           sample: data
-        file: structure/resources/base-deployment.yaml
+        file: structure/resources/deployment.yaml
         ids:
         - deploy
         - deployment-nginx-deployment.yaml
@@ -484,19 +479,43 @@
         path: structure/forks/
         renderers: []
         value: {}
+      - _order: 3
+        config:
+          fork: false
+          id:
+          - .*
+          no_match: append
+          pattern: true
+          render: true
+          subpath: false
+        data:
+          forks_data:
+            sampler: true
+          registry_data:
+            sampler: true
+          resources_data:
+            sampler: true
+          sample: data
+        file: structure/patches/label.yaml
+        ids:
+        - .*
+        path: structure/patches/
+        renderers: []
+        value: {}
       fork: "true"
       id:
       - deploy
       render: true
       renderers: []
       subpath: prod
-    - checksum: cee2fb51f15f5e9cf355f00f43d8c5250a545186ebe8d4ea9145aea230bcdb6c
+    - checksum: f05359ed5f82ffa1227ff39945f5aa43f5aa33e8336beb80ec565565394b0f3d
       content:
         apiVersion: apps/v1
         kind: Deployment
         metadata:
           labels:
             app: nginx
+            shared: labels
           name: nginx-deployment-test
         spec:
           replicas: 2
@@ -513,14 +532,7 @@
                 name: nginx
                 ports:
                 - containerPort: 80
-          test:
-            forks_data:
-              sampler: true
-            registry_data:
-              sampler: true
-            resources_data:
-              sampler: true
-            sample: data
+          test: null
       debug: []
       errors: []
       files:
@@ -541,7 +553,7 @@
           resources_data:
             sampler: true
           sample: data
-        file: structure/resources/base-deployment.yaml
+        file: structure/resources/deployment.yaml
         ids:
         - deploy
         - deployment-nginx-deployment.yaml
@@ -569,6 +581,29 @@
         ids:
         - deploy
         path: structure/forks/
+        renderers: []
+        value: {}
+      - _order: 3
+        config:
+          fork: false
+          id:
+          - .*
+          no_match: append
+          pattern: true
+          render: true
+          subpath: false
+        data:
+          forks_data:
+            sampler: true
+          registry_data:
+            sampler: true
+          resources_data:
+            sampler: true
+          sample: data
+        file: structure/patches/label.yaml
+        ids:
+        - .*
+        path: structure/patches/
         renderers: []
         value: {}
       fork: "true"

@@ -5,7 +5,9 @@ description = "Quickstart"
 weight = 2 
 +++
 
-{{< hint "info" >}}If you encounter any problems during the quickstart make sure to use the [flags](../../usage/flags). They help to understand what's going on and what might be the problem.{{< /hint >}}
+{{< hint "info" >}}If you encounter any problems during the quickstart make sure to use the [flags](../../usage/flags). They help to understand what's going on and what might be the problem.
+
+[https://github.com/buttahtoast/helmize/tree/main/examples/reference](https://github.com/buttahtoast/helmize/tree/main/examples/reference){{< /hint >}}
 
 First we create a new helm chart which is going to contain the entire deployment structure for helmize. We can simply do that with the following comment (In this case I will call the new chart `reference`, chose the name you would like):
 

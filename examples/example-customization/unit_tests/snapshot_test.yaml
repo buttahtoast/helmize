@@ -1,12 +1,15 @@
-suite: example/identifiers snapshot tests
+suite: example/customization snapshot tests
 templates:
   - deploy.yaml
 tests:
   - it: Manifest snapshot
+    set: 
+      helmize.force: true
     asserts:
       - matchSnapshot: {}
   - it: Summary snapshot
     set: 
+      helmize.force: true
       summary: true
     asserts:
       - matchSnapshot: {}

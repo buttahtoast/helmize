@@ -1,11 +1,11 @@
-suite: example/identifiers snapshot tests
+suite: example/yaml snapshot tests
 templates:
   - deploy.yaml
 tests:
-  - it: Manifest snapshot
+  - it: "Manifest snapshot"
     asserts:
       - matchSnapshot: {}
-  - it: Summary snapshot
+  - it: "Summary snapshot"
     set: 
       summary: true
     asserts:
