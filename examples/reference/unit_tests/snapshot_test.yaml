@@ -1,0 +1,12 @@
+suite: example/identifiers snapshot tests
+templates:
+  - deploy.yaml
+tests:
+  - it: "[Reference]: Manifest Snapshot"
+    asserts:
+      - matchSnapshot: {}
+  - it: "[Reference]: Summary Snapshot"
+    set: 
+      summary: true
+    asserts:
+      - matchSnapshot: {}

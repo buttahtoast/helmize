@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    env: {{ $.value }}
+spec:
+  progressDeadlineSeconds: 120
+  template:
+    spec:
+      containers:
+      - name: frontend
+        command:
+        - __inject__
+        - --level=debug
+        env:
+        - name: PODINFO_UI_COLOR
+          value: '#FAB418'
+        ports:
+        - __inject__
+        - containerPort: 20000
+          name: grpc

@@ -93,7 +93,7 @@
         {{- if $filter -}}
           {{/* Append Default Value to filter */}}
           {{- if (get $condition (include "helmize.conditions.defaults.conditions.default" $)) -}}
-            {{- $filter = append $filter (get $condition (include "helmize.conditions.defaults.conditions.default" $)) -}}
+            {{- $filter = (append $filter (get $condition (include "helmize.conditions.defaults.conditions.default" $)) | uniq) -}}
           {{- end -}}
           {{/* Run Filter for each Condition Value */}}
           {{- range $con := $condition_keys -}}
@@ -133,7 +133,7 @@
 
         {{/* Run Templates */}}
         {{- if (get $condition (include "helmize.conditions.defaults.conditions.tpls" $)) -}}
-          {{- include "helmize.conditions.func.resolve.templates" (dict "tpls" (get $condition (include "helmize.conditions.defaults.conditions.tpls" $)) "condition" $condition_struct "ctx" $.ctx) -}}
+          {{- include "helmize.conditions.func.resolve.templates" (dict "tpls" (get $condition (include "helmize.conditions.defaults.conditions.tpls" $)) "condition" $condition_struct "conditions" $return.conditions "ctx" $.ctx) -}}
         {{- end -}}
         {{- $shared_data = (mergeOverwrite $shared_data (default dict (get $condition (include "helmize.conditions.defaults.conditions.data" $)))) -}}
           
@@ -160,7 +160,7 @@
         {{- $tpl_content := ($.ctx.Files.Get $path) -}}
 
         {{/* Prepare Context */}}
-        {{- $context := (set (set $.ctx "Data" $.condition.data) "Value" $.condition.value) -}}
+        {{- $context := (set (set (set $.ctx "data" $.condition.data) "value" $.condition.value) "conditions" $.conditions) -}}
 
         {{/* Template File */}}
         {{- $template_content_raw := tpl $tpl_content $context -}}
@@ -168,7 +168,7 @@
         {{/* Parse Content as YAML */}}
         {{- $parsed_content := (fromYaml ($template_content_raw)) -}}
 
-        {{- $_ := (unset (unset $context "Data") "Value") -}}
+        {{- $_ := (unset (unset (unset $context "data") "value") "conditions") -}}
 
         {{/* Validate if parse was successful, otherwise return with error */}}
         {{- if not (include "lib.utils.errors.unmarshalingError" $parsed_content) -}}

@@ -4,6 +4,8 @@ description = "Concept"
 weight = 1
 +++
 
+{{< hint "info" >}}[Inner Workings](../../usage){{< /hint >}}
+
 Helmize is included as library chart. It just has all the function it needs to render the structure you give it and then returns the resulting contents. So it's basically just a render engine. 
 
 In the below image we have the Releases (which are effecitively values which install your helm chart). In your helm chart you see different yamls organized in a structure which depends on input conditions eg. `locations`. Your chart includes a [configuration file](../../configuration/) which defines these conditions and allows you to map it two values. Helmize will read the configuration and render inputs according to it. 

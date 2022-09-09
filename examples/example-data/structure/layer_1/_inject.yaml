@@ -1,1 +1,1 @@
-{{- $_ := set $.Data "unwanted" "Unset me again" -}}
+{{- $_ := set $.data "unwanted" "Unset me again" -}}

@@ -6,7 +6,7 @@ weight = 3
 
 {{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/data](https://github.com/buttahtoast/helmize/tree/main/examples/data){{< /hint >}}
 
-Data is shared over a specific field across all files. Data can originate from [Conditions]() or you can manipulate the data to a certain extend.
+Data is shared over a specific field across all files. Data can originate from [Conditions](../../configuration/helmize/conditions) or you can manipulate the data to a certain extend.
 
 
 ## Manipulate
@@ -21,19 +21,19 @@ This way you add data, which will be available for all the following files:
 
 {{< expand "structure/layer_2/_inject.yaml" "..." >}}
 ```
-{{- $_ := set $.Data "inject" (dict "msg" "inject data into shared data store") -}}
+{{- $_ := set $.data "inject" (dict "msg" "inject data into shared data store") -}}
 ```
 {{< /expand >}}
 
 ### Overwrite
 
-{{< hint "info" >}}Seting data which originates from [condition data](../../configuration/conditions/#condition-data) will only overwrite it for the current file (All YAMLs within that file). For the next file the condition data is newly merged and therefor present again.{{< /hint >}}
+{{< hint "info" >}}Seting data which originates from [condition data](../../configuration/helmize/conditions/#condition-data) will only overwrite it for the current file (All YAMLs within that file). For the next file the condition data is newly merged and therefor present again.{{< /hint >}}
 
 Overwrite the key `layer1.overwrite`
 
 {{< expand "structure/layer_2/_overwrite.yaml" "..." >}}
 ```
-{{- $_ := set $.Data.layer_1 "overwrite" "Not Overwritten by Layer2" -}}
+{{- $_ := set $.data.layer_1 "overwrite" "Not Overwritten by Layer2" -}}
 ```
 {{< /expand >}}
 
@@ -47,8 +47,8 @@ Unsets the data key `unwated` and `layer1`.
 
 {{< expand "structure/layer_2/_unset.yaml" "..." >}}
 ```
-{{- $_ := unset $.Data "unwanted" -}}
-{{- $_ := unset $.Data "layer1" -}}
+{{- $_ := unset $.data "unwanted" -}}
+{{- $_ := unset $.data "layer1" -}}
 ```
 {{< /expand >}}
 

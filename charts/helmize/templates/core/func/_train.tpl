@@ -48,8 +48,8 @@
       {{/* Check if Content */}}
       {{- if $content -}}
 
-        {{/* Initialize Context (Sets $.Data and $.Value key) */}}
-        {{- $context := (set (set $.ctx "Data" $shared_data) "Value" (default dict $file.value))  -}}
+        {{/* Initialize Context (Sets $.data and $.value key) */}}
+        {{- $context := (set (set (set $.ctx "data" $shared_data) "value" (default dict $file.value)) "conditions" $.conditions) -}}
 
         {{/* Template File Content */}}
         {{- $template_content_raw := tpl $content $context -}}

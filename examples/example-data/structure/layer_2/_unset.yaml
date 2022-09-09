@@ -1,2 +1,2 @@
-{{- $_ := unset $.Data "unwanted" -}}
-{{- $_ := unset $.Data "layer1" -}}
+{{- $_ := unset $.data "unwanted" -}}
+{{- $_ := unset $.data "layer1" -}}

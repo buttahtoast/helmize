@@ -4,22 +4,55 @@ description = "Templating"
 weight = 1
 +++
 
+## Files 
+
+You can use templating in any file, with any extension. Helmize renders each file with [sprig](https://masterminds.github.io/sprig/) any validates, if it generates YAML output. You have access to the [file context](#file-context) within each file. Lets template! :) 
 ## Library
 
 Helmize comes with our helm library as dependency. The library provides a lot of functions which simplify the maniplution of dicts, slices, etc. You should definitly make use of it's functionalities. See the full documentation of the library chart here:
 
   * [https://github.com/buttahtoast/helm-charts/tree/master/charts/library#templates](https://github.com/buttahtoast/helm-charts/tree/master/charts/library#templates)
 
+
+### Recursive Merges
+
+The mergering of files is not implement with the normal `merge` function from sprig. We have implemented our own merge function which allows the recusrive merging of list elements, which is per default not possible. Meaning you can merge the list objects from base data and new data and merge list elements of type dict based on an attribute. Which are crucial functionalities to reduce code and make life easier. See the documentation:
+
+  * [https://artifacthub.io/packages/helm/buttahtoast/library#merge](https://artifacthub.io/packages/helm/buttahtoast/library#merge)
+
+This function might have some bugs, but we are doing our best to unit test it and make sure it works as expected.
+
 ## Contexts
 
 Contexts are data structures. In Sprig a template receives a context. Based on which context is given, you have acces to certain data.
+
+### File Context
+
+{{< hint "info" >}}With this example [https://github.com/buttahtoast/helmize/tree/main/examples/data](https://github.com/buttahtoast/helmize/tree/main/examples/data) you can see the file contexts. `helm template . --set showContext=true` {{< /hint >}}
+
+
+The context available in each file:
+
+  1. See [Condition Context](#condition-context)
+  2. See [Global Context](#condition-context)
+
+
+{{< expand "File Context" "..." >}}
+```YAML
+# Condition Context of current file (1)
+<Condition Context>
+
+# Global Context (2)
+<Global Context>
+```
+{{< /expand >}}
 
 ### Train Context
 
 The train is a construct which mainly holds the general configuration and consists of [wagons](#wagon).
 
 {{< expand "Train Context" "..." >}}
-```
+```YAML
 # Conditions from Configuration
 conditions:
 - config:
@@ -247,12 +280,6 @@ Config:
   show_config: false
   summary: false
 
-# Condition Data (2)  
-Data: {}
-
-# Condition Value (3)
-Value: {}
-
 # Wagon Context of current file (4)
 Wagon: <Wagon Context>
 
@@ -276,5 +303,82 @@ Template:
   Name: example-customization/templates/deploy.yaml
 
 etc..
+```
+{{< /expand >}}
+
+### Condition Context
+
+The Condition is always available.
+
+  1. All (previously) evaluated conditions can be accessed under `$.conditions`. The `$.conditions.[*].value` holds the resolved value from the `$.conditions.[*].key` property.
+  2. When you template wagons, you can access the conditions Data field which selected this file via `$.data` (Reference to `$.Conditions.[*].data` field)
+  3.  When you template wagons, you can access the conditions Value field which selected this file via `$.value` (Reference to `$.Conditions.[*].value` field). 
+
+
+{{< expand "Condition Context" "..." >}}
+```
+# Evaluated Conditions (1)
+conditions:
+
+  # Condition Name
+- name: base
+
+  # Applied Config for Condition
+  config:
+    any: true
+    key_types:
+    - string
+    - slice
+    name: base
+    path: /base/
+
+  # Evaluated Data from templates
+  data: {}
+
+  # Errors
+  errors: []
+
+  # Evaluated Keys
+  keys:
+  - /
+
+  # Condition paths (for lookup)
+  paths:
+  - structure/base/
+
+  # Condition Root-Path (without inventory directoy)
+  root_path: /base/
+
+  # Value evaluated from key
+  value: {}
+
+- config:
+    any: false
+    default: test
+    filter:
+    - test
+    - prod
+    key: env
+    key_types:
+    - string
+    - slice
+    name: environment
+    path: env/
+    reverse_filter: true
+  data: {}
+  errors: []
+  keys:
+  - test
+  name: environment
+  paths:
+  - structure/env/test/
+  root_path: env/
+  value: test
+
+# Condition Data (2)  
+data: {}
+
+# Condition Value (3)
+value: {}
 ```
 {{< /expand >}}

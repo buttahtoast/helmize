@@ -1,8 +1,8 @@
 {{/* 
   Template To Evaluate ingress top domain based on location 
 */}}
-{{- if (or (eq $.Value "east") (eq $.Value "west"))  -}}
-domain: {{ $.Value }}.vertical.public.domain
+{{- if (or (eq $.value "east") (eq $.value "west"))  -}}
+domain: {{ $.value }}.vertical.public.domain
 {{- else }}
-domain: {{ $.Value }}.horizontal.public.domain
+domain: {{ $.value }}.horizontal.public.domain
 {{- end }}

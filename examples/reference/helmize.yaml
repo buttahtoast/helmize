@@ -1,31 +1,47 @@
+
 inventory_directory: "structure/"
-#custom_identifier_template: "reference.identifier.template"
-post_renderers:
-  - "reference.postrenderers.annotations"
-  - "reference.postrenderers.annotations"
+
 conditions:
 
-    # Base Condition: Anything in there will be rendered
   - name: "base"
-    path: "resources/"
-  
-    # Environment Condition: Defines an environment. The Environment is defined via $.Values.env
-    # `test` and `prod` are allowed values.
+
+    path: "/base/"
+
+    any: true
+
+
+
   - name: "environment"
-    key: "Values.env"
+
+    key: "env"
+
     path: "env/"
+
     default: "test"
+
     filter: [ "test", "prod" ]
+
     reverse_filter: true
 
+
+
   - name: "location"
-    key: "Values.location"
+
+    key: "location"
+
     default: "east"
 
-  - name: "patches"
-    path: "/patches/"
-    allow_root: true
-    file_cfg:
-      pattern: true
-      render: false
-      subpath: false
+
+
+  - name: "expose"
+
+    any: true
+
+    data:
+
+      ingress_class: "company-domain"
+
+    tpls:
+
+      - tpls/ingress.tpl
+

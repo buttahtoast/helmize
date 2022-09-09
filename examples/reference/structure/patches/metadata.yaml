@@ -1,7 +1,0 @@
-helmize:
-  id: ".*"
-metadata:
-  labels: 
-    added: "for-all"
-  annotations:
-    added: "for-all"

@@ -72,7 +72,7 @@
           {{- include "helmize.helpers.ts" (dict "msg" "Files initialized" "ctx" $return) -}}
 
           {{/* Execute File Train */}}
-          {{- $train := fromYaml (include "helmize.core.func.train" (dict "files" $files.files "groups" $.groups "ctx" $ctx "ts" $return)) -}}
+          {{- $train := fromYaml (include "helmize.core.func.train" (dict "files" $files.files "conditions" $conds.conditions "ctx" $ctx "ts" $return)) -}}
 
           {{/* Benchmark */}}
           {{- include "helmize.helpers.ts" (dict "msg" "Train initialized" "ctx" $return) -}}

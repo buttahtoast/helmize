@@ -31,7 +31,7 @@ helmize:
       additional: true
 ```
 
-The configuration via values is merged on top of the [helmize configuration from file](#file), should it exist.
+The configuration via values is merged on top of the [helmize configuration from file](#file), should it exist. Here you can make use of [Recursive Merges](../../usage/templating#recursive-merges)
 
 
 ## File 

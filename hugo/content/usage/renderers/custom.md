@@ -4,6 +4,8 @@ description = "Custom Renderers"
 weight = 4
 +++
 
+{{< hint "info" >}}**Example** [https://github.com/buttahtoast/helmize/tree/main/examples/example-customization](https://github.com/buttahtoast/helmize/tree/main/examples/example-customization){{< /hint >}}
+
 You can implement your own Renderer templates.
 
 ## Configuration
