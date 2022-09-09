@@ -1,4 +1,4 @@
-manifest snapshot:
+Manifest snapshot:
   1: |
     Data:
       class: vertical-class
@@ -43,7 +43,7 @@ manifest snapshot:
         other: true
   6: |
     Value: {}
-summary snapshot:
+Summary snapshot:
   1: |
     conditions:
     - config:
