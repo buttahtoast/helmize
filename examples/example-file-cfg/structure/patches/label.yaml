@@ -1,0 +1,6 @@
+metadata:
+  helmize:
+    id: 
+      - ".*"
+  labels:
+    shared: "labels"

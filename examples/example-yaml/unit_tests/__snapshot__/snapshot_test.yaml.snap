@@ -1,0 +1,720 @@
+Manifest snapshot:
+  1: |
+    apiVersion: v1
+    data:
+      game.properties: |-
+        enemy:
+          types:
+          - alien
+          - monsters
+        player:
+          maximumLives:5
+    kind: ConfigMap
+    metadata:
+      name: multiline-yaml-1
+  2: |
+    apiVersion: v1
+    data:
+      game.properties: |
+        enemy:
+          types:
+          - imps
+          - warriors
+        player:
+          maximumLives:10
+    kind: ConfigMap
+    metadata:
+      name: multiline-yaml-2
+  3: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: nested
+    spec:
+      minReadySeconds: 3
+      progressDeadlineSeconds: 60
+      revisionHistoryLimit: 5
+      selector:
+        matchLabels:
+          app: nested
+      strategy:
+        rollingUpdate:
+          maxUnavailable: 0
+        type: RollingUpdate
+      template:
+        metadata:
+          annotations:
+            prometheus.io/port: "9797"
+            prometheus.io/scrape: "true"
+          labels:
+            app: nested
+        spec:
+          containers:
+          - command:
+            - ./podinfo
+            - --port=9898
+            - --port-metrics=9797
+            - --grpc-port=9999
+            - --grpc-service-name=backend
+            - --cache-server=cache:6379
+            - --level=info
+            env:
+            - name: PODINFO_UI_COLOR
+              value: '#34577c'
+            image: ghcr.io/stefanprodan/podinfo:6.1.1
+            imagePullPolicy: IfNotPresent
+            livenessProbe:
+              exec:
+                command:
+                - podcli
+                - check
+                - http
+                - localhost:9898/healthz
+              initialDelaySeconds: 5
+              timeoutSeconds: 5
+            name: nested
+            ports:
+            - containerPort: 1000
+              name: grpc
+              protocol: TCP
+            - containerPort: 9898
+              name: http
+              protocol: TCP
+            - containerPort: 9797
+              name: http-metrics
+              protocol: TCP
+            - containerPort: 10000
+              name: extra_port
+              protocol: TCP
+            readinessProbe:
+              exec:
+                command:
+                - podcli
+                - check
+                - http
+                - localhost:9898/readyz
+              initialDelaySeconds: 5
+              timeoutSeconds: 5
+            resources:
+              limits:
+                cpu: 2000m
+                memory: 512Mi
+              requests:
+                cpu: 100m
+                memory: 32Mi
+  4: |
+    apiVersion: v1
+    data:
+      entrypoint.sh: |-
+        #!/bin/bash
+        echo "Do this"
+
+        echo "Do that"
+      game.properties: |-
+        ---
+        enemy:
+          types:
+          - alien
+          - monsters
+        player:
+          maximumLives:5
+    kind: ConfigMap
+    metadata:
+      name: my-configmap
+  5: |
+    apiVersion: v1
+    kind: Pod
+    metadata:
+      name: my-pod
+    spec:
+      containers:
+      - command:
+        - sh
+        - -c
+        - |
+          /bin/bash <<'EOF'
+
+          # Do MultiLine YAML Stuff here
+
+          EOF
+        image: alpine
+        name: my-container
+        volumeMounts:
+        - mountPath: /bin/entrypoint.sh
+          name: configmap-volume
+          readOnly: true
+          subPath: entrypoint.sh
+      volumes:
+      - configMap:
+          defaultMode: 448
+          name: my-configmap
+        name: configmap-volume
+  6: |
+    apiVersion: source.toolkit.fluxcd.io/v1beta1
+    kind: HelmRepository
+    metadata:
+      name: external_dns
+    spec:
+      interval: 1m
+      url: https://kubernetes-sigs.github.io/external-dns/
+  7: |
+    apiVersion: source.toolkit.fluxcd.io/v1beta1
+    kind: HelmRepository
+    metadata:
+      name: jetstack
+    spec:
+      interval: 1m
+      url: https://charts.jetstack.io
+  8: |
+    apiVersion: source.toolkit.fluxcd.io/v1beta1
+    kind: HelmRepository
+    metadata:
+      name: metallb
+    spec:
+      interval: 1m
+      url: https://metallb.github.io/metallb
+  9: |
+    apiVersion: v1
+    data:
+      field: val_1
+    kind: ConfigMap
+    metadata:
+      name: configmap-cfg-1
+  10: |
+    apiVersion: v1
+    data:
+      field: val_2
+    kind: ConfigMap
+    metadata:
+      name: configmap-cfg-2
+  11: |
+    apiVersion: v1
+    data:
+      field: val_3
+    kind: ConfigMap
+    metadata:
+      name: configmap-cfg-3
+Summary snapshot:
+  1: |
+    conditions:
+    - config:
+        any: true
+        key_types:
+        - string
+        - slice
+        name: resources
+      data: {}
+      errors: []
+      keys:
+      - /
+      name: resources
+      paths:
+      - structure/resources/
+      root_path: resources
+      value: {}
+    - config:
+        any: true
+        key_types:
+        - string
+        - slice
+        name: patches
+      data: {}
+      errors: []
+      keys:
+      - /
+      name: patches
+      paths:
+      - structure/patches/
+      root_path: patches
+      value: {}
+    errors: []
+    paths:
+    - config: null
+      data: {}
+      paths:
+      - structure/resources/
+      renderers: null
+      value: {}
+    - config: null
+      data: {}
+      paths:
+      - structure/patches/
+      renderers: null
+      value: {}
+    wagons:
+    - checksum: 25506fc6f877f9c0b88a27e370f5d9f9cae85cbb8afbddb652b0b9dedb8bcdd7
+      content:
+        apiVersion: v1
+        data:
+          game.properties: |-
+            enemy:
+              types:
+              - alien
+              - monsters
+            player:
+              maximumLives:5
+        kind: ConfigMap
+        metadata:
+          name: multiline-yaml-1
+      debug: []
+      errors: []
+      files:
+      - _order: 0
+        config:
+          fork: false
+          id:
+          - custom-id-1
+          - custom-id-2
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data: {}
+        file: structure/resources/configmap.yaml
+        ids:
+        - custom-id-1
+        - custom-id-2
+        - configmap-multiline-yaml-1.yaml
+        path: structure/resources/
+        renderers: []
+        value: {}
+      id:
+      - custom-id-1
+      - custom-id-2
+      - configmap-multiline-yaml-1.yaml
+      render: true
+      renderers: []
+      subpath: .
+    - checksum: 90a8854483c445f8345a58942eb9248092678ff21a369fe9f821e5506d524a84
+      content:
+        apiVersion: v1
+        data:
+          game.properties: |
+            enemy:
+              types:
+              - imps
+              - warriors
+            player:
+              maximumLives:10
+        kind: ConfigMap
+        metadata:
+          name: multiline-yaml-2
+      debug: []
+      errors: []
+      files:
+      - _order: 1
+        config:
+          fork: false
+          id:
+          - custom-id-3
+          - custom-id-4
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data: {}
+        file: structure/resources/configmap.yaml
+        ids:
+        - custom-id-3
+        - custom-id-4
+        - configmap-multiline-yaml-2.yaml
+        path: structure/resources/
+        renderers: []
+        value: {}
+      id:
+      - custom-id-3
+      - custom-id-4
+      - configmap-multiline-yaml-2.yaml
+      render: true
+      renderers: []
+      subpath: .
+    - checksum: 389db53686022b836e3fb72583996091fca3febdf4d1dab9199cd763560bf8f3
+      content:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: nested
+        spec:
+          minReadySeconds: 3
+          progressDeadlineSeconds: 60
+          revisionHistoryLimit: 5
+          selector:
+            matchLabels:
+              app: nested
+          strategy:
+            rollingUpdate:
+              maxUnavailable: 0
+            type: RollingUpdate
+          template:
+            metadata:
+              annotations:
+                prometheus.io/port: "9797"
+                prometheus.io/scrape: "true"
+              labels:
+                app: nested
+            spec:
+              containers:
+              - command:
+                - ./podinfo
+                - --port=9898
+                - --port-metrics=9797
+                - --grpc-port=9999
+                - --grpc-service-name=backend
+                - --cache-server=cache:6379
+                - --level=info
+                env:
+                - name: PODINFO_UI_COLOR
+                  value: '#34577c'
+                image: ghcr.io/stefanprodan/podinfo:6.1.1
+                imagePullPolicy: IfNotPresent
+                livenessProbe:
+                  exec:
+                    command:
+                    - podcli
+                    - check
+                    - http
+                    - localhost:9898/healthz
+                  initialDelaySeconds: 5
+                  timeoutSeconds: 5
+                name: nested
+                ports:
+                - containerPort: 1000
+                  name: grpc
+                  protocol: TCP
+                - containerPort: 9898
+                  name: http
+                  protocol: TCP
+                - containerPort: 9797
+                  name: http-metrics
+                  protocol: TCP
+                - containerPort: 10000
+                  name: extra_port
+                  protocol: TCP
+                readinessProbe:
+                  exec:
+                    command:
+                    - podcli
+                    - check
+                    - http
+                    - localhost:9898/readyz
+                  initialDelaySeconds: 5
+                  timeoutSeconds: 5
+                resources:
+                  limits:
+                    cpu: 2000m
+                    memory: 512Mi
+                  requests:
+                    cpu: 100m
+                    memory: 32Mi
+      debug: []
+      errors: []
+      files:
+      - _order: 2
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data: {}
+        file: structure/resources/deployment.yaml
+        ids:
+        - deployment-nested.yaml
+        path: structure/resources/
+        renderers: []
+        value: {}
+      - _order: 11
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data: {}
+        file: structure/patches/deployment.yaml
+        ids:
+        - deployment-nested.yaml
+        path: structure/patches/
+        renderers: []
+        value: {}
+      id:
+      - deployment-nested.yaml
+      render: true
+      renderers: []
+      subpath: .
+    - checksum: 02b7d0db3b46aa28583de5e37bb58bdadcb19b611fe2dea627838fb64fb036e6
+      content:
+        apiVersion: v1
+        data:
+          entrypoint.sh: |-
+            #!/bin/bash
+            echo "Do this"
+
+            echo "Do that"
+          game.properties: |-
+            ---
+            enemy:
+              types:
+              - alien
+              - monsters
+            player:
+              maximumLives:5
+        kind: ConfigMap
+        metadata:
+          name: my-configmap
+      debug: []
+      errors: []
+      files:
+      - _order: 3
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data: {}
+        file: structure/resources/multi-line.yaml
+        ids:
+        - configmap-my-configmap.yaml
+        path: structure/resources/
+        renderers: []
+        value: {}
+      id:
+      - configmap-my-configmap.yaml
+      render: true
+      renderers: []
+      subpath: .
+    - checksum: c65bee18f40ce0bab5bb56ba154261394d5fadae8f424703372462aac8cb9d19
+      content:
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: my-pod
+        spec:
+          containers:
+          - command:
+            - sh
+            - -c
+            - |
+              /bin/bash <<'EOF'
+
+              # Do MultiLine YAML Stuff here
+
+              EOF
+            image: alpine
+            name: my-container
+            volumeMounts:
+            - mountPath: /bin/entrypoint.sh
+              name: configmap-volume
+              readOnly: true
+              subPath: entrypoint.sh
+          volumes:
+          - configMap:
+              defaultMode: 448
+              name: my-configmap
+            name: configmap-volume
+      debug: []
+      errors: []
+      files:
+      - _order: 4
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data: {}
+        file: structure/resources/multi-line.yaml
+        ids:
+        - pod-my-pod.yaml
+        path: structure/resources/
+        renderers: []
+        value: {}
+      id:
+      - pod-my-pod.yaml
+      render: true
+      renderers: []
+      subpath: .
+    - checksum: 7ae7ae809c40251fb91209b1afe4bd864657667ef828df5a9cd9455af576fc22
+      content:
+        apiVersion: source.toolkit.fluxcd.io/v1beta1
+        kind: HelmRepository
+        metadata:
+          name: external_dns
+        spec:
+          interval: 1m
+          url: https://kubernetes-sigs.github.io/external-dns/
+      debug: []
+      errors: []
+      files:
+      - _order: 5
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data: {}
+        file: structure/resources/repositories.yaml
+        ids:
+        - helmrepository-external_dns.yaml
+        path: structure/resources/
+        renderers: []
+        value: {}
+      id:
+      - helmrepository-external_dns.yaml
+      render: true
+      renderers: []
+      subpath: .
+    - checksum: c879ba5993cc035b2d9dfc9a7fa7987662da78ce85264ce29105136049de01ed
+      content:
+        apiVersion: source.toolkit.fluxcd.io/v1beta1
+        kind: HelmRepository
+        metadata:
+          name: jetstack
+        spec:
+          interval: 1m
+          url: https://charts.jetstack.io
+      debug: []
+      errors: []
+      files:
+      - _order: 6
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data: {}
+        file: structure/resources/repositories.yaml
+        ids:
+        - helmrepository-jetstack.yaml
+        path: structure/resources/
+        renderers: []
+        value: {}
+      id:
+      - helmrepository-jetstack.yaml
+      render: true
+      renderers: []
+      subpath: .
+    - checksum: 6eb95220b4e806bf10faf4b880ee57f7874d72c9e85043d16e59f22a5af1027d
+      content:
+        apiVersion: source.toolkit.fluxcd.io/v1beta1
+        kind: HelmRepository
+        metadata:
+          name: metallb
+        spec:
+          interval: 1m
+          url: https://metallb.github.io/metallb
+      debug: []
+      errors: []
+      files:
+      - _order: 7
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data: {}
+        file: structure/resources/repositories.yaml
+        ids:
+        - helmrepository-metallb.yaml
+        path: structure/resources/
+        renderers: []
+        value: {}
+      id:
+      - helmrepository-metallb.yaml
+      render: true
+      renderers: []
+      subpath: .
+    - checksum: c61366cff342f8749ba365aac4516393da69fdc1966aba53e60131b408346b89
+      content:
+        apiVersion: v1
+        data:
+          field: val_1
+        kind: ConfigMap
+        metadata:
+          name: configmap-cfg-1
+      debug: []
+      errors: []
+      files:
+      - _order: 8
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data: {}
+        file: structure/resources/wrong-template.yaml
+        ids:
+        - configmap-configmap-cfg-1.yaml
+        path: structure/resources/
+        renderers: []
+        value: {}
+      id:
+      - configmap-configmap-cfg-1.yaml
+      render: true
+      renderers: []
+      subpath: .
+    - checksum: 713b7ce3e00c8f62956d06282f1789d066d3eaf33d8d5e62da92c80e3dcbf80b
+      content:
+        apiVersion: v1
+        data:
+          field: val_2
+        kind: ConfigMap
+        metadata:
+          name: configmap-cfg-2
+      debug: []
+      errors: []
+      files:
+      - _order: 9
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data: {}
+        file: structure/resources/wrong-template.yaml
+        ids:
+        - configmap-configmap-cfg-2.yaml
+        path: structure/resources/
+        renderers: []
+        value: {}
+      id:
+      - configmap-configmap-cfg-2.yaml
+      render: true
+      renderers: []
+      subpath: .
+    - checksum: 7f2daf6b5d3e69d4c8f3a279d572727fca24f46719ea85797923b50d89e56fea
+      content:
+        apiVersion: v1
+        data:
+          field: val_3
+        kind: ConfigMap
+        metadata:
+          name: configmap-cfg-3
+      debug: []
+      errors: []
+      files:
+      - _order: 10
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data: {}
+        file: structure/resources/wrong-template.yaml
+        ids:
+        - configmap-configmap-cfg-3.yaml
+        path: structure/resources/
+        renderers: []
+        value: {}
+      id:
+      - configmap-configmap-cfg-3.yaml
+      render: true
+      renderers: []
+      subpath: .

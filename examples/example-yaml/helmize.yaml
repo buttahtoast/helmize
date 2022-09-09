@@ -1,0 +1,6 @@
+inventory_directory: "structure/"
+conditions:
+  - name: "resources"
+    any: true
+  - name: "patches"
+    any: true

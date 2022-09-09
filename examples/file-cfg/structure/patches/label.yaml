@@ -1,9 +1,0 @@
-id:
-  - ".*"
-cfg:
-  subpath: false
-  pattern: true
-  render: false
-metadata:
-  labels:
-    shared: "labels"

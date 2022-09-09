@@ -1,0 +1,11 @@
+# -- Show Context per Layer
+showContext: false
+
+# -- Show Data per Layer
+showData: true
+
+# -- Show Condition Value per Layer
+showValue: true
+
+# -- Enable Faulty Layer
+faulty: false

@@ -4,11 +4,13 @@ description = "Concept"
 weight = 1
 +++
 
+{{< hint "info" >}}[Inner Workings](../../usage){{< /hint >}}
+
 Helmize is included as library chart. It just has all the function it needs to render the structure you give it and then returns the resulting contents. So it's basically just a render engine. 
 
-In the below image we have the Releases (which are effecitively values which install your helm chart). In your helm chart you see different yamls organized in a structure which depends on input conditions eg. `locations`. Your chart includes a [configuration file](../documentation/configuration/) which defines these conditions and allows you to map it two values. Helmize will read the configuration and render inputs according to it. 
+In the below image we have the Releases (which are effecitively values which install your helm chart). In your helm chart you see different yamls organized in a structure which depends on input conditions eg. `locations`. Your chart includes a [configuration file](../../configuration/) which defines these conditions and allows you to map it two values. Helmize will read the configuration and render inputs according to it. 
 
-<img src="../../images/concept.png" alt="concept" style="width:100%;"/>
+<img src="/concept.png" alt="concept" style="width:100%;"/>
 
 
 For the `Release Vanilla` we see, that we have a configuration for the `location` which is `east` and a configuration for the `env` which is `dev`. On Install all files in the `base/` folder are used, since these apply for all releases. For the location only the files in the `location/east` folder are considered. Same for the environment, only files in the `environments/dev`folder are considered. The release does not have a value for a customer but in the configuration we specified that the default value for customer is `default`. Therefor all files under `customer/default` are considered as well. 

@@ -1,0 +1,5 @@
+# -- Enable Context Renderer
+contextRenderer: false
+
+# -- Enable All Default Renderers
+defaultsRenderers: false

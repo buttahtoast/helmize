@@ -1,0 +1,29 @@
+conditions:
+  - name: "resources"
+    any: true
+    file_cfg:
+      render: true
+    data: 
+      resources_data:
+        sampler: true
+  - name: "forks"
+    any: true
+    file_cfg:
+      fork: true
+      subpath: false
+    data: 
+      forks_data:
+        sampler: true
+  - name: "patches"
+    any: true
+    file_cfg:
+      pattern: true
+      subpath: false
+    tpls:
+      - registry.tpl
+    data: 
+      registry_data:
+        sampler: true
+
+file_config_key: "metadata.helmize"
+force: false

@@ -3,25 +3,32 @@
   Defines the Type Definition for one Condition Type
   
 */}}
-{{- define "inventory.conditions.types.condition" -}}
-name:
+{{- define "helmize.conditions.types.condition" -}}
+{{ include "helmize.conditions.defaults.conditions.name" $ }}:
   types: [ "string" ]
   required: true
-key:
+{{ include "helmize.conditions.defaults.conditions.key" $ }}:
   types: [ "string" ]
-key_types:
+{{ include "helmize.conditions.defaults.conditions.key_types" $ }}:
   types: [ "slice" ]
   default: [ "string", "slice" ]
-required:
-  types: [ "int", "bool" ]
-default:
+{{ include "helmize.conditions.defaults.conditions.required" $ }}:
+  types: [  "bool" ]
+{{ include "helmize.conditions.defaults.conditions.default" $ }}:
   types: [ "string" ]
-path:
+{{ include "helmize.conditions.defaults.conditions.path" $ }}:
   types: [ "string" ]
-filter: 
+{{ include "helmize.conditions.defaults.conditions.filter" $ }}: 
   types: [ "string", "slice" ]
-reverse_filter:
+{{ include "helmize.conditions.defaults.conditions.any" $ }}:
   types: [ "int", "bool" ]
-allow_root:
-  types: [ "int", "bool" ]     
+  default: false
+{{ include "helmize.conditions.defaults.conditions.data" $ }}:
+  types: [ "map" ]
+{{ include "helmize.conditions.defaults.conditions.tpls" $ }}:
+  types: [ "slice" ]
+file_cfg:
+  _props: {{- include "helmize.core.types.file_configuration.shared" $ | nindent 4 }}
+{{ include "helmize.config.defaults.renderers" $ }}:
+  types: [ "slice" ]
 {{- end -}}

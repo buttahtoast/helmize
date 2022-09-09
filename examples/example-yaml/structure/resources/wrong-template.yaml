@@ -1,0 +1,16 @@
+{{- range $f, $d := (fromYaml (include "data" $)).data }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: configmap-{{ $f }}
+data:
+  field: {{ $d }}
+{{- end }}
+
+{{- define "data" -}}
+data: 
+  cfg-1: val_1
+  cfg-2: val_2
+  cfg-3: val_3
+{{- end -}}

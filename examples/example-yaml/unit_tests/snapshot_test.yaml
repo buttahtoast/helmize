@@ -1,0 +1,12 @@
+suite: example/yaml snapshot tests
+templates:
+  - deploy.yaml
+tests:
+  - it: "Manifest snapshot"
+    asserts:
+      - matchSnapshot: {}
+  - it: "Summary snapshot"
+    set: 
+      summary: true
+    asserts:
+      - matchSnapshot: {}

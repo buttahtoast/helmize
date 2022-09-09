@@ -3,27 +3,29 @@
   Defines the Type Definition for the configuration
   
 */}}
-{{- define "inventory.config.types.config" -}}
-{{ include "inventory.conditions.defaults.inv_dir" $ }}:
+{{- define "helmize.config.types.config" -}}
+{{ include "helmize.config.defaults.inv_dir" $ }}:
   types: [ "string" ]
-{{ include "inventory.conditions.defaults.conditions" $ }}:
+  default: {{ include "helmize.config.defaults.inv_dir.value" $ }}
+{{ include "helmize.config.defaults.conditions" $ }}:
   types: [ "slice" ]
-{{ include "inventory.entrypoint.defaults.force" $ }}:
+{{ include "helmize.config.defaults.force" $ }}:
   types: [ "bool", "int" ]
   default: false
-{{ include "inventory.render.defaults.file.excludes" $ }}:
+{{ include "helmize.config.defaults.file_excludes" $ }}:
   types: [ "string", "slice" ]
-{{ include "inventory.render.defaults.file.extensions" $ }}:
+{{ include "helmize.config.defaults.file_extensions" $ }}:
   types: [ "string", "slice" ]
   default: [ ".yaml", ".yml", ".tpl" ]
-{{ include "inventory.render.defaults.files.identifier_template" $ }}:
+{{ include "helmize.config.defaults.identifier_template" $ }}:
   types: [ "string" ]
-  default: "inventory.render.templates.identifier"
-{{ include "inventory.entrypoint.defaults.render_template" $ }}:
+  default: {{ include "helmize.config.defaults.identifier_template.value" $ }}
+{{ include "helmize.config.defaults.render_template" $ }}:
   types: [ "string" ]
-  default: "inventory.entrypoint.templates.render" 
-{{ include "inventory.postrenders.defaults.cfg.post_renderers" $ }}:
+  default: {{ include "helmize.config.defaults.render_template.value" $ }} 
+{{ include "helmize.config.defaults.renderers" $ }}:
   types: [ "slice" ]
-  default: [ "{{ include "inventory.postrenders.defaults.cfg.post_renderers.inject_key" $ }}" ]
-{{ include "inventory.render.types.file_configuration" $ }}
+{{ include "helmize.config.defaults.file_cfg_key" $ }}:
+  types: [ "string" ]
+  default: {{ include "helmize.config.defaults.file_cfg_key.value" $ }}
 {{- end -}}

@@ -10,12 +10,12 @@
   returns <string>: Formatted Condition Path
 
 */}}
-{{- define "inventory.conditions.func.path" -}}
-  {{- if and $.cond $.path $.ctx -}}
-    {{- $base_directory := (fromYaml (include "inventory.config.func.resolve" (dict "path" (include "inventory.conditions.defaults.inv_dir" $.ctx) "ctx" $.ctx))).res -}}
-    {{- $base_path := (include "inventory.helpers.trailingPath" $.path) -}}
+{{- define "helmize.conditions.func.path" -}}
+  {{- if and $.path $.ctx -}}
+    {{- $base_directory := (fromYaml (include "helmize.config.func.resolve" (dict "path" (include "helmize.config.defaults.inv_dir" $.ctx) "ctx" $.ctx))).res -}}
+    {{- $base_path := (include "helmize.helpers.trailingPath" $.path) -}}
     {{- if $base_directory -}}
-      {{- $base_path = (printf "%s/%s" (include "inventory.helpers.trailingPath" $base_directory | trimSuffix "/") $base_path) -}}
+      {{- $base_path = (printf "%s/%s" (include "helmize.helpers.trailingPath" $base_directory | trimSuffix "/") $base_path) -}}
     {{- end -}}
     {{/* Full Path (Caputre if cond is only / -> allow root */}}
     {{- $path := "" -}}
@@ -31,6 +31,6 @@
     {{- end -}}
     {{- printf "%s/" $path -}}
   {{- else -}}
-    {{- include "lib.utils.errors.params" (dict "tpl" "inventory.conditions.func.resolve" "params" (list "cond" "path" "ctx")) -}}
+    {{- include "lib.utils.errors.params" (dict "tpl" "helmize.conditions.func.path" "params" (list "cond" "path" "ctx")) -}}
   {{- end -}}
 {{- end -}}

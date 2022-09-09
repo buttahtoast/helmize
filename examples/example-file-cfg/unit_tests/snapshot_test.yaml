@@ -1,0 +1,38 @@
+suite: example/file-cfg snapshot tests
+templates:
+  - deploy.yaml
+tests:
+  - it: "[Config File]: Manifest snapshot"
+    asserts:
+      - matchSnapshot: {}
+
+  - it: "[Config File]: Manifest snapshot (Show Config)"
+    set:
+      show_config: true
+    asserts:
+      - matchSnapshot: {}
+
+  - it: "[Config File]: Manifest snapshot/Inline Config (Show Config)"
+    set:
+      show_config: true
+      helmize:
+        conditions:
+        - __inject__
+        - name: "patches"
+          file_cfg:
+            pattern: true
+            render: false
+          required: false
+        - name: "render_all"
+          file_cfg:
+            render: true
+          data: 
+            additional: true
+    asserts:
+      - matchSnapshot: {}
+
+  - it: "[Config File]: Summary Snapshot"
+    set: 
+      summary: true
+    asserts:
+      - matchSnapshot: {}

@@ -1,0 +1,3 @@
+{{- if $.Values.showData -}}
+Data: {{- toYaml $.data | nindent 2 }}
+{{- end }}

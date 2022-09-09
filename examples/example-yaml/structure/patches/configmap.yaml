@@ -1,0 +1,13 @@
+---
+helmize:
+  id:
+    - no-match
+  no_match: "skip"
+data:
+  game.properties: |
+    enemy:
+      types:
+      - alien
+      - monsters
+    player:
+      maximumLives:5

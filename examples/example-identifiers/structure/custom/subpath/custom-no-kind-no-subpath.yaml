@@ -1,0 +1,23 @@
+helmize:
+  subpath: false
+  id: 
+    - custom-id-1 
+    - custom-id-2
+metadata:
+  labels:
+    subpath-custom-no-kind-no-subpath: "true"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80

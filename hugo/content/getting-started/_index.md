@@ -8,12 +8,22 @@ geekdocCollapseSection = false
 
 {{< toc-tree >}}
 
+# Helm
+
+This documentation won't explain the core concepts of [Helm](https://helm.sh/) and [Sprig templating](http://masterminds.github.io/sprig/), it is expected that you know these technologies.The only requirement for helmize is [helm](https://helm.sh/docs/intro/install/). 
+
 # Requirements
 
-This documentation won't explain the core concepts of [Helm](https://helm.sh/) and [Sprig templating](http://masterminds.github.io/sprig/), it is expected that you know these technologies.The only requirement for helmize is [helm](https://helm.sh/docs/intro/install/). The library was tested with the following helm version:
+It's required to use a Helm Version `>= 3.5.0` (above or equal). Versions below are missing the `addf` function, which is used within helmize.
 
-  * v3.7.2
+# Testing
 
-# Limitations
+Helmize is unit-tested with the following helm versions:
 
-Merge of files is done with the [mergeOverwrite](http://masterminds.github.io/sprig/dicts.html) function that comes with Sprig. You can't combine any type of slice (lists). If you have two files with lists in a map, the prededing one will always overwrite the list contents. Therefor you must work around this with value templating when you want to combine values of lists.
+  * `v3.5.4`
+  * `v3.6.3`
+  * `v3.7.1`
+  * `v3.8.2`
+  * `latest`
+
+This way we can detect breaking changes and avoid them.

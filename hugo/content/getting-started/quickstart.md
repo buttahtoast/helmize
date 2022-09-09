@@ -5,7 +5,9 @@ description = "Quickstart"
 weight = 2 
 +++
 
-{{< hint "info" >}}If you encounter any problems during the quickstart make sure to use the [debug options](..//documentation/structure/debug/). They help to understand what's going on and what might be the problem.{{< /hint >}}
+{{< hint "info" >}}If you encounter any problems during the quickstart make sure to use the [flags](../../usage/flags). They help to understand what's going on and what might be the problem.
+
+[https://github.com/buttahtoast/helmize/tree/main/examples/reference](https://github.com/buttahtoast/helmize/tree/main/examples/reference){{< /hint >}}
 
 First we create a new helm chart which is going to contain the entire deployment structure for helmize. We can simply do that with the following comment (In this case I will call the new chart `reference`, chose the name you would like):
 
@@ -16,20 +18,19 @@ helm create reference && cd reference/
 We can clear the `templates/*` content and the ǜalues.yaml, since we are going to recreate them.
 
 ```Shell
-rm -rf templates/* && rm -f values.yaml
+rm -rf templates/* && rm -f values.yaml && cd reference/
 ```
 
 Now we add **helmize** as new [chart dependency](https://helm.sh/docs/helm/helm_dependency/) (Check out the release page or artifacthub to get the latest helmize version):
 
 ```Shell
-# Chart.yaml
-...
+cat << EOF >> ./Chart.yaml
 dependencies:
 - name: helmize
   # Make sure to use a fixed version
   version: ">=0.0.0-0"
-  repository: "https://buttahtoast.github.io/helm-charts/"
-...
+  repository: "https://helmize.dev/"
+EOF
 ```
 
 Update dependencies to download the specified version for helmize:
@@ -43,20 +44,19 @@ Now we need to add a template which includes the entrypoint for helmize:
 
 ```Shell
 cat << EOF > ./templates/deploy.yaml
-{{- include "inventory.entrypoint.func.deploy" $ | nindent 0 }}
+{{- include "helmize.deploy" $ | nindent 0 }}
 EOF
 ```
 
-Now we create a very simplistic configuration in the chart root:
+Now we create a very simplistic configuration in the chart root. This configuration reads all files which are located in `structure/base/`
 
 ```Shell
 cat << EOF > ./helmize.yaml
 inventory_directory: "structure/"
-templates_directory: "tpls/"
 conditions:
   - name: "base"
     path: "/base/"
-    allow_root: true
+    any: true
 EOF
 ```
 
@@ -186,7 +186,8 @@ The result should not be surprising, for now the two new added files are just re
 ```YAML
 ---
 # Source: reference/templates/deploy.yaml
-# File: podinfo/service.yaml
+# Identifers: [service-frontend.yaml]
+# Subpath: podinfo
 # Checksum 08b06c48a587e3fe6179875f70331bb97562a6e584dcb32807ce9eac7572fc8d
 apiVersion: v1
 kind: Service
@@ -203,7 +204,8 @@ spec:
   type: ClusterIP
 ---
 # Source: reference/templates/deploy.yaml
-# File: podinfo/deploy.yaml
+# Identifers: [deployment-frontend.yaml]
+# Subpath: podinfo
 # Checksum 71f6b6d50be2ddace75a2259b577150467e85a80c2c29a10dd402446edb028b8
 apiVersion: apps/v1
 kind: Deployment
@@ -233,7 +235,6 @@ spec:
         - ./podinfo
         - --port=9898
         - --port-metrics=9797
-        - --level=info
         - --backend-url=http://backend:9898/echo
         - --cache-server=cache:6379
         env:
@@ -282,26 +283,24 @@ spec:
 
 ## Conditions
 
-[Read more on conditions](../documentation/configuration/conditions/)
+[Read more on conditions](../../configuration/helmize/conditions/)
 
 For the quickstart we are going to add two conditions on top of the base condition called `environment` and `location`
 
 ### Environment
 
-Now we want to add a condition, that podinfo is different names on different environments. The environment can be controlled via the values of the chart. 
+Now we want to add a condition, that podinfo is different names on different environments. The environment can be controlled via the values of the chart. The Value which is considered is defined under `key` which points to `$.Values.env`. If no value is given the `default` of `test` is applied. With the `filter` we define, that only `test` and `prod` are accepted as value. Files for this condition are located under `structure/env/{value}`:
 
 ```Shell
 cat << EOF > ./helmize.yaml
 inventory_directory: "structure/"
-templates_directory: "tpls/"
 conditions:
-
   - name: "base"
     path: "/base/"
-    allow_root: true
+    any: true
 
   - name: "environment"
-    key: "Values.env"
+    key: "env"
     path: "env/"
     default: "test"
     filter: [ "test", "prod" ]
@@ -319,16 +318,32 @@ Create Directory based on condition configuration
 mkdir -p structure/env/test/podinfo/
 ```
 
-Create under the same path as in the base (`podinfo/deploy.yaml`) we want to merge over the file from the base. In thase case we adjust the `name` and the `minReadySeconds` properties.
+Create under the same path as in the base (`podinfo/deploy.yaml`) we want to merge over the file from the base. In this case we make some adjustments to the base deployment. We inject a different log level, change the UI color and overwrite the port number for the grpc port ([Read More on how the merge works](../../usage/templating#recursive-merges)). You can access to condition's Value via `$.Value`, that's not possible in the base deployment file.
 
 ```Shell
-cat << EOF > ./structure/env/test/podinfo/deploy.yaml
+ cat << EOF > ./structure/env/test/podinfo/deploy.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-test
+  name: frontend
+  labels:
+    env: {{ $.value }}
 spec:
-  minReadySeconds: 10
+  progressDeadlineSeconds: 120
+  template:
+    spec:
+      containers:
+      - name: frontend
+        command:
+        - __inject__
+        - --level=debug
+        env:
+        - name: PODINFO_UI_COLOR
+          value: '#FAB418'
+        ports:
+        - __inject__
+        - containerPort: 20000
+          name: grpc
 EOF        
 ```
 
@@ -357,7 +372,7 @@ spec:
 EOF
 ```
 
-Since we defined `test` as default for the environment we can template via
+Since we defined `test` as `default` for the environment we can template via
 
 ```Shell
 helm template .
@@ -369,6 +384,21 @@ or with explicit value
 helm template . --set "env=test"
 ```
 
+If you try with any other environment Helmize will fail:
+
+```
+$ helm template . --set "env=dev"
+Error: execution error at (reference/templates/deploy.yaml:1:4):
+
+Found errors, please resolve those errors or use the force option (--set helmize.force=true):
+
+  - condition: environment
+    error: 'Value dev is not allowed (Allowed values: test, prod)'
+```
+
+When you try with `env=prod` you will get the same output as with the base. Since we don't have anything below `structure/env/prod/`. This condition slecets based on the value of `$.Values.env`.
+
+
 Both will result in the same output. Based on the output you can see that the `hpa.yaml` file is now rendered as well, but only if the environment is `test`. The Deployment files were also merged, since they both resolve into the subpath `podinfo/deploy.yaml`underneath their condition folders.
 
 {{< expand "Test Environment" "..." >}}
@@ -376,7 +406,8 @@ Both will result in the same output. Based on the output you can see that the `h
 ```YAML
 ---
 # Source: reference/templates/deploy.yaml
-# File: podinfo/service.yaml
+# Identifers: [service-frontend.yaml]
+# Subpath: podinfo
 # Checksum 08b06c48a587e3fe6179875f70331bb97562a6e584dcb32807ce9eac7572fc8d
 apiVersion: v1
 kind: Service
@@ -392,15 +423,19 @@ spec:
     app: frontend
   type: ClusterIP
 ---
-# File: podinfo/deploy.yaml
-# Checksum 30852c17c788e196ef62884c2e5bb092472a3b6b02d035bf39cdcbf6b54fc5e3
+# Source: reference/templates/deploy.yaml
+# Identifers: [deployment-frontend.yaml]
+# Subpath: podinfo
+# Checksum 576057612df9b3ceaae50d87000ad7b171deb16d870cd284e21a41b1bbb9248f
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-test
+  labels:
+    env: test
+  name: frontend
 spec:
-  minReadySeconds: 10
-  progressDeadlineSeconds: 60
+  minReadySeconds: 3
+  progressDeadlineSeconds: 120
   revisionHistoryLimit: 5
   selector:
     matchLabels:
@@ -425,9 +460,10 @@ spec:
         - --level=info
         - --backend-url=http://backend:9898/echo
         - --cache-server=cache:6379
+        - --level=debug
         env:
         - name: PODINFO_UI_COLOR
-          value: '#34577c'
+          value: '#FAB418'
         image: ghcr.io/stefanprodan/podinfo:6.0.3
         imagePullPolicy: IfNotPresent
         livenessProbe:
@@ -441,14 +477,14 @@ spec:
           timeoutSeconds: 5
         name: frontend
         ports:
+        - containerPort: 20000
+          name: grpc
+          protocol: TCP
         - containerPort: 9898
           name: http
           protocol: TCP
         - containerPort: 9797
           name: http-metrics
-          protocol: TCP
-        - containerPort: 9999
-          name: grpc
           protocol: TCP
         readinessProbe:
           exec:
@@ -468,8 +504,9 @@ spec:
             memory: 32Mi
 ---
 # Source: reference/templates/deploy.yaml
-# File: podinfo/hpa.yaml
-# Checksum 4669de4bb6631c64c7459e44b38c32a1236a0b7fb419b642d4a52b76ff51747c
+# Identifers: [horizontalpodautoscaler-frontend.yaml]
+# Subpath: podinfo
+# Checksum b3e231fd6bc48aa8e1c94208952372b01cec1f7afb7b756c386cd38d007bb976
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -487,7 +524,7 @@ spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: frontend
+    name: frontend-test
 ```    
 {{< /expand >}}
 
@@ -501,16 +538,24 @@ Create Directory based on condition configuration
 mkdir -p structure/env/prod/podinfo/
 ```
 
-Create under the same path as in the base (`podinfo/deploy.yaml`) we want to merge over the file from the base. In thase case we adjust the `name` and the `minReadySeconds` properties.
+Create under the same path as in the base (`podinfo/deploy.yaml`) we want to merge over the file from the base. For prod we just change the log level for the frontend.  You can access to condition's Value via `$.Value`, that's not possible in the base deployment file.
 
 ```Shell
 cat << EOF > ./structure/env/prod/podinfo/deploy.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-prod
+  name: frontend
+  labels:
+    env: {{ $.value }}
 spec:
-  minReadySeconds: 10
+  template:
+    spec:
+      containers:
+      - name: frontend
+        command:
+        - __inject__
+        - --level=info
 EOF
 ```
 
@@ -527,7 +572,8 @@ The Deployment files were also merged, since they both resolve into the subpath 
 ```YAML
 ---
 # Source: reference/templates/deploy.yaml
-# File: podinfo/service.yaml
+# Identifers: [service-frontend.yaml]
+# Subpath: podinfo
 # Checksum 08b06c48a587e3fe6179875f70331bb97562a6e584dcb32807ce9eac7572fc8d
 apiVersion: v1
 kind: Service
@@ -543,14 +589,18 @@ spec:
     app: frontend
   type: ClusterIP
 ---
-# File: podinfo/deploy.yaml
-# Checksum f5f1922876fe509774c40afbd4576984bd3a952f248a3601a424966544a33892
+# Source: reference/templates/deploy.yaml
+# Identifers: [deployment-frontend.yaml]
+# Subpath: podinfo
+# Checksum 927e03253e8b730aa0b982bba87da4eeab0349419e120476446823b95e0ba7a1
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: frontend-prod
+  labels:
+    env: prod
+  name: frontend
 spec:
-  minReadySeconds: 10
+  minReadySeconds: 3
   progressDeadlineSeconds: 60
   revisionHistoryLimit: 5
   selector:
@@ -576,6 +626,7 @@ spec:
         - --level=info
         - --backend-url=http://backend:9898/echo
         - --cache-server=cache:6379
+        - --level=info
         env:
         - name: PODINFO_UI_COLOR
           value: '#34577c'
@@ -631,22 +682,21 @@ Let's add a condition for the location. The location should also be controllable
 ```Shell
 cat << EOF > ./helmize.yaml
 inventory_directory: "structure/"
-templates_directory: "tpls/"
 conditions:
-
   - name: "base"
     path: "/base/"
-    allow_root: true
+    any: true
 
   - name: "environment"
-    key: "Values.env"
+    key: "env"
     path: "env/"
     default: "test"
     filter: [ "test", "prod" ]
     reverse_filter: true
 
   - name: "location"
-    key: "Values.location"
+    key: "location"
+    default: "east"
 EOF    
 ```
 
@@ -668,7 +718,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels
-    location: "east"
+    location: {{ $.value }}
 EOF        
 ```
 
@@ -686,8 +736,10 @@ There's an error!
 
 {{< expand "Template Error" "..." >}}
 ```Shell
-Error: execution error at (reference/templates/deploy.yaml:1:4): 
-Found errors in render manifest, please resolve those errors or use the force options:
+Error: execution error at (reference/templates/deploy.yaml:1:4):
+
+Found errors, please resolve those errors or use the force option (--set helmize.force=true):
+
   - error: 'error converting YAML to JSON: yaml: line 5: mapping values are not allowed
       in this context'
     file: structure/location/east/podinfo/deploy.yaml
@@ -696,7 +748,9 @@ Found errors in render manifest, please resolve those errors or use the force op
       kind: Deployment
       metadata:
         labels
-          location: "east"
+          location: east
+
+Use --debug flag to render out invalid YAML
 ```
 {{< /expand >}}
 
@@ -707,8 +761,9 @@ cat << EOF > ./structure/location/east/podinfo/deploy.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: frontend
   labels:
-    location: "east"
+    location: {{ $.value }}
 EOF        
 ```
 
@@ -732,6 +787,7 @@ cat << EOF > ./structure/location/west/podinfo/deploy.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  name: frontend
   labels:
     location: "west"
 EOF        
@@ -870,84 +926,111 @@ spec:
 
 As seen with these two examples, conditions are a great mechanism to combine different indepdendent factors. You can extended the conditions at anytime without restructering the entire folder structure.
 
-## Dropins
+### Conditional Data
 
-[Read more on dropins](../../documentation/configuration/dropins/)
-
-We create a simple that's not really useful but helps you understand how dropins work:
+Throughout the entire rendering process you can access the different data contexts and add logic to the given values. Now we add a new condition, which evaluates the required data, to atuomaticaly adjust the ingress based on previous cdonditions.
 
 
 ```Shell
-cat << EOF >> ./helmize.yaml
-dropins: 
-  - patterns: [ ".*" ]
+cat << EOF > ./helmize.yaml
+inventory_directory: "structure/"
+conditions:
+  - name: "base"
+    path: "/base/"
+    any: true
+
+  - name: "environment"
+    key: "env"
+    path: "env/"
+    default: "test"
+    filter: [ "test", "prod" ]
+    reverse_filter: true
+
+  - name: "location"
+    key: "location"
+    default: "east"
+
+  - name: "expose"
+    any: true
     data:
-      labels:
-        "custom.label": "data"
+      ingress_class: "company-domain"
     tpls:
-      - "*.tpl"
+      - tpls/ingress.tpl
 EOF    
 ```
 
-This Dropin makes use of the [Label Post Renderer]() and adds the `registry.tpl`
-
-{{< expand "registry.tpl" "..." >}}
-
-First we have to create the templates directory we configured via `templates_directory`
-
-```Shell
-mkdir tpls/
-```
-
-Then Let's add this Template under `templates/registry.tpl`
-
-```
-{{/* Does not do much, but you can use templating to map values or use defaulting */}}
-{{- if $.Values.registry }}
-registry: {{ $.Values.registry }}
-{{- end }}
-
-{{/*
-  Adds Another Label for the Post Renderer
-*/}}
-labels:
-  registy.template: "label"
-```
-
-Since we include any files with the `*.tpl` ending in the `templates` directory this template will be used. If you want to be more explicit you would need to add only the `registry.tpl`
+This condition implements a [data template](../../configuration/helmize/conditions#tpls) which evaluates data. This template can use sprig. and you can add as many as you want, just make sure they return valid yaml. In addition we declare static [data](../../configuration/helmize/conditions#data). Now let's create the template:
 
 
 ```Shell
-cat << EOF >> ./helmize.yaml
-dropins: 
-  - patterns: [ ".*" ]
-    data:
-      labels:
-        "custom.label": "data"
-    tpls:
-      - "registry.tpl"
+mkdir -p tpls/
+```
+
+This template evaluates the field `ingress_name` based on the previous values from conditions. This is a very simple example, you can increase the complexity by as much as you are comfortable with :).
+
+```Shell
+cat << EOF > ./helmize.yaml
+{{/* Default Variables */}}
+{{- $env := "" -}}
+{{- $location := "" -}}
+
+{{/* Iterate over previous Conditions */}}
+{{- range $c := $.conditions -}}
+
+  {{/* Evaluate Environment */}}
+  {{- if (eq $c.name "environment") -}}
+    {{- $env = default "" $c.value -}}
+
+  {{/* Evaluate Location */}}
+  {{- else if (eq $c.name "location") -}}
+    {{- $location = default "" $c.value -}}
+  {{- end -}}
+
+{{- end -}}
+
+{{/* Return Data */}}
+ingress_name: frontend.{{ $env }}.{{ $location }}.company.com
 EOF    
 ```
 
-In the `structure/base/podinfo/deploy.yaml` we change the image to default on the registry if it's set, others use `ghcr.io`:
+Now lets create the file which will implement this data.
 
-```
-...
-      - name: frontend
-        image: {{ default "ghcr.io" $.Data.registry }}/stefanprodan/podinfo:6.0.3
-        imagePullPolicy: IfNotPresent
-...
+```Shell
+mkdir -p structure/expose/
 ```
 
-Now if we template with the `registry` set, we should see it
+This template accesses the data. Since it's coming from the condition, which sources the ingress, it can directly access the data via `$.data`. You could also do the same evaluation within this template, since you can access `$.conditions` in this context as well. This decision really comes down to how reusable the data must be and how many files implement it.
 
+```Shell
+cat << EOF > ./structure/expose/ingress.tpl
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  {{- with $.data.ingress_class }}
+  ingressClassName: {{ . }}
+  {{- end }}
+  tls:
+  - hosts:
+      - {{ $.data.ingress_name }}
+    secretName: frontend-tls
+  rules:
+  - http:
+      paths:
+      - host: {{ $.data.ingress_name }}
+        path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: frontend
+            port:
+              number: 80
+EOF    
 ```
-helm template . --set registry="custom.registry"
-```
 
-So we can access the results of dropings via the `$.Data` map in our file structure. [Read More](../documentation/structure/files/)
+Templating this, will result in a different ingress based on previous conditions, truly value driven. These were some very simple examples on how Helmize works.
 
-{{< /expand >}}
-
-
-Now have seen the basi principles helmize brings. It's an help to organize large deployments and gives you greate customization which is value driven. The next step is to try it out for yourself! If there are still a lot of question marks, check out the [examples](../../examples) where we reference some implementations of helmize which might help you get started with your own use-case.
+**Helmize has a lot to offer, are you ready to explore it's possabilities?**

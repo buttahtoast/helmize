@@ -10,16 +10,24 @@
   returns <string>: Value from given path
 
 */}}
-{{- define "inventory.config.func.resolve" -}}
+{{- define "helmize.config.func.resolve" -}}
   {{- if and $.path $.ctx }}
-    {{- $tpl := default false $.tpl -}}
+    {{- $cfg := dict -}}
 
-    {{/* Resolve configuration */}}
-    {{- $cfg := fromYaml (include "inventory.config.func.get" $.ctx) -}}
-    {{- $result := include "lib.utils.dicts.lookup" (dict "data" $cfg "path" $.path "required" (default false $.req)) -}}
+    {{/* Resolve from Context */}}
+    {{- if (get $.ctx "Config") -}}
+      {{- $cfg = (get $.ctx "Config") -}}
+
+    {{/* Resolve from File */}}
+    {{- else -}}
+      {{- $cfg = fromYaml (include "helmize.config.func.get" $.ctx) -}}
+    {{- end -}}
+
+    {{/* Execute Lookup */}}
+    {{- $result := include "lib.utils.dicts.get" (dict "data" $cfg "path" $.path "required" (default false $.req)) -}}
     {{- printf "%s" ($result) -}}
 
   {{- else -}}
-    {{- include "lib.utils.errors.params" (dict "tpl" "inventory.render.files.parse" "params" (list "path" "ctx")) -}}
+    {{- include "lib.utils.errors.params" (dict "tpl" "helmize.render.files.parse" "params" (list "path" "ctx")) -}}
   {{- end -}}
 {{- end -}}

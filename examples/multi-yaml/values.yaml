@@ -1,7 +1,0 @@
-## Multi YAML Example
-repo:
-  interval: "1m"
-public_repos:
-  metallb: https://metallb.github.io/metallb
-  jetstack: https://charts.jetstack.io
-  external_dns: https://kubernetes-sigs.github.io/external-dns/

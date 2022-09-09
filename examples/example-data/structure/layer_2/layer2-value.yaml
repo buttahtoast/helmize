@@ -1,0 +1,3 @@
+{{- if $.Values.showValue -}}
+Value: {{ toYaml $.value }}
+{{- end }}

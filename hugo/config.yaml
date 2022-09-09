@@ -1,6 +1,6 @@
 baseURL: "http://helmize.dev/"
 languageCode: "en-us"
-title: "Helmize"
+title: " Helmize"
 theme: "hugo-geekdoc"
 pygmentsCodeFences: true
 pygmentsStyle: "monokailight"

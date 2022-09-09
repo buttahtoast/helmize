@@ -1,0 +1,28 @@
+## Deployment with no matching ids
+# Test 'no_match' file configuration
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: no-match
+  labels:
+    app: no-match
+  helmize:
+    id: 
+      - no-match
+    no_match: skip
+    render: true
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: nginx:1.14.2
+        ports:
+        - containerPort: 80
