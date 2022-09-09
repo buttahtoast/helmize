@@ -3,20 +3,20 @@
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=color-scheme content="light dark">
-<meta name=description content="Getting Started">
+<meta name=description content="Identifiers">
 <title>
-Getting Started | Helmize
+Identifiers | Helmize
 </title>
 <link rel=icon type=image/svg+xml href=/favicon/favicon.svg>
 <link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png>
 <link rel=icon type=image/png sizes=16x16 href=/favicon/favicon-16x16.png>
-<meta property="og:title" content="Getting Started">
-<meta property="og:description" content="Getting Started">
+<meta property="og:title" content="Identifiers">
+<meta property="og:description" content="Identifiers">
 <meta property="og:type" content="website">
-<meta property="og:url" content="http://helmize.dev/getting-started/">
+<meta property="og:url" content="http://helmize.dev/usage/identifiers/">
 <meta name=twitter:card content="summary">
-<meta name=twitter:title content="Getting Started">
-<meta name=twitter:description content="Getting Started">
+<meta name=twitter:title content="Identifiers">
+<meta name=twitter:description content="Identifiers">
 <script src=/js/main.bundle.min.js></script>
 <link rel=preload as=font href=/fonts/Metropolis.woff2 type=font/woff2 crossorigin=anonymous>
 <link rel=preload as=font href=/fonts/LiberationSans.woff2 type=font/woff2 crossorigin=anonymous>
@@ -81,7 +81,7 @@ Getting Started | Helmize
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/getting-started/ class="gdoc-nav__entry is-active">
+<a href=/getting-started/ class=gdoc-nav__entry>
 Getting Started
 </a>
 </span>
@@ -216,10 +216,10 @@ Data
 </label>
 </li>
 <li>
-<input type=checkbox class=gdoc-nav__toggle id=navtree-5cbadb5f>
+<input type=checkbox class=gdoc-nav__toggle id=navtree-5cbadb5f checked>
 <label for=navtree-5cbadb5f class="flex justify-between">
 <span class=flex>
-<a href=/usage/identifiers/ class=gdoc-nav__entry>
+<a href=/usage/identifiers/ class="gdoc-nav__entry is-active">
 Identifiers
 </a>
 </span><svg class="icon gdoc_keyborad_arrow_left"><use xlink:href="#gdoc_keyborad_arrow_left"/></svg><svg class="icon gdoc_keyborad_arrow_down"><use xlink:href="#gdoc_keyborad_arrow_down"/></svg>
@@ -337,62 +337,380 @@ justify-between
 hidden-mobile" itemprop=breadcrumb>
 <div><svg class="icon gdoc_path hidden-mobile"><use xlink:href="#gdoc_path"/></svg>
 <ol class=breadcrumb itemscope itemtype=https://schema.org/BreadcrumbList>
-<li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemscope itemtype=https://schema.org/WebPage itemprop=item itemid=/ href=/><span itemprop=name></span></a><meta itemprop=position content="1"></li><li> / </li><li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><span itemprop=name>Getting Started</span><meta itemprop=position content="2"></li>
+<li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemscope itemtype=https://schema.org/WebPage itemprop=item itemid=/ href=/><span itemprop=name></span></a><meta itemprop=position content="1"></li><li> / </li><li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><a itemscope itemtype=https://schema.org/WebPage itemprop=item itemid=/usage/ href=/usage/><span itemprop=name>Usage</span></a><meta itemprop=position content="2"></li><li> / </li><li itemprop=itemListElement itemscope itemtype=https://schema.org/ListItem><span itemprop=name>Identifiers</span><meta itemprop=position content="3"></li>
 </ol>
 </div>
 </div>
 <article class="gdoc-markdown gdoc-markdown__align--left">
-<h1>Getting Started</h1>
-<div class="gdoc-toc gdoc-toc__level--6">
+<h1>Identifiers</h1>
+<blockquote class="gdoc-hint info">
+<strong>Example</strong> <a class=gdoc-markdown__link href=https://github.com/buttahtoast/helmize/tree/main/examples/example-identifiers>https://github.com/buttahtoast/helmize/tree/main/examples/example-identifiers</a>
+</blockquote>
+<p>Identifiers are used to identify a file or a partial file. Based on identifiers files are merged together. <a class=gdoc-markdown__link href=../../configuration/files/>File Configurations</a> may influence the behavior. The subpath is not relevant in the identifier evaluation.</p>
+<div class=gdoc-page__anchorwrap>
+<h2 id=predefined>
+Predefined
+<a data-clipboard-text=http://helmize.dev/usage/identifiers/#predefined class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Predefined" href=#predefined><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
+</a>
+</h2>
+</div>
+<blockquote class="gdoc-hint warning">
+Regardless if you are using the default identifier template or your own. If the template returns an empty ID the file name where the resource originate from is used. Should there be multiple resources in that file which don&rsquo;t evaluate dedicated identifiers, they are both assigned the same identifier (filename) and therefor merged.
+</blockquote>
+<p><a class=gdoc-markdown__link href=#custom-id>Custom IDs</a> are always used. If a manifest has the field <code>kind</code> and <code>metadata.name</code> it&rsquo;s combined to <code>{kind}-{metadata.name}.yaml</code> which is added as identifier. If no <a class=gdoc-markdown__link href=#custom-id>custom IDs</a> are set or those two data fields, the filename is used. The current template for identifiert evaluation can be found here:</p>
 <ul>
-<li>
-<span>
-<a href=/getting-started/concept/ class=gdoc-toc__entry>
-Concept
+<li><a class=gdoc-markdown__link href=https://github.com/buttahtoast/helmize/blob/master/charts/helmize/templates/core/templates/_identifier.tpl>https://github.com/buttahtoast/helmize/blob/master/charts/helmize/templates/core/templates/_identifier.tpl</a></li>
+</ul>
+<p><a class=gdoc-markdown__link href=custom/>You can change the identifier template</a></p>
+<div class=gdoc-page__anchorwrap>
+<h2 id=reference>
+Reference
+<a data-clipboard-text=http://helmize.dev/usage/identifiers/#reference class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Reference" href=#reference><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
 </a>
-</span>
-</li>
-<li>
-<span>
-<a href=/getting-started/quickstart/ class=gdoc-toc__entry>
-Quickstart
-</a>
-</span>
-</li>
+</h2>
+</div>
+<p>The identifier template which should be used is defined in the <a class=gdoc-markdown__link href=../../configuration/helmize/#identifier_template>helmize configuration</a></p>
+<h2>Outcomes</h2>
+<p>Here are different outcomes for identifiers.</p>
+<hr>
+<h3>Kind and Name</h3>
+<p>In this example the <code>kind</code> and <code>metadata.name</code> are set.</p>
+<div class=gdoc-expand>
+<label class="gdoc-expand__head flex justify-between" for=f9e40fe1-2>
+<span>structure/resources/configmap.yaml</span>
+<span>...</span>
+</label>
+<input id=f9e40fe1-2 type=checkbox class="gdoc-expand__control hidden">
+<div class="gdoc-markdown--nested gdoc-expand__content">
+<pre tabindex=0><code>apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+data:
+  game.properties: |
+    enemy:
+      types:
+      - alien
+      - monsters
+    player:
+      maximumLives:5
+</code></pre>
+</div>
+</div>
+<p>Results in the following IDs:</p>
+<ul>
+<li><code>configmap-my-configmap.yaml</code></li>
+</ul>
+<div class=gdoc-expand>
+<label class="gdoc-expand__head flex justify-between" for=55c3bbc9-3>
+<span>Multi YAML</span>
+<span>...</span>
+</label>
+<input id=55c3bbc9-3 type=checkbox class="gdoc-expand__control hidden">
+<div class="gdoc-markdown--nested gdoc-expand__content">
+<p>Outcome with multiple YAMLs in one file</p>
+<div class=gdoc-expand>
+<label class="gdoc-expand__head flex justify-between" for=904ae553-0>
+<span>structure/resources/configmap.yaml</span>
+<span>...</span>
+</label>
+<input id=904ae553-0 type=checkbox class="gdoc-expand__control hidden">
+<div class="gdoc-markdown--nested gdoc-expand__content">
+<pre tabindex=0><code>---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+data:
+  game.properties: |
+    enemy:
+      types:
+      - alien
+      - monsters
+    player:
+      maximumLives:5
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap2
+data:
+  game.properties: |
+    enemy:
+      types:
+      - imps
+      - warriors
+    player:
+      maximumLives:10
+</code></pre>
+</div>
+</div>
+<p>Results in two dedicated elements. First one has ID:</p>
+<ul>
+<li><code>configmap-my-configmap.yaml</code></li>
+</ul>
+<p>Second one has ID:</p>
+<ul>
+<li><code>configmap-my-configmap2.yaml</code></li>
 </ul>
 </div>
-<div class=gdoc-page__anchorwrap>
-<h1 id=helm>
-Helm
-<a data-clipboard-text=http://helmize.dev/getting-started/#helm class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Helm" href=#helm><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
-</a>
-</h1>
 </div>
-<p>This documentation won&rsquo;t explain the core concepts of <a class=gdoc-markdown__link href=https://helm.sh/>Helm</a> and <a class=gdoc-markdown__link href=http://masterminds.github.io/sprig/>Sprig templating</a>, it is expected that you know these technologies.The only requirement for helmize is <a class=gdoc-markdown__link href=https://helm.sh/docs/intro/install/>helm</a>.</p>
-<div class=gdoc-page__anchorwrap>
-<h1 id=requirements>
-Requirements
-<a data-clipboard-text=http://helmize.dev/getting-started/#requirements class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Requirements" href=#requirements><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
-</a>
-</h1>
+<hr>
+<h3>Without Kind and Name</h3>
+<p>In this example the <code>kind</code> and <code>metadata.name</code> are not set. In this case the filename is used as id.</p>
+<div class=gdoc-expand>
+<label class="gdoc-expand__head flex justify-between" for=4e06d648-4>
+<span>structure/resources/configmap.yaml</span>
+<span>...</span>
+</label>
+<input id=4e06d648-4 type=checkbox class="gdoc-expand__control hidden">
+<div class="gdoc-markdown--nested gdoc-expand__content">
+<div class=highlight><pre tabindex=0 style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>data</span><span style=color:#111>:</span>
+  <span style=color:#f92672>game.properties</span><span style=color:#111>:</span> <span style=color:#111>|</span><span style=color:#d88200>
+</span><span style=color:#d88200>    enemy:
+</span><span style=color:#d88200>      types:
+</span><span style=color:#d88200>      - alien
+</span><span style=color:#d88200>      - monsters
+</span><span style=color:#d88200>    player:
+</span><span style=color:#d88200>      maximumLives:5</span>    
+</code></pre></div>
 </div>
-<p>It&rsquo;s required to use a Helm Version <code>>= 3.5.0</code> (above or equal). Versions below are missing the <code>addf</code> function, which is used within helmize.</p>
-<div class=gdoc-page__anchorwrap>
-<h1 id=testing>
-Testing
-<a data-clipboard-text=http://helmize.dev/getting-started/#testing class="gdoc-page__anchor gdoc-page__anchor--right clip" aria-label="Anchor Testing" href=#testing><svg class="icon gdoc_link"><use xlink:href="#gdoc_link"/></svg>
-</a>
-</h1>
 </div>
-<p>Helmize is unit-tested with the following helm versions:</p>
+<p>Results in the following IDs:</p>
 <ul>
-<li><code>v3.5.4</code></li>
-<li><code>v3.6.3</code></li>
-<li><code>v3.7.1</code></li>
-<li><code>v3.8.2</code></li>
-<li><code>latest</code></li>
+<li><code>configmap.yaml</code></li>
 </ul>
-<p>This way we can detect breaking changes and avoid them.</p>
+<div class=gdoc-expand>
+<label class="gdoc-expand__head flex justify-between" for=5d225553-5>
+<span>Multi YAML</span>
+<span>...</span>
+</label>
+<input id=5d225553-5 type=checkbox class="gdoc-expand__control hidden">
+<div class="gdoc-markdown--nested gdoc-expand__content">
+<blockquote class="gdoc-hint info">
+Make sure to use same kinds when you don&rsquo;t explicit define ids or if they don&rsquo;t resolve via filename. If you have eg. a kind <code>service</code> and <code>deployment</code> in the same file they will be merged, which is not valid in kubernetes terms
+</blockquote>
+<p>Outcome with multiple YAMLs in one file</p>
+<div class=gdoc-expand>
+<label class="gdoc-expand__head flex justify-between" for=882537b9-1>
+<span>structure/resources/configmap.yaml</span>
+<span>...</span>
+</label>
+<input id=882537b9-1 type=checkbox class="gdoc-expand__control hidden">
+<div class="gdoc-markdown--nested gdoc-expand__content">
+<pre tabindex=0><code>---
+data:
+  game.properties: |
+    enemy:
+      types:
+      - alien
+      - monsters
+    player:
+      maximumLives:5
+---
+data:
+  game.properties: |
+    enemy:
+      types:
+      - imps
+      - warriors
+    player:
+      maximumLives:10
+</code></pre>
+</div>
+</div>
+<p>Both elements have the same ID and merged:</p>
+<ul>
+<li><code>configmap.yaml</code></li>
+</ul>
+</div>
+</div>
+<hr>
+<h3>Custom ID</h3>
+<p>In this example we define custom identifiers via the <a class=gdoc-markdown__link href=../../files/#id>id</a> field.</p>
+<div class=gdoc-expand>
+<label class="gdoc-expand__head flex justify-between" for=2a317b63-6>
+<span>structure/resources/configmap.yaml</span>
+<span>...</span>
+</label>
+<input id=2a317b63-6 type=checkbox class="gdoc-expand__control hidden">
+<div class="gdoc-markdown--nested gdoc-expand__content">
+<div class=highlight><pre tabindex=0 style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>helmize</span><span style=color:#111>:</span>
+  <span style=color:#f92672>id</span><span style=color:#111>:</span>
+    - <span style=color:#ae81ff>custom-id-1</span>
+    - <span style=color:#ae81ff>custom-id-2</span>
+<span style=color:#f92672>data</span><span style=color:#111>:</span>
+  <span style=color:#f92672>game.properties</span><span style=color:#111>:</span> <span style=color:#111>|</span><span style=color:#d88200>
+</span><span style=color:#d88200>    enemy:
+</span><span style=color:#d88200>      types:
+</span><span style=color:#d88200>      - alien
+</span><span style=color:#d88200>      - monsters
+</span><span style=color:#d88200>    player:
+</span><span style=color:#d88200>      maximumLives:5</span>    
+</code></pre></div>
+</div>
+</div>
+<p>Results in the following IDs:</p>
+<ul>
+<li><code>custom-id-1</code></li>
+<li><code>custom-id-2</code></li>
+</ul>
+<div class=gdoc-expand>
+<label class="gdoc-expand__head flex justify-between" for=a6695ac3-7>
+<span>Multi YAML</span>
+<span>...</span>
+</label>
+<input id=a6695ac3-7 type=checkbox class="gdoc-expand__control hidden">
+<div class="gdoc-markdown--nested gdoc-expand__content">
+<p>Outcome with multiple YAMLs in one file</p>
+<div class=gdoc-expand>
+<label class="gdoc-expand__head flex justify-between" for=7d9815f9-0>
+<span>structure/resources/configmap.yaml</span>
+<span>...</span>
+</label>
+<input id=7d9815f9-0 type=checkbox class="gdoc-expand__control hidden">
+<div class="gdoc-markdown--nested gdoc-expand__content">
+<pre tabindex=0><code>---
+helmize:
+  id:
+  - custom-id-1
+  - custom-id-2
+data:
+  game.properties: |
+    enemy:
+      types:
+      - alien
+      - monsters
+    player:
+      maximumLives:5
+---
+helmize:
+  id:
+    - custom-id-3
+    - custom-id-4
+data:
+  game.properties: |
+    enemy:
+      types:
+      - imps
+      - warriors
+    player:
+      maximumLives:10
+</code></pre>
+</div>
+</div>
+<p>Results in two dedicated elements. First one has ID:</p>
+<ul>
+<li><code>custom-id-1</code></li>
+<li><code>custom-id-2</code></li>
+</ul>
+<p>Second one has ID:</p>
+<ul>
+<li><code>custom-id-3</code></li>
+<li><code>custom-id-4</code></li>
+</ul>
+</div>
+</div>
+<hr>
+<h3>Custom ID + Kind and Name</h3>
+<p>In this example we define custom identifiers via the <code>id</code> field. In addition the <code>kind</code> and <code>metadata.name</code> are set.</p>
+<div class=gdoc-expand>
+<label class="gdoc-expand__head flex justify-between" for=dca319e5-8>
+<span>structure/resources/configmap.yaml</span>
+<span>...</span>
+</label>
+<input id=dca319e5-8 type=checkbox class="gdoc-expand__control hidden">
+<div class="gdoc-markdown--nested gdoc-expand__content">
+<div class=highlight><pre tabindex=0 style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>apiVersion</span><span style=color:#111>:</span> <span style=color:#ae81ff>v1</span>
+<span style=color:#f92672>kind</span><span style=color:#111>:</span> <span style=color:#ae81ff>ConfigMap</span>
+<span style=color:#f92672>metadata</span><span style=color:#111>:</span>
+  <span style=color:#f92672>name</span><span style=color:#111>:</span> <span style=color:#ae81ff>my-configmap</span>
+<span style=color:#f92672>id</span><span style=color:#111>:</span>
+  - <span style=color:#ae81ff>custom-id-1</span>
+  - <span style=color:#ae81ff>custom-id-2</span>
+<span style=color:#f92672>data</span><span style=color:#111>:</span>
+  <span style=color:#f92672>game.properties</span><span style=color:#111>:</span> <span style=color:#111>|</span><span style=color:#d88200>
+</span><span style=color:#d88200>    enemy:
+</span><span style=color:#d88200>      types:
+</span><span style=color:#d88200>      - alien
+</span><span style=color:#d88200>      - monsters
+</span><span style=color:#d88200>    player:
+</span><span style=color:#d88200>      maximumLives:5</span>    
+</code></pre></div>
+</div>
+</div>
+<p>Results in the following IDs:</p>
+<ul>
+<li><code>configmap-my-configmap.yaml</code></li>
+<li><code>custom-id-1</code></li>
+<li><code>custom-id-2</code></li>
+</ul>
+<div class=gdoc-expand>
+<label class="gdoc-expand__head flex justify-between" for=6049c9f4-9>
+<span>Multi YAML</span>
+<span>...</span>
+</label>
+<input id=6049c9f4-9 type=checkbox class="gdoc-expand__control hidden">
+<div class="gdoc-markdown--nested gdoc-expand__content">
+<p>Outcome with multiple YAMLs in one file</p>
+<div class=gdoc-expand>
+<label class="gdoc-expand__head flex justify-between" for=0f12e860-0>
+<span>structure/resources/configmap.yaml</span>
+<span>...</span>
+</label>
+<input id=0f12e860-0 type=checkbox class="gdoc-expand__control hidden">
+<div class="gdoc-markdown--nested gdoc-expand__content">
+<pre tabindex=0><code>---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+helmize:  
+  id:
+    - custom-id-1
+    - custom-id-2
+data:
+  game.properties: |
+    enemy:
+      types:
+      - alien
+      - monsters
+    player:
+      maximumLives:5
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: my-configmap
+helmize:
+  id:
+    - custom-id-3
+    - custom-id-4
+data:
+  game.properties: |
+    enemy:
+      types:
+      - imps
+      - warriors
+    player:
+      maximumLives:10
+</code></pre>
+</div>
+</div>
+<p>Results in two dedicated elements. First one has ID:</p>
+<ul>
+<li><code>configmap-my-configmap.yaml</code></li>
+<li><code>custom-id-1</code></li>
+<li><code>custom-id-2</code></li>
+</ul>
+<p>Second one has ID:</p>
+<ul>
+<li><code>configmap-my-configmap.yaml</code></li>
+<li><code>custom-id-3</code></li>
+<li><code>custom-id-4</code></li>
+</ul>
+</div>
+</div>
 </article>
 <div class="gdoc-page__footer flex flex-wrap justify-between">
 </div>

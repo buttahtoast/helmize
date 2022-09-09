@@ -3,9 +3,9 @@
 <meta charset=utf-8>
 <meta name=viewport content="width=device-width,initial-scale=1">
 <meta name=color-scheme content="light dark">
-<meta name=description content="Helmize">
+<meta name=description content=" Helmize">
 <title>
-Tags |Helmize
+Tags | Helmize
 </title>
 <link rel=icon type=image/svg+xml href=/favicon/favicon.svg>
 <link rel=icon type=image/png sizes=32x32 href=/favicon/favicon-32x32.png>
@@ -41,7 +41,7 @@ Tags |Helmize
 <a class=gdoc-header__link href=http://helmize.dev/>
 <span class="gdoc-brand flex align-center">
 <img class=gdoc-brand__img src=/brand.svg alt>
-<span class=gdoc-brand__title>Helmize</span>
+<span class=gdoc-brand__title> Helmize</span>
 </span>
 </a>
 <div class=gdoc-menu-header>
@@ -113,37 +113,27 @@ Quickstart
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/documentation/ class=gdoc-nav__entry>
-Documentation
-</a>
-</span>
-</label>
-<ul class=gdoc-nav__list>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/configuration/ class=gdoc-nav__entry>
+<a href=/configuration/ class=gdoc-nav__entry>
 Configuration
 </a>
 </span>
 </label>
 <ul class=gdoc-nav__list>
 <li>
-<input type=checkbox class=hidden>
-<label>
+<input type=checkbox class=gdoc-nav__toggle id=navtree-673b7261>
+<label for=navtree-673b7261 class="flex justify-between">
 <span class=flex>
-<a href=/documentation/configuration/general/ class=gdoc-nav__entry>
-Config
+<a href=/configuration/helmize/ class=gdoc-nav__entry>
+Helmize
 </a>
-</span>
+</span><svg class="icon gdoc_keyborad_arrow_left"><use xlink:href="#gdoc_keyborad_arrow_left"/></svg><svg class="icon gdoc_keyborad_arrow_down"><use xlink:href="#gdoc_keyborad_arrow_down"/></svg>
 </label>
-</li>
+<ul class=gdoc-nav__list>
 <li>
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/documentation/configuration/conditions/ class=gdoc-nav__entry>
+<a href=/configuration/helmize/conditions/ class=gdoc-nav__entry>
 Conditions
 </a>
 </span>
@@ -153,7 +143,7 @@ Conditions
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/documentation/configuration/reference/ class=gdoc-nav__entry>
+<a href=/configuration/helmize/reference/ class=gdoc-nav__entry>
 Reference
 </a>
 </span>
@@ -162,71 +152,11 @@ Reference
 </ul>
 </li>
 <li>
-<input type=checkbox class=hidden>
-<label>
+<input type=checkbox class=gdoc-nav__toggle id=navtree-c47ae66a>
+<label for=navtree-c47ae66a class="flex justify-between">
 <span class=flex>
-<a href=/documentation/structure/ class=gdoc-nav__entry>
-Structure
-</a>
-</span>
-</label>
-<ul class=gdoc-nav__list>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/structure/priority/ class=gdoc-nav__entry>
-Priority
-</a>
-</span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/structure/files/ class=gdoc-nav__entry>
-Files Config
-</a>
-</span>
-</label>
-<ul class=gdoc-nav__list>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/structure/files/identifiers/ class=gdoc-nav__entry>
-Identifiers
-</a>
-</span>
-</label>
-</li>
-</ul>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>Templating</span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/structure/multiyaml/ class=gdoc-nav__entry>
-Multi YAML
-</a>
-</span>
-</label>
-</li>
-</ul>
-</li>
-<li>
-<input type=checkbox class=gdoc-nav__toggle id=navtree-4f490504>
-<label for=navtree-4f490504 class="flex justify-between">
-<span class=flex>
-<a href=/documentation/customization/ class=gdoc-nav__entry>
-Customization
+<a href=/configuration/files/ class=gdoc-nav__entry>
+Files
 </a>
 </span><svg class="icon gdoc_keyborad_arrow_left"><use xlink:href="#gdoc_keyborad_arrow_left"/></svg><svg class="icon gdoc_keyborad_arrow_down"><use xlink:href="#gdoc_keyborad_arrow_down"/></svg>
 </label>
@@ -235,8 +165,32 @@ Customization
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/documentation/customization/identifiers/ class=gdoc-nav__entry>
-Identifiers
+<a href=/configuration/files/reference/ class=gdoc-nav__entry>
+Reference
+</a>
+</span>
+</label>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/usage/ class=gdoc-nav__entry>
+Usage
+</a>
+</span>
+</label>
+<ul class=gdoc-nav__list>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/usage/templating/ class=gdoc-nav__entry>
+Templating
 </a>
 </span>
 </label>
@@ -245,29 +199,73 @@ Identifiers
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/documentation/customization/render/ class=gdoc-nav__entry>
+<a href=/usage/yaml/ class=gdoc-nav__entry>
+YAML
+</a>
+</span>
+</label>
+</li>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/usage/data/ class=gdoc-nav__entry>
+Data
+</a>
+</span>
+</label>
+</li>
+<li>
+<input type=checkbox class=gdoc-nav__toggle id=navtree-5cbadb5f>
+<label for=navtree-5cbadb5f class="flex justify-between">
+<span class=flex>
+<a href=/usage/identifiers/ class=gdoc-nav__entry>
+Identifiers
+</a>
+</span><svg class="icon gdoc_keyborad_arrow_left"><use xlink:href="#gdoc_keyborad_arrow_left"/></svg><svg class="icon gdoc_keyborad_arrow_down"><use xlink:href="#gdoc_keyborad_arrow_down"/></svg>
+</label>
+<ul class=gdoc-nav__list>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/usage/identifiers/custom/ class=gdoc-nav__entry>
+Custom Template
+</a>
+</span>
+</label>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox class=gdoc-nav__toggle id=navtree-69910faf>
+<label for=navtree-69910faf class="flex justify-between">
+<span class=flex>
+<a href=/usage/renderers/ class=gdoc-nav__entry>
+Renderers
+</a>
+</span><svg class="icon gdoc_keyborad_arrow_left"><use xlink:href="#gdoc_keyborad_arrow_left"/></svg><svg class="icon gdoc_keyborad_arrow_down"><use xlink:href="#gdoc_keyborad_arrow_down"/></svg>
+</label>
+<ul class=gdoc-nav__list>
+<li>
+<input type=checkbox class=hidden>
+<label>
+<span class=flex>
+<a href=/usage/renderers/custom/ class=gdoc-nav__entry>
+Custom Renderers
+</a>
+</span>
+</label>
+</li>
+</ul>
+</li>
+<li>
+<input type=checkbox class=gdoc-nav__toggle id=navtree-7a4a824e>
+<label for=navtree-7a4a824e class="flex justify-between">
+<span class=flex>
+<a href=/usage/render/ class=gdoc-nav__entry>
 Render
 </a>
-</span>
-</label>
-</li>
-<li>
-<input type=checkbox class=gdoc-nav__toggle id=navtree-569e3964>
-<label for=navtree-569e3964 class="flex justify-between">
-<span class=flex>
-<a href=/documentation/customization/post-renderers/ class=gdoc-nav__entry>
-Post Renderers
-</a>
-</span><svg class="icon gdoc_keyborad_arrow_left"><use xlink:href="#gdoc_keyborad_arrow_left"/></svg><svg class="icon gdoc_keyborad_arrow_down"><use xlink:href="#gdoc_keyborad_arrow_down"/></svg>
-</label>
-<ul class=gdoc-nav__list>
-<li>
-<input type=checkbox class=gdoc-nav__toggle id=navtree-5996eec7>
-<label for=navtree-5996eec7 class="flex justify-between">
-<span class=flex>
-<a href=/documentation/customization/post-renderers/built-in/ class=gdoc-nav__entry>
-Built-in
-</a>
 </span><svg class="icon gdoc_keyborad_arrow_left"><use xlink:href="#gdoc_keyborad_arrow_left"/></svg><svg class="icon gdoc_keyborad_arrow_down"><use xlink:href="#gdoc_keyborad_arrow_down"/></svg>
 </label>
 <ul class=gdoc-nav__list>
@@ -275,8 +273,8 @@ Built-in
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/documentation/customization/post-renderers/built-in/labels/ class=gdoc-nav__entry>
-Labels
+<a href=/usage/render/custom/ class=gdoc-nav__entry>
+Custom Template
 </a>
 </span>
 </label>
@@ -287,22 +285,8 @@ Labels
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/documentation/customization/post-renderers/customize/ class=gdoc-nav__entry>
-Customize
-</a>
-</span>
-</label>
-</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/documentation/debug/ class=gdoc-nav__entry>
-Debug
+<a href=/usage/flags/ class=gdoc-nav__entry>
+Flags
 </a>
 </span>
 </label>
@@ -328,56 +312,16 @@ Fluxcd
 </a>
 </span>
 </label>
-<ul class=gdoc-nav__list>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>Chart</span>
-</label>
 </li>
 <li>
 <input type=checkbox class=hidden>
 <label>
 <span class=flex>
-<a href=/guides/fluxcd/bootstrap/ class=gdoc-nav__entry>
-Bootstrap
+<a href=/guides/helm/ class=gdoc-nav__entry>
+Helm
 </a>
 </span>
 </label>
-</li>
-</ul>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/guides/use/ class=gdoc-nav__entry>
-Use with
-</a>
-</span>
-</label>
-<ul class=gdoc-nav__list>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/guides/use/secrets/ class=gdoc-nav__entry>
-Secrets
-</a>
-</span>
-</label>
-</li>
-<li>
-<input type=checkbox class=hidden>
-<label>
-<span class=flex>
-<a href=/guides/use/kustomize/ class=gdoc-nav__entry>
-Kustomization
-</a>
-</span>
-</label>
-</li>
-</ul>
 </li>
 </ul>
 </li>
