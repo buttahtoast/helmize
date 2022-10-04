@@ -6,10 +6,17 @@ helm-docs: docker
 	@docker run -v "$(SRC_ROOT):/helm-docs" jnorwood/helm-docs:$(HELMDOCS_VERSION) --chart-search-root /helm-docs
 
 lint: docker
-	@docker run -v "$(SRC_ROOT):/workdir" --entrypoint /bin/sh quay.io/helmpack/chart-testing:v3.3.1 -c cd /workdir && ct lint --config ./charts/ct.yaml --lint-conf ./charts/lint.yaml --all --debug
-	@docker run -v "$(SRC_ROOT):/workdir" --entrypoint /bin/sh quay.io/helmpack/chart-testing:v3.3.1 -c cd /workdir && ct lint --config ./examples/ct.yaml --all --debug
+	@docker run -v "$(SRC_ROOT):/workdir" --entrypoint /bin/sh quay.io/helmpack/chart-testing:v3.3.1 \
+	-c cd /workdir \
+	&& ct lint --config ./charts/ct.yaml --lint-conf ./charts/lint.yaml --lint-conf ./charts/lint.yaml --all --debug
 
+.PHONY: unit-test
 unit-test: docker
+	@docker run -v "$(SRC_ROOT):/workdir" --entrypoint /bin/sh quay.io/helmpack/chart-testing:v3.3.1 \
+	-c cd /workdir \
+	&& helm version \
+	&& helm plugin install https://github.com/quintush/helm-unittest || true \
+	&& ct lint --config ./examples/ct.yaml --lint-conf ./charts/lint.yaml --all --debug
 
 docker:
 	@hash docker 2>/dev/null || {\

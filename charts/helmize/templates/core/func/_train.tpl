@@ -234,7 +234,12 @@
         {{- $_ := set $file "partial_files" $partial_files -}}
 
       {{- else -}}
-        {{- $_ := set $return "errors" (list (dict "error" "File not found or empty content" "file" $file_name)) -}}
+
+        {{/* Add Error if disallowed empty files */}}
+        {{- if (fromYaml (include "helmize.config.func.resolve" (dict "path" (include "helmize.config.defaults.allow_empty" $.ctx) "ctx" $.ctx))).res -}} 
+          {{- $_ := set $return "errors" (list (dict "error" "File not found or empty content" "file" $file_name)) -}}
+        {{- end -}}
+        
       {{- end -}}
 
       {{/* Benchmark */}}
