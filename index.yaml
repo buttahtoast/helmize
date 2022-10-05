@@ -2,6 +2,32 @@ apiVersion: v1
 entries:
   helmize:
   - annotations:
+      artifacthub.io/changes: '- "[Fixed]: Skip empty files and do not throw an error"'
+      artifacthub.io/prerelease: "false"
+    apiVersion: v2
+    appVersion: 0.1.0
+    created: "2022-10-05T20:37:27.60640312Z"
+    dependencies:
+    - name: library
+      repository: https://buttahtoast.github.io/helm-charts/
+      version: 3.0.0-rc.3
+    description: Go Sprig based deployment engine (GitOps Tool)
+    digest: 1f5a7948bd376eaf6ac78acb6339000ce7c3450a53e89e05feafbbc1ab7144b4
+    home: https://helmize.dev
+    icon: https://raw.githubusercontent.com/buttahtoast/helmize/main/hugo/icon/icon.png
+    keywords:
+    - library
+    - sprig
+    - deploy
+    maintainers:
+    - email: oliverbaehler@hotmail.com
+      name: oliverbaehler
+    name: helmize
+    type: library
+    urls:
+    - https://github.com/buttahtoast/helmize/releases/download/helmize-0.1.1/helmize-0.1.1.tgz
+    version: 0.1.1
+  - annotations:
       artifacthub.io/prerelease: "false"
     apiVersion: v2
     appVersion: 0.1.0
@@ -51,4 +77,4 @@ entries:
     urls:
     - https://github.com/buttahtoast/helmize/releases/download/helmize-0.1.0-rc.4/helmize-0.1.0-rc.4.tgz
     version: 0.1.0-rc.4
-generated: "2022-09-09T20:41:02.211056031Z"
+generated: "2022-10-05T20:37:27.60641992Z"
