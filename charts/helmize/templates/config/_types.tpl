@@ -28,7 +28,4 @@
 {{ include "helmize.config.defaults.file_cfg_key" $ }}:
   types: [ "string" ]
   default: {{ include "helmize.config.defaults.file_cfg_key.value" $ }}
-{{ include "helmize.config.defaults.allow_empty" $ }}:
-  types: [ "bool" ]
-  default: {{ include "helmize.config.defaults.allow_empty.value" $ }}
 {{- end -}}

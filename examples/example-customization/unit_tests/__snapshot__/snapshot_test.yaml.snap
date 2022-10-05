@@ -1,1 +1,265 @@
-{}
+Manifest snapshot:
+  1: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        additional_label1: value_1
+        additional_label2: value2
+        app: web
+        new_label: existing_deploy
+      name: octopus-deployment
+  2: |
+    apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      labels:
+        additional_label1: value_1
+        additional_label2: value2
+        app: web
+      name: new-deployment
+    spec:
+      replicas: 1
+      selector:
+        matchLabels:
+          app: new-deployment
+      strategy:
+        type: RollingUpdate
+      template:
+        metadata:
+          labels:
+            app: new-deployment
+        spec:
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+              - podAffinityTerm:
+                  labelSelector:
+                    matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                      - web
+                  topologyKey: kubernetes.io/hostname
+                weight: 100
+          containers:
+          - env:
+            - name: DEMO_GREETING
+              value: Hello from the environment
+            - name: DEMO_FAREWELL
+              value: Such a sweet sorrow
+            - name: EXISTING_VAR
+              value: Some existing value
+            image: nginx
+            name: nginx
+            ports:
+            - containerPort: 80
+          - command:
+            - java
+            - -XX:+UnlockExperimentalVMOptions
+            - -XX:+UseCGroupMemoryLimitForHeap
+            - -XX:MaxRAMFraction=1
+            - -XshowSettings:vm
+            - -jar
+            - jmx_prometheus_httpserver.jar
+            - "90001"
+            - /opt/jmx-config/jmx-prometheus.yml
+            name: jmx
+            ports:
+            - containerPort: 9001
+              name: jmx
+Summary snapshot:
+  1: |
+    conditions:
+    - config:
+        allow_root: true
+        any: false
+        key_types:
+        - string
+        - slice
+        name: resources
+      data:
+        sample: data
+      errors: []
+      keys: []
+      name: resources
+      paths: []
+      root_path: resources
+      value: {}
+    - config:
+        allow_root: true
+        any: false
+        data:
+          sample: data
+        default: resources
+        file_cfg:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: false
+        key_types:
+        - string
+        - slice
+        name: additional
+        renderers:
+        - customization.renderers.additional
+      data:
+        sample: data
+      errors: []
+      keys:
+      - resources
+      name: additional
+      paths:
+      - structure/additional/resources/
+      root_path: additional
+      value: resources
+    errors:
+    - error: No Kind Defined
+      file:
+      - deployment-octopus-deployment.yaml
+      renderer: customization.renderers.sidecar
+    paths:
+    - config:
+        fork: false
+        no_match: append
+        pattern: false
+        render: true
+        subpath: false
+      data:
+        sample: data
+      paths:
+      - structure/additional/resources/
+      renderers:
+      - customization.renderers.additional
+      value: resources
+    wagons:
+    - checksum: e11bccee8d1ffab55dbbc4a799e4e8aade095385c611c747b043a1b839d41679
+      content:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          labels:
+            additional_label1: value_1
+            additional_label2: value2
+            app: web
+            new_label: existing_deploy
+          name: octopus-deployment
+      debug: []
+      errors:
+      - error: No Kind Defined
+        file:
+        - deployment-octopus-deployment.yaml
+        renderer: customization.renderers.sidecar
+      files:
+      - _order: 0
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: false
+        data:
+          sample: data
+        file: structure/additional/resources/existing_deploy.yaml
+        ids:
+        - deployment-octopus-deployment.yaml
+        path: structure/additional/resources/
+        renderers:
+        - customization.renderers.additional
+        value: resources
+      id:
+      - deployment-octopus-deployment.yaml
+      render: true
+      renderers:
+      - customization.renderers.additional
+      - customization.renderers.sidecar
+      - customization.renderers.env
+      subpath: .
+    - checksum: a3bcc618b14cc676702197947ed522014f5f3835884c42a3c8915bcfd9e6a97f
+      content:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          labels:
+            additional_label1: value_1
+            additional_label2: value2
+            app: web
+          name: new-deployment
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              app: new-deployment
+          strategy:
+            type: RollingUpdate
+          template:
+            metadata:
+              labels:
+                app: new-deployment
+            spec:
+              affinity:
+                podAntiAffinity:
+                  preferredDuringSchedulingIgnoredDuringExecution:
+                  - podAffinityTerm:
+                      labelSelector:
+                        matchExpressions:
+                        - key: app
+                          operator: In
+                          values:
+                          - web
+                      topologyKey: kubernetes.io/hostname
+                    weight: 100
+              containers:
+              - env:
+                - name: DEMO_GREETING
+                  value: Hello from the environment
+                - name: DEMO_FAREWELL
+                  value: Such a sweet sorrow
+                - name: EXISTING_VAR
+                  value: Some existing value
+                image: nginx
+                name: nginx
+                ports:
+                - containerPort: 80
+              - command:
+                - java
+                - -XX:+UnlockExperimentalVMOptions
+                - -XX:+UseCGroupMemoryLimitForHeap
+                - -XX:MaxRAMFraction=1
+                - -XshowSettings:vm
+                - -jar
+                - jmx_prometheus_httpserver.jar
+                - "90001"
+                - /opt/jmx-config/jmx-prometheus.yml
+                name: jmx
+                ports:
+                - containerPort: 9001
+                  name: jmx
+      debug: []
+      errors: []
+      files:
+      - _order: 1
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: false
+        data:
+          sample: data
+        file: structure/additional/resources/new_deploy.yaml
+        ids:
+        - deployment-new-deployment.yaml
+        path: structure/additional/resources/
+        renderers:
+        - customization.renderers.additional
+        value: resources
+      id:
+      - deployment-new-deployment.yaml
+      render: true
+      renderers:
+      - customization.renderers.additional
+      - customization.renderers.sidecar
+      - customization.renderers.env
+      subpath: .

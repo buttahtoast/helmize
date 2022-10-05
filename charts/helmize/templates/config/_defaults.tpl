@@ -145,19 +145,3 @@ file_config_key
 {{- define "helmize.config.defaults.file_cfg_key.value" -}}
 helmize
 {{- end -}}
-
-{{/* Allow Empty (Config Type) <Template> 
-
-  Allows Empty Files
-
-*/}}
-{{- define "helmize.config.defaults.allow_empty" -}}
-allow_empty
-{{- end -}}
-
-
-{{/* Allow Empty (Config Value) <Template> 
-*/}}
-{{- define "helmize.config.defaults.allow_empty.value" -}}
-true
-{{- end -}}
