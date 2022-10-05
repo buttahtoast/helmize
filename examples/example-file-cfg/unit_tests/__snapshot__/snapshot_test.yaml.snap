@@ -49,7 +49,6 @@
 '[Config File]: Manifest snapshot (Show Config)':
   1: |
     config:
-      allow_empty: true
       benchmark: false
       conditions:
       - any: true
@@ -97,7 +96,6 @@
 '[Config File]: Manifest snapshot/Inline Config (Show Config)':
   1: |
     config:
-      allow_empty: true
       benchmark: false
       conditions:
       - any: true

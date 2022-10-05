@@ -19,3 +19,5 @@ maintainers:
     email: oliverbaehler@hotmail.com
 annotations:
   artifacthub.io/prerelease: "false"
+  artifacthub.io/changes: |
+    - "[Fixed]: Skip empty files and do not throw an error"

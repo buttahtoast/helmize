@@ -1,0 +1,22 @@
+repos:
+- repo: local
+  hooks:
+    - id: helm-docs
+      name: docs
+      entry: make
+      args: ["helm-docs"]
+      language: system
+      pass_filenames: false
+    - id: lint
+      name: lint
+      entry: make
+      args: ["lint-all"]
+      language: system
+      pass_filenames: false
+    - id: unit-test
+      name: unit-test
+      entry: make
+      args: ["unit-test-all"]
+      language: system
+      pass_filenames: false
+

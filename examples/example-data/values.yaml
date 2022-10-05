@@ -1,5 +1,5 @@
 # -- Show Context per Layer
-showContext: true
+showContext: false
 
 # -- Show Data per Layer
 showData: true
