@@ -1,62 +1,5 @@
-manifest snapshot:
+Manifest snapshot:
   1: |
-    apiVersion: apps/v1
-    kind: DaemonSet
-    metadata:
-      labels:
-        app: web
-      name: octopus-deployment
-    spec:
-      selector:
-        matchLabels:
-          octopusexport: OctopusExport
-      template:
-        metadata:
-          labels:
-            app: web
-            octopusexport: OctopusExport
-        spec:
-          affinity:
-            podAntiAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-              - podAffinityTerm:
-                  labelSelector:
-                    matchExpressions:
-                    - key: app
-                      operator: In
-                      values:
-                      - web
-                  topologyKey: kubernetes.io/hostname
-                weight: 100
-          containers:
-          - env:
-            - name: DEMO_GREETING
-              value: Hello from the environment
-            - name: DEMO_FAREWELL
-              value: Such a sweet sorrow
-            - name: EXISTING_VAR
-              value: Some existing value
-            image: nginx
-            name: nginx
-            ports:
-            - containerPort: 80
-          - command:
-            - java
-            - -XX:+UnlockExperimentalVMOptions
-            - -XX:+UseCGroupMemoryLimitForHeap
-            - -XX:MaxRAMFraction=1
-            - -XshowSettings:vm
-            - -jar
-            - jmx_prometheus_httpserver.jar
-            - "90001"
-            - /opt/jmx-config/jmx-prometheus.yml
-            name: jmx
-            ports:
-            - containerPort: 9001
-              name: jmx
-      updateStrategy:
-        type: RollingUpdate
-  2: |
     apiVersion: apps/v1
     kind: Deployment
     metadata:
@@ -66,171 +9,7 @@ manifest snapshot:
         app: web
         new_label: existing_deploy
       name: octopus-deployment
-    spec:
-      replicas: 1
-      selector:
-        matchLabels:
-          octopusexport: OctopusExport
-      strategy:
-        type: RollingUpdate
-      template:
-        metadata:
-          labels:
-            app: web
-            octopusexport: OctopusExport
-        spec:
-          affinity:
-            podAntiAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-              - podAffinityTerm:
-                  labelSelector:
-                    matchExpressions:
-                    - key: app
-                      operator: In
-                      values:
-                      - web
-                  topologyKey: kubernetes.io/hostname
-                weight: 100
-          containers:
-          - env:
-            - name: DEMO_GREETING
-              value: Hello from the environment
-            - name: DEMO_FAREWELL
-              value: Such a sweet sorrow
-            - name: EXISTING_VAR
-              value: Some existing value
-            image: nginx
-            name: nginx
-            ports:
-            - containerPort: 80
-          - command:
-            - java
-            - -XX:+UnlockExperimentalVMOptions
-            - -XX:+UseCGroupMemoryLimitForHeap
-            - -XX:MaxRAMFraction=1
-            - -XshowSettings:vm
-            - -jar
-            - jmx_prometheus_httpserver.jar
-            - "90001"
-            - /opt/jmx-config/jmx-prometheus.yml
-            name: jmx
-            ports:
-            - containerPort: 9001
-              name: jmx
-  3: |
-    apiVersion: v1
-    kind: Pod
-    metadata:
-      labels:
-        app: web
-      name: octopus-deployment
-    spec:
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                - key: app
-                  operator: In
-                  values:
-                  - web
-              topologyKey: kubernetes.io/hostname
-            weight: 100
-      containers:
-      - env:
-        - name: DEMO_GREETING
-          value: Hello from the environment
-        - name: DEMO_FAREWELL
-          value: Such a sweet sorrow
-        - name: EXISTING_VAR
-          value: Some existing value
-        image: nginx
-        name: nginx
-        ports:
-        - containerPort: 80
-      - command:
-        - java
-        - -XX:+UnlockExperimentalVMOptions
-        - -XX:+UseCGroupMemoryLimitForHeap
-        - -XX:MaxRAMFraction=1
-        - -XshowSettings:vm
-        - -jar
-        - jmx_prometheus_httpserver.jar
-        - "90001"
-        - /opt/jmx-config/jmx-prometheus.yml
-        name: jmx
-        ports:
-        - containerPort: 9001
-          name: jmx
-  4: |
-    apiVersion: apps/v1
-    kind: StatefulSet
-    metadata:
-      labels:
-        app: web
-        k8s.io/inject_port: "true"
-      name: octopus-deployment
-    spec:
-      podManagementPolicy: OrderedReady
-      replicas: 1
-      selector:
-        matchLabels:
-          octopusexport: OctopusExport
-      template:
-        metadata:
-          labels:
-            app: web
-            octopusexport: OctopusExport
-        spec:
-          affinity:
-            podAntiAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-              - podAffinityTerm:
-                  labelSelector:
-                    matchExpressions:
-                    - key: app
-                      operator: In
-                      values:
-                      - web
-                  topologyKey: kubernetes.io/hostname
-                weight: 100
-          containers:
-          - env:
-            - name: EXISTING_VAR
-              value: Overwrite Value
-            - name: DEMO_GREETING
-              value: Hello from the environment
-            - name: DEMO_FAREWELL
-              value: Such a sweet sorrow
-            - name: injected
-              value: env
-            image: nginx
-            name: nginx
-            ports:
-            - containerPort: 80
-          - command:
-            - java
-            - -XX:+UnlockExperimentalVMOptions
-            - -XX:+UseCGroupMemoryLimitForHeap
-            - -XX:MaxRAMFraction=1
-            - -XshowSettings:vm
-            - -jar
-            - jmx_prometheus_httpserver.jar
-            - "90001"
-            - /opt/jmx-config/jmx-prometheus.yml
-            env:
-            - name: EXISTING_VAR
-              value: Overwrite Value
-            - name: injected
-              value: env
-            name: jmx
-            ports:
-            - containerPort: 9001
-              name: jmx
-      updateStrategy:
-        type: RollingUpdate
-  5: |
+  2: |
     apiVersion: apps/v1
     kind: Deployment
     metadata:
@@ -289,11 +68,12 @@ manifest snapshot:
             ports:
             - containerPort: 9001
               name: jmx
-summary snapshot:
+Summary snapshot:
   1: |
     conditions:
     - config:
         allow_root: true
+        any: false
         key_types:
         - string
         - slice
@@ -301,15 +81,14 @@ summary snapshot:
       data:
         sample: data
       errors: []
-      keys:
-      - /
+      keys: []
       name: resources
-      paths:
-      - structure/resources/
+      paths: []
       root_path: resources
       value: {}
     - config:
         allow_root: true
+        any: false
         data:
           sample: data
         default: resources
@@ -329,104 +108,33 @@ summary snapshot:
         sample: data
       errors: []
       keys:
-      - /
       - resources
       name: additional
       paths:
-      - structure/additional/
       - structure/additional/resources/
       root_path: additional
       value: resources
     errors:
     - error: No Kind Defined
       file:
-      - super
+      - deployment-octopus-deployment.yaml
       renderer: customization.renderers.sidecar
-    wagons:
-    - checksum: 78ff2c4e51363e2cc309b526aa8d36a1ae6fe33808c21c901f0d56fd2e1750ba
-      content:
-        apiVersion: apps/v1
-        kind: DaemonSet
-        metadata:
-          labels:
-            app: web
-          name: octopus-deployment
-        spec:
-          selector:
-            matchLabels:
-              octopusexport: OctopusExport
-          template:
-            metadata:
-              labels:
-                app: web
-                octopusexport: OctopusExport
-            spec:
-              affinity:
-                podAntiAffinity:
-                  preferredDuringSchedulingIgnoredDuringExecution:
-                  - podAffinityTerm:
-                      labelSelector:
-                        matchExpressions:
-                        - key: app
-                          operator: In
-                          values:
-                          - web
-                      topologyKey: kubernetes.io/hostname
-                    weight: 100
-              containers:
-              - env:
-                - name: DEMO_GREETING
-                  value: Hello from the environment
-                - name: DEMO_FAREWELL
-                  value: Such a sweet sorrow
-                - name: EXISTING_VAR
-                  value: Some existing value
-                image: nginx
-                name: nginx
-                ports:
-                - containerPort: 80
-              - command:
-                - java
-                - -XX:+UnlockExperimentalVMOptions
-                - -XX:+UseCGroupMemoryLimitForHeap
-                - -XX:MaxRAMFraction=1
-                - -XshowSettings:vm
-                - -jar
-                - jmx_prometheus_httpserver.jar
-                - "90001"
-                - /opt/jmx-config/jmx-prometheus.yml
-                name: jmx
-                ports:
-                - containerPort: 9001
-                  name: jmx
-          updateStrategy:
-            type: RollingUpdate
-      debug: []
-      errors: []
-      files:
-      - _order: 0
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data:
-          sample: data
-        file: structure/resources/daemonset.yaml
-        ids:
-        - daemonset-octopus-deployment.yaml
-        path: structure/resources/
-        renderers: []
-        value: {}
-      id:
-      - daemonset-octopus-deployment.yaml
-      render: true
+    paths:
+    - config:
+        fork: false
+        no_match: append
+        pattern: false
+        render: true
+        subpath: false
+      data:
+        sample: data
+      paths:
+      - structure/additional/resources/
       renderers:
-      - customization.renderers.sidecar
-      - customization.renderers.env
-      subpath: .
-    - checksum: 45f608708a5e392398e86f5606ea0319d565c9e34bf39cd45ff68161d63d8347
+      - customization.renderers.additional
+      value: resources
+    wagons:
+    - checksum: e11bccee8d1ffab55dbbc4a799e4e8aade095385c611c747b043a1b839d41679
       content:
         apiVersion: apps/v1
         kind: Deployment
@@ -437,92 +145,14 @@ summary snapshot:
             app: web
             new_label: existing_deploy
           name: octopus-deployment
-        spec:
-          replicas: 1
-          selector:
-            matchLabels:
-              octopusexport: OctopusExport
-          strategy:
-            type: RollingUpdate
-          template:
-            metadata:
-              labels:
-                app: web
-                octopusexport: OctopusExport
-            spec:
-              affinity:
-                podAntiAffinity:
-                  preferredDuringSchedulingIgnoredDuringExecution:
-                  - podAffinityTerm:
-                      labelSelector:
-                        matchExpressions:
-                        - key: app
-                          operator: In
-                          values:
-                          - web
-                      topologyKey: kubernetes.io/hostname
-                    weight: 100
-              containers:
-              - env:
-                - name: DEMO_GREETING
-                  value: Hello from the environment
-                - name: DEMO_FAREWELL
-                  value: Such a sweet sorrow
-                - name: EXISTING_VAR
-                  value: Some existing value
-                image: nginx
-                name: nginx
-                ports:
-                - containerPort: 80
-              - command:
-                - java
-                - -XX:+UnlockExperimentalVMOptions
-                - -XX:+UseCGroupMemoryLimitForHeap
-                - -XX:MaxRAMFraction=1
-                - -XshowSettings:vm
-                - -jar
-                - jmx_prometheus_httpserver.jar
-                - "90001"
-                - /opt/jmx-config/jmx-prometheus.yml
-                name: jmx
-                ports:
-                - containerPort: 9001
-                  name: jmx
       debug: []
-      errors: []
+      errors:
+      - error: No Kind Defined
+        file:
+        - deployment-octopus-deployment.yaml
+        renderer: customization.renderers.sidecar
       files:
-      - _order: 1
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data:
-          sample: data
-        file: structure/resources/deploy.yaml
-        ids:
-        - deployment-octopus-deployment.yaml
-        path: structure/resources/
-        renderers: []
-        value: {}
-      - _order: 5
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data:
-          sample: data
-        file: structure/additional/resources/existing_deploy.yaml
-        ids:
-        - deployment-octopus-deployment.yaml
-        path: structure/additional/
-        renderers:
-        - customization.renderers.additional
-        value: resources
-      - _order: 7
+      - _order: 0
         config:
           fork: false
           no_match: append
@@ -543,239 +173,6 @@ summary snapshot:
       render: true
       renderers:
       - customization.renderers.additional
-      - customization.renderers.sidecar
-      - customization.renderers.env
-      subpath: .
-    - checksum: ee92be1d80df1ceba397f956d633a6c7a9e116de3cfaa10c91fbc5fadf8b7239
-      content:
-        apiVersion: v1
-        metadata:
-          labels:
-            app: web
-            render: "false"
-          name: octopus-deployment
-        spec:
-          affinity:
-            podAntiAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-              - podAffinityTerm:
-                  labelSelector:
-                    matchExpressions:
-                    - key: app
-                      operator: In
-                      values:
-                      - web
-                  topologyKey: kubernetes.io/hostname
-                weight: 100
-          containers:
-          - env:
-            - name: DEMO_GREETING
-              value: Hello from the environment
-            - name: DEMO_FAREWELL
-              value: Such a sweet sorrow
-            - name: EXISTING_VAR
-              value: Some existing value
-            image: nginx
-            name: nginx
-            ports:
-            - containerPort: 80
-      debug:
-      - debug: super is a super identifier
-        identifier-template: customization.identifier.template
-      errors:
-      - error: No Kind Defined
-        file:
-        - super
-        renderer: customization.renderers.sidecar
-      files:
-      - _order: 2
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data:
-          sample: data
-        file: structure/resources/no-kind.yaml
-        ids:
-        - super
-        path: structure/resources/
-        renderers: []
-        value: {}
-      id:
-      - super
-      render: true
-      renderers:
-      - customization.renderers.sidecar
-      - customization.renderers.env
-      subpath: .
-    - checksum: 3229288b236dfb437d25a8fa2af6ec93b4b90a1f916a79447be91771556cbbf1
-      content:
-        apiVersion: v1
-        kind: Pod
-        metadata:
-          labels:
-            app: web
-          name: octopus-deployment
-        spec:
-          affinity:
-            podAntiAffinity:
-              preferredDuringSchedulingIgnoredDuringExecution:
-              - podAffinityTerm:
-                  labelSelector:
-                    matchExpressions:
-                    - key: app
-                      operator: In
-                      values:
-                      - web
-                  topologyKey: kubernetes.io/hostname
-                weight: 100
-          containers:
-          - env:
-            - name: DEMO_GREETING
-              value: Hello from the environment
-            - name: DEMO_FAREWELL
-              value: Such a sweet sorrow
-            - name: EXISTING_VAR
-              value: Some existing value
-            image: nginx
-            name: nginx
-            ports:
-            - containerPort: 80
-          - command:
-            - java
-            - -XX:+UnlockExperimentalVMOptions
-            - -XX:+UseCGroupMemoryLimitForHeap
-            - -XX:MaxRAMFraction=1
-            - -XshowSettings:vm
-            - -jar
-            - jmx_prometheus_httpserver.jar
-            - "90001"
-            - /opt/jmx-config/jmx-prometheus.yml
-            name: jmx
-            ports:
-            - containerPort: 9001
-              name: jmx
-      debug: []
-      errors: []
-      files:
-      - _order: 3
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data:
-          sample: data
-        file: structure/resources/pod.yaml
-        ids:
-        - pod-octopus-deployment.yaml
-        path: structure/resources/
-        renderers: []
-        value: {}
-      id:
-      - pod-octopus-deployment.yaml
-      render: true
-      renderers:
-      - customization.renderers.sidecar
-      - customization.renderers.env
-      subpath: .
-    - checksum: 2f6c2dd291aff4e399854a468a3cc8f1a752724e5b5dc22b104982e04dc624ee
-      content:
-        apiVersion: apps/v1
-        kind: StatefulSet
-        metadata:
-          labels:
-            app: web
-            k8s.io/inject_port: "true"
-          name: octopus-deployment
-        spec:
-          podManagementPolicy: OrderedReady
-          replicas: 1
-          selector:
-            matchLabels:
-              octopusexport: OctopusExport
-          template:
-            metadata:
-              labels:
-                app: web
-                octopusexport: OctopusExport
-            spec:
-              affinity:
-                podAntiAffinity:
-                  preferredDuringSchedulingIgnoredDuringExecution:
-                  - podAffinityTerm:
-                      labelSelector:
-                        matchExpressions:
-                        - key: app
-                          operator: In
-                          values:
-                          - web
-                      topologyKey: kubernetes.io/hostname
-                    weight: 100
-              containers:
-              - env:
-                - name: EXISTING_VAR
-                  value: Overwrite Value
-                - name: DEMO_GREETING
-                  value: Hello from the environment
-                - name: DEMO_FAREWELL
-                  value: Such a sweet sorrow
-                - name: injected
-                  value: env
-                image: nginx
-                name: nginx
-                ports:
-                - containerPort: 80
-              - command:
-                - java
-                - -XX:+UnlockExperimentalVMOptions
-                - -XX:+UseCGroupMemoryLimitForHeap
-                - -XX:MaxRAMFraction=1
-                - -XshowSettings:vm
-                - -jar
-                - jmx_prometheus_httpserver.jar
-                - "90001"
-                - /opt/jmx-config/jmx-prometheus.yml
-                env:
-                - name: EXISTING_VAR
-                  value: Overwrite Value
-                - name: injected
-                  value: env
-                name: jmx
-                ports:
-                - containerPort: 9001
-                  name: jmx
-          updateStrategy:
-            type: RollingUpdate
-      debug:
-      - debug: statefulset/octopus-deployment/nginx injected labels
-        renderer: customization.renderers.env
-      - debug: statefulset/octopus-deployment/jmx injected labels
-        renderer: customization.renderers.env
-      errors: []
-      files:
-      - _order: 4
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: true
-        data:
-          sample: data
-        file: structure/resources/statefulset.yaml
-        ids:
-        - statefulset-octopus-deployment.yaml
-        path: structure/resources/
-        renderers: []
-        value: {}
-      id:
-      - statefulset-octopus-deployment.yaml
-      render: true
-      renderers:
       - customization.renderers.sidecar
       - customization.renderers.env
       subpath: .
@@ -842,23 +239,7 @@ summary snapshot:
       debug: []
       errors: []
       files:
-      - _order: 6
-        config:
-          fork: false
-          no_match: append
-          pattern: false
-          render: true
-          subpath: false
-        data:
-          sample: data
-        file: structure/additional/resources/new_deploy.yaml
-        ids:
-        - deployment-new-deployment.yaml
-        path: structure/additional/
-        renderers:
-        - customization.renderers.additional
-        value: resources
-      - _order: 8
+      - _order: 1
         config:
           fork: false
           no_match: append
@@ -881,4 +262,4 @@ summary snapshot:
       - customization.renderers.additional
       - customization.renderers.sidecar
       - customization.renderers.env
-      subpath: resources
+      subpath: .

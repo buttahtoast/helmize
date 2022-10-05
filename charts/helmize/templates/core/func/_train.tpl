@@ -232,9 +232,7 @@
 
         {{/* Partial Files */}}
         {{- $_ := set $file "partial_files" $partial_files -}}
-
-      {{- else -}}
-        {{- $_ := set $return "errors" (list (dict "error" "File not found or empty content" "file" $file_name)) -}}
+        
       {{- end -}}
 
       {{/* Benchmark */}}

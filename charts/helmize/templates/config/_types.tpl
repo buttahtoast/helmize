@@ -10,7 +10,7 @@
 {{ include "helmize.config.defaults.conditions" $ }}:
   types: [ "slice" ]
 {{ include "helmize.config.defaults.force" $ }}:
-  types: [ "bool", "int" ]
+  types: [ "bool" ]
   default: false
 {{ include "helmize.config.defaults.file_excludes" $ }}:
   types: [ "string", "slice" ]

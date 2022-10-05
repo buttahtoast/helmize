@@ -236,13 +236,45 @@ Summary snapshot:
       render: true
       renderers: []
       subpath: .
+    - content: {}
+      debug: []
+      errors: []
+      files:
+      - _order: 1
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data:
+          class: vertical-class
+          domain: east.vertical.public.domain
+          layer_1:
+            overwrite: this
+            remove: false
+          layer_2:
+            sampler: true
+          layer_3:
+            other: true
+        file: structure/layer_1/layer1-empty.yaml
+        ids:
+        - layer1-empty.yaml
+        path: structure/layer_1/
+        renderers: []
+        value: {}
+      id:
+      - layer1-empty.yaml
+      render: true
+      renderers: []
+      subpath: .
     - checksum: e73ebdb9a8d141b5b7fd2885c1fc044a74312adfa47b70189418953dc5d1d0a3
       content:
         Value: {}
       debug: []
       errors: []
       files:
-      - _order: 1
+      - _order: 2
         config:
           fork: false
           no_match: append
@@ -287,7 +319,7 @@ Summary snapshot:
       debug: []
       errors: []
       files:
-      - _order: 2
+      - _order: 3
         config:
           fork: false
           no_match: append
@@ -315,13 +347,45 @@ Summary snapshot:
       render: true
       renderers: []
       subpath: .
+    - content: {}
+      debug: []
+      errors: []
+      files:
+      - _order: 4
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data:
+          class: vertical-class
+          domain: east.vertical.public.domain
+          layer_1:
+            overwrite: this
+            remove: false
+          layer_2:
+            sampler: true
+          layer_3:
+            other: true
+        file: structure/layer_2/layer2-empty.yaml
+        ids:
+        - layer2-empty.yaml
+        path: structure/layer_2/
+        renderers: []
+        value: east
+      id:
+      - layer2-empty.yaml
+      render: true
+      renderers: []
+      subpath: .
     - checksum: 1f029017f09741e3e8d36030a34d3d3b8663b008b1588eedf886c973af280b84
       content:
         Value: east
       debug: []
       errors: []
       files:
-      - _order: 3
+      - _order: 5
         config:
           fork: false
           no_match: append
@@ -366,7 +430,7 @@ Summary snapshot:
       debug: []
       errors: []
       files:
-      - _order: 4
+      - _order: 6
         config:
           fork: false
           no_match: append
@@ -394,13 +458,45 @@ Summary snapshot:
       render: true
       renderers: []
       subpath: .
+    - content: {}
+      debug: []
+      errors: []
+      files:
+      - _order: 7
+        config:
+          fork: false
+          no_match: append
+          pattern: false
+          render: true
+          subpath: true
+        data:
+          class: vertical-class
+          domain: east.vertical.public.domain
+          layer_1:
+            overwrite: this
+            remove: false
+          layer_2:
+            sampler: true
+          layer_3:
+            other: true
+        file: structure/layer_3/layer3-empty.yaml
+        ids:
+        - layer3-empty.yaml
+        path: structure/layer_3/
+        renderers: []
+        value: {}
+      id:
+      - layer3-empty.yaml
+      render: true
+      renderers: []
+      subpath: .
     - checksum: e73ebdb9a8d141b5b7fd2885c1fc044a74312adfa47b70189418953dc5d1d0a3
       content:
         Value: {}
       debug: []
       errors: []
       files:
-      - _order: 5
+      - _order: 8
         config:
           fork: false
           no_match: append

@@ -1,4 +1,4 @@
-manifest snapshot:
+Manifest snapshot:
   1: |
     apiVersion: apps/v1
     kind: Deployment
@@ -316,7 +316,7 @@ manifest snapshot:
         targetPort: 80
       selector:
         app: nginx
-summary snapshot:
+Summary snapshot:
   1: |
     conditions:
     - config:

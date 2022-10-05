@@ -6,7 +6,8 @@ chart-dirs:
   - charts/
 chart-repos:
   - buttahtoast=https://buttahtoast.github.io/helm-charts/
-validate-chart-schema: true
+validate-chart-schema: false
+check-version-increment: true
 validate-maintainers: true
 validate-yaml: true
 helm-extra-args: "--timeout 600s"  

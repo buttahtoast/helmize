@@ -1,4 +1,4 @@
-'[Reference]: Manifest Snapshot':
+Manifest snapshot:
   1: |
     apiVersion: apps/v1
     kind: Deployment
@@ -133,7 +133,7 @@
       - hosts:
         - frontend.test.east.company.com
         secretName: frontend-tls
-'[Reference]: Summary Snapshot':
+Summary snapshot:
   1: |
     conditions:
     - config:
