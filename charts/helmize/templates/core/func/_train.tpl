@@ -28,7 +28,6 @@
 
     {{/* Iterate over files */}}
     {{- range $file := $.files -}}
-      {{- $train_file := dict "files" (list $file) "errors" list "debug" list -}}
 
       {{/* Parse File */}}
       {{- $file_name := $file.file -}}
@@ -48,8 +47,11 @@
       {{/* Check if Content */}}
       {{- if $content -}}
 
+        {{/* File Struct */}}
+        {{- $incoming_wagon := dict "file_id" $file_id "subpath" (regexReplaceAll $file_id.path $file_id.file "${1}" | trimPrefix "/" | dir) "renderers" $file.renderers "debug" list "errors" list -}}
+  
         {{/* Initialize Context (Sets $.data and $.value key) */}}
-        {{- $context := (set (set (set $.ctx "data" $shared_data) "value" (default dict $file.value)) "conditions" $.conditions) -}}
+        {{- $context := (set (set (set (set (set $.ctx "data" $shared_data) "value" (default dict $file.value)) "conditions" $.conditions) "errors" $incoming_wagon.errors) "debug" $incoming_wagon.debug) -}}
 
         {{/* Template File Content */}}
         {{- $template_content_raw := tpl $content $context -}}
@@ -75,7 +77,8 @@
               {{- $fork := 0 -}}
   
               {{/* File Struct */}}
-              {{- $incoming_wagon := dict "id" list "content" $parsed_content "file_id" $file_id "subpath" (regexReplaceAll $file_id.path $file_id.file "${1}" | trimPrefix "/" | dir) "renderers" $file.renderers "debug" list "errors" list -}}
+              {{- $_ := set $incoming_wagon "id" list -}}
+              {{- $_ := set $incoming_wagon "content" $parsed_content -}}
   
               {{/* Benchmark */}}
               {{- include "helmize.helpers.ts" (dict "msg" (printf "Evaluating Configuration") "ctx" $.ts) -}}
