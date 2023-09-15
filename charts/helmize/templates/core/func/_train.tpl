@@ -49,7 +49,7 @@
       {{- if $content -}}
 
         {{/* Initialize Context (Sets $.data and $.value key) */}}
-        {{- $context := (set (set (set $.ctx "data" $shared_data) "value" (default dict $file.value)) "conditions" $.conditions) -}}
+        {{- $context := (set (set (set (set $.ctx "data" $shared_data) "value" (default dict $file.value)) "conditions" $.conditions) "Train" $file_train) -}}
 
         {{/* Template File Content */}}
         {{- $template_content_raw := tpl $content $context -}}

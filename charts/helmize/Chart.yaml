@@ -2,7 +2,7 @@ apiVersion: v2
 name: helmize
 description: Go Sprig based deployment engine (GitOps Tool)
 type: library
-version: "0.1.1"
+version: "0.1.w"
 appVersion: "0.1.0"
 home: https://helmize.dev
 icon: https://raw.githubusercontent.com/buttahtoast/helmize/main/hugo/icon/icon.png
@@ -20,4 +20,4 @@ maintainers:
 annotations:
   artifacthub.io/prerelease: "false"
   artifacthub.io/changes: |
-    - "[Fixed]: Skip empty files and do not throw an error"
+    - "[Feat]: Add $.Train as file context"
